@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080e1b">
-<title>浮光纪：裂隙棋航 V4.6 · 战术与战报升级</title>
+<title>浮光纪：裂隙棋航 V4.6.1 · 公平竞技与成长回顾</title>
 <style>
 :root{color-scheme:dark;--bg:#080d19;--panel:#101b2b;--panel2:#142236;--line:#29405b;--faint:#88a5b7;--white:#ecf5ff;--teal:#6ce6d3;--gold:#f5cb7a;--red:#fe7d89;--purple:#bba5ff;--radius:15px;--shadow:0 16px 55px rgba(0,0,0,.29)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;min-width:330px;min-height:100vh;overflow-x:hidden}button{font:inherit;cursor:pointer;touch-action:manipulation}button:disabled{cursor:not-allowed;opacity:.43!important;filter:grayscale(.35)}button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--teal);outline-offset:3px}button:hover:not(:disabled){filter:brightness(1.14)}.app-bg{position:fixed;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(ellipse at 18% 4%,#123249 0%,transparent 42%),radial-gradient(ellipse at 88% 20%,#282345 0%,transparent 35%),linear-gradient(160deg,#080d18,#0c1524 60%,#090e19)}.app-bg:after{content:"";position:absolute;inset:0;opacity:.25;background-image:radial-gradient(circle,#8ba7cf 1px,transparent 1px);background-size:56px 64px;mask-image:linear-gradient(to bottom,#000,transparent 65%)}.shell{max-width:1640px;margin:auto;padding:0 21px 28px}.topbar{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #29405688;margin-bottom:16px}.brand{display:flex;align-items:center;gap:13px;min-width:0}.brand-mark{flex:none;width:49px;height:49px;border:1px solid #6bcbc4;border-radius:15px;background:linear-gradient(145deg,#1b5060,#172237);box-shadow:inset 0 0 24px #78e4d421,0 0 22px #46bcae20;display:grid;place-items:center;transform:rotate(-5deg)}.brand-mark span{font-size:30px;color:var(--gold);text-shadow:0 0 17px #ebd7a9}.brand h1{font-size:21px;letter-spacing:2.1px;margin:0;line-height:1.15;white-space:nowrap}.brand small{display:block;color:#91b0bf;letter-spacing:2.8px;font-size:10px;margin-top:6px;font-weight:600}.top-stats{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:9px}.top-chip{border:1px solid #2d4762;border-radius:12px;background:#142234ba;padding:7px 12px;min-height:47px;display:flex;gap:9px;align-items:center}.top-chip .ic{font-size:22px}.top-chip .meta{display:flex;flex-direction:column;gap:1px}.top-chip small{font-size:10px;color:#95acbf}.top-chip strong{font-size:16px;line-height:1.1;font-variant-numeric:tabular-nums}.top-chip .hp{color:#f4a8ae}.top-chip .gold{color:var(--gold)}.head-btn{border:1px solid #35516d;background:#14283c;border-radius:12px;color:#b9d2df;height:43px;width:43px;font-size:19px}.layout{display:grid;grid-template-columns:232px minmax(0,1fr) 285px;align-items:start;gap:14px}.sidebar{display:flex;flex-direction:column;gap:14px;min-width:0}.panel{border:1px solid #294057b8;background:linear-gradient(154deg,#142236e8,#0e192add);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.panel-heading{display:flex;align-items:center;justify-content:space-between;padding:15px 15px 11px;gap:7px}.panel-heading h2{font-size:13px;margin:0;letter-spacing:1.3px;color:#d4e5ee}.panel-heading small{font-size:10px;color:#87abb7}.mini-label{font-size:10px;letter-spacing:1.4px;color:#89a9bb}.rank-list{padding:0 10px 10px;display:flex;flex-direction:column;gap:8px}.rank-card{padding:10px 10px;border-radius:11px;background:#0e1a2bb8;border:1px solid #2a3f5680;position:relative;overflow:hidden}.rank-card.you{border-color:#4db3a6aa;background:linear-gradient(105deg,#1a3a40,#142334 80%)}.rank-card.next{box-shadow:inset 3px 0 var(--gold)}.rank-card.dead{opacity:.48;filter:grayscale(.7)}.rank-top{display:flex;align-items:center;gap:8px}.rank-avatar{width:35px;height:35px;border-radius:10px;flex:none;border:1px solid #ffffff23;display:grid;place-items:center;font-size:19px}.rank-name{font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-sub{color:#8babb9;font-size:10px;margin-top:3px}.rank-life{margin-top:9px;height:5px;border-radius:6px;background:#29374b;overflow:hidden}.rank-life i{display:block;height:100%;background:linear-gradient(90deg,#ff8798,#f9bd78);border-radius:6px}.rank-badge{margin-left:auto;color:var(--gold);font-size:10px;white-space:nowrap}.relic-list{padding:0 14px 15px;display:grid;gap:8px}.relic-mini{display:flex;gap:9px;align-items:center;font-size:12px;padding:7px;background:#0e1a2a;border:1px solid #294059;border-radius:10px}.relic-mini .sig{font-size:20px}.relic-mini small{display:block;color:#89a8b8;font-size:10px;margin-top:2px}.muted{color:#7797aa;font-size:11px;line-height:1.7}.hint-list{padding:0 15px 15px;color:#91adbd;font-size:11px;line-height:1.9}.kbd{display:inline-flex;border:1px solid #516278;border-bottom-width:2px;border-radius:4px;padding:0 4px;color:#cfe3e8;line-height:1.5;font-size:10px;background:#1e2d40}.maincol{display:flex;flex-direction:column;gap:13px;min-width:0}.arena-panel{position:relative;border:1px solid #3b5268;border-radius:17px;background:linear-gradient(#0d1b2c,#091625);box-shadow:0 14px 48px #0007;overflow:hidden}.arena-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:linear-gradient(95deg,#12283a,#131d32);border-bottom:1px solid #2b435b}.round-head{display:flex;gap:10px;align-items:center;min-width:0}.round-icon{width:37px;height:37px;border:1px solid #426077;border-radius:11px;background:#193448;display:grid;place-items:center;color:var(--gold);font-size:21px}.round-title{font-size:15px;font-weight:800;white-space:nowrap}.round-desc{color:#9db7c5;font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.arena-actions{display:flex;align-items:center;gap:7px}.btn{padding:10px 14px;color:#d6eef5;background:#1b3146;border:1px solid #395871;border-radius:10px;font-size:12px;font-weight:750;white-space:nowrap;transition:filter .14s,transform .14s}.btn:active:not(:disabled){transform:translateY(1px)}.btn.gold{color:#261c12;background:linear-gradient(135deg,#f8de9e,#d8a657);border-color:#ffe6ab;box-shadow:0 4px 19px #e9bb6733}.btn.teal{color:#052a30;background:linear-gradient(130deg,#8ff4d5,#42c5cc);border-color:#b3fff3;box-shadow:0 4px 22px #5dcaca28}.btn.ghost{background:#1a293b;color:#b8d2dc}.btn.danger{border-color:#9e5967;color:#ffadb2;background:#3d202d}.btn.tiny{padding:6px 10px;font-size:11px}.board-area{position:relative;background:#0d1929;overflow:hidden;line-height:0;user-select:none;touch-action:none}.board-area canvas{display:block;width:100%;height:auto;cursor:crosshair;aspect-ratio:980/660}.board-tag{position:absolute;z-index:1;pointer-events:none;padding:5px 11px;background:#06101c96;border:1px solid #4460788a;border-radius:8px;font-size:10px;line-height:1.4;color:#bdd2d7;backdrop-filter:blur(7px)}.board-tag.enemy{left:13px;top:13px;color:#f4abb4}.board-tag.friendly{right:13px;bottom:14px;color:#8be8d1}.board-help{position:absolute;bottom:11px;left:12px;max-width:65%;line-height:1.4;font-size:10px;color:#a1c0cd;pointer-events:none;text-shadow:0 1px 4px #000}.combat-hud{position:absolute;top:13px;left:50%;transform:translateX(-50%);min-width:125px;text-align:center;line-height:1.3;border-radius:12px;padding:7px 12px;background:#0a1425ce;border:1px solid #54839090;box-shadow:0 4px 18px #0009}.combat-hud strong{font-size:17px;font-variant-numeric:tabular-nums}.combat-hud small{display:block;color:#8eb6c4;font-size:9px;letter-spacing:1px}.battle-log{height:33px;padding:8px 13px;background:#08121dd9;color:#9db8c9;border-top:1px solid #30435b;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.battle-log b{color:#d8eaee}.bench-panel{padding:11px 11px 12px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}.section-head strong{font-size:12px;letter-spacing:.8px}.section-head small{color:#829bad;font-size:10px}.bench-slots{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}.bench-slot{position:relative;min-width:0;aspect-ratio:.83;border-radius:9px;border:1px dashed #38536a;background:#0a1726;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#4e7588;padding:0;overflow:hidden}.bench-slot.occupied{border:1px solid #527087;background:#152b3d}.bench-slot.picked{outline:2px solid #8af0da;outline-offset:-2px;background:#254445}.bench-slot .small-icon{font-size:24px;line-height:1.2;filter:drop-shadow(0 2px 3px #0008)}.bench-slot .bench-name{position:absolute;bottom:2px;font-size:9px;white-space:nowrap;transform:scale(.9);width:115%;overflow:hidden;text-overflow:ellipsis;color:#d1e7ee;text-align:center}.bench-slot .star-mini{position:absolute;top:2px;right:3px;color:#ffe8a6;font-size:9px}.bench-slot .idx{position:absolute;top:3px;left:4px;font-size:9px;opacity:.3}.bench-slot .rarity-line{position:absolute;top:0;left:0;right:0;height:2px}.shop-panel{padding:12px 13px 13px}.shop-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}.shop-heading{font-size:14px;font-weight:850;letter-spacing:1px}.shop-explain{color:#94afbe;font-size:10px;margin-left:8px}.shop-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.econ{font-size:11px;color:#b0c7d1;white-space:nowrap}.econ b{color:#f5d58f}.shop-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.shop-card{position:relative;min-width:0;min-height:169px;display:flex;flex-direction:column;padding:0;text-align:left;overflow:hidden;border:1px solid #577084;background:#122436;border-radius:12px;color:#e3f2fa;transition:transform .14s,border-color .14s,filter .14s}.shop-card:not(:disabled):hover{transform:translateY(-4px);border-color:#f9d78e;filter:brightness(1.08)}.shop-card.tier1{border-color:#718b9b}.shop-card.tier2{border-color:#66bba0}.shop-card.tier3{border-color:#679fe3}.shop-card.tier4{border-color:#b18df2}.shop-card.tier5{border-color:#efc26f}.shop-card.empty{background:#0e1b2a;border-style:dashed;justify-content:center;align-items:center;color:#56758c}.shop-art{min-height:93px;flex:1;display:grid;place-items:center;position:relative;overflow:hidden}.shop-art::before{content:"";position:absolute;width:91px;height:91px;border:1px solid #ffffff33;border-radius:20px;transform:rotate(45deg);top:8px}.shop-art::after{content:"";position:absolute;width:70px;height:70px;border:1px dashed #ffffff25;border-radius:50%;top:17px}.portrait-main{font-size:57px;line-height:1;z-index:1;color:#f4f8ff;text-shadow:0 4px 1px #0004,0 0 25px #ffffff80;filter:drop-shadow(0 8px 9px #0006)}.shop-card .bottom{padding:8px 9px 9px;background:#0d1c2df0;border-top:1px solid #ffffff15}.shop-unit-name{font-size:12px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.shop-classes{color:#9fbed0;font-size:10px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.shop-cost{position:absolute;top:7px;left:8px;z-index:2;font-size:12px;background:#0b1728c9;border-radius:8px;padding:4px 7px;color:#ffe3a0;font-weight:850}.shop-key{position:absolute;top:9px;right:10px;z-index:2;color:#e0eff7a6;font-size:10px}.market-footer{display:flex;justify-content:space-between;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap}.xp-box{flex:1;min-width:130px}.xp-top{font-size:11px;color:#afc8d8;display:flex;justify-content:space-between;gap:8px;margin-bottom:5px}.progress{height:7px;border-radius:10px;background:#223449;overflow:hidden}.progress>i{height:100%;display:block;background:linear-gradient(90deg,#55bed0,#b7f2dd);border-radius:10px;transition:width .2s}.small-note{font-size:10px;color:#718fa4}.trait-list{padding:0 11px 12px;display:grid;gap:7px}.trait-row{display:flex;align-items:center;gap:9px;padding:8px;border-radius:9px;background:#0c1a2a;border:1px solid #2b4155;opacity:.68}.trait-row.active{opacity:1;border-color:#538a7f;background:#122f37}.trait-icon{font-size:20px;min-width:23px;text-align:center}.trait-body{flex:1;min-width:0}.trait-name{font-size:11px;font-weight:750;display:flex;justify-content:space-between}.trait-desc{font-size:10px;color:#92aebb;line-height:1.5;margin-top:3px}.trait-steps{font-size:10px;color:#c8ae78}.inspect-body{padding:1px 13px 14px}.inspect-head{display:flex;align-items:center;gap:10px}.inspect-portrait{width:62px;height:65px;display:grid;place-items:center;font-size:37px;border-radius:11px;position:relative;flex:none;border:1px solid #ffffff2c}.inspect-head h3{margin:0;font-size:16px}.inspect-head p{margin:5px 0 0;color:#90b2c1;font-size:11px}.unit-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}.unit-stat{padding:7px 8px;background:#0b1a2a;border:1px solid #293e55;border-radius:8px}.unit-stat small{font-size:9px;color:#7f9eaf}.unit-stat b{display:block;margin-top:3px;font-size:12px}.skill-card{padding:10px;border-radius:9px;background:#0a1d30;border-left:2px solid #73c9bf}.skill-card strong{font-size:12px;color:#a6eee0}.skill-card div{font-size:10px;color:#a1bac7;line-height:1.65;margin-top:5px}.equip-row{display:flex;gap:7px;flex-wrap:wrap}.equip-chip{display:flex;align-items:center;gap:5px;background:#192f41;border:1px solid #45637c;border-radius:8px;padding:6px 7px;color:#cfe1e8;font-size:11px}.inspect-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px}.inventory{padding:1px 11px 12px}.inventory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-height:184px;overflow-y:auto;padding:2px}.item-btn{height:55px;border:1px solid #4b5b73;border-radius:10px;background:linear-gradient(145deg,#1c3147,#111e32);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;color:#f6e1bb}.item-btn span{font-size:23px}.item-btn small{font-size:8px;color:#aec4d1;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:0 3px}.item-btn.picked{border-color:#ffe59e;background:#33403f;box-shadow:0 0 0 1px #e5ca6d}.item-empty{height:55px;border:1px dashed #33465b;border-radius:10px;display:grid;place-items:center;color:#375369;font-size:16px}.tooltip-line{font-size:10px;line-height:1.6;color:#849fac;padding:8px 1px 1px}.toast-stack{position:fixed;z-index:30;top:90px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}.toast{color:#f0f8f9;font-size:12px;font-weight:700;padding:10px 19px;border:1px solid #65c0acb5;border-radius:10px;background:#152e38ed;box-shadow:0 8px 35px #0008;animation:popin .22s ease-out;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}@keyframes popin{from{transform:translateY(-13px);opacity:0}to{transform:translateY(0);opacity:1}}.overlay{position:fixed;z-index:20;inset:0;background:#040a13d9;backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}.overlay.hidden{display:none}.modal{position:relative;border:1px solid #467b89;border-radius:22px;background:radial-gradient(ellipse at 50% 0%,#234459,#101f33 63%,#0d182a);box-shadow:0 30px 120px #000b,0 0 80px #4cf4d313;max-width:680px;width:100%;padding:32px;overflow:hidden}.modal:before{content:"";position:absolute;top:-115px;right:-100px;width:260px;height:260px;border:1px solid #9ee2cf24;border-radius:50%;pointer-events:none}.modal h2{font-size:29px;letter-spacing:3px;margin:7px 0 9px}.modal .subtitle{font-size:12px;color:#a1bfcd;line-height:1.9;margin:0 0 18px}.modal-eyebrow{color:var(--gold);font-size:10px;letter-spacing:3px;font-weight:850}.modal-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.modal .btn{font-size:14px;padding:12px 19px}.menu-logo{display:flex;gap:14px;align-items:center;margin-bottom:14px}.menu-insignia{width:84px;height:84px;display:grid;place-items:center;border:1px solid #7bcece;border-radius:23px;transform:rotate(-8deg);font-size:57px;color:#ffda91;background:radial-gradient(circle,#265b63,#132b42);box-shadow:0 0 39px #54d5cd30}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:19px}.feature{padding:13px 10px;border:1px solid #395469;background:#0c1c2dd4;border-radius:12px}.feature b{display:block;font-size:13px}.feature small{display:block;font-size:10px;color:#8dacbd;margin-top:6px;line-height:1.7}.relic-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:21px}.relic-opt{border:1px solid #4b6076;background:linear-gradient(145deg,#1d3c51,#122035);color:#e4f3f6;border-radius:13px;min-height:184px;text-align:center;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:12px}.relic-opt:hover{border-color:#f6cd80;transform:translateY(-3px)}.relic-opt .relic-glyph{font-size:41px;text-shadow:0 0 30px #fbd4a580}.relic-opt b{font-size:14px}.relic-opt small{font-size:11px;color:#a9c2d0;line-height:1.7}.result-hero{font-size:53px;margin-bottom:10px;text-shadow:0 0 30px #a1fbec65}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}.result-stat{padding:14px;background:#0b1b2a;border:1px solid #36536b;border-radius:11px;text-align:center}.result-stat b{display:block;font-size:21px;color:#f8d58f}.result-stat small{display:block;margin-top:5px;color:#88a8b7;font-size:10px}.help-copy{color:#afc7d1;font-size:12px;line-height:2}.help-copy b{color:#8ee7d7}.close-modal{position:absolute;top:12px;right:12px;font-size:20px;width:34px;height:34px;border-radius:9px;color:#b7d4dd;background:#152c40;border:1px solid #3a586c}.mobile-nav{display:none}.gold-dot{color:#fcd082}.rarity1{--rarity:#a2b6c5}.rarity2{--rarity:#69d4a7}.rarity3{--rarity:#7cb4ff}.rarity4{--rarity:#cf9bff}.rarity5{--rarity:#ffc976}.stars{color:#ffdb87;letter-spacing:1px}.hidden{display:none!important}
@@ -472,6 +472,7 @@ body{min-height:0}
 @media(max-width:1000px){.combat-tactics{max-width:160px}.combat-tactics span{font-size:9px}}
 @media(max-width:780px){.combat-tactics{display:none}.final-rank{grid-template-columns:25px minmax(62px,1fr) auto auto;font-size:10px}.final-overview b{font-size:17px}}
 
+.progress-summary{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}.progress-summary span{padding:5px 9px;border:1px solid #365d67;border-radius:8px;color:#b2d1d8;font-size:11px}.progress-summary b{color:#f9d58d}.progress-sparkline{display:block;width:100%;height:145px;background:#0e2634;border:1px solid #355e67;border-radius:10px;padding:9px 12px;margin:9px 0}.progress-milestones{display:flex;flex-wrap:wrap;gap:6px}.progress-milestones span{font-size:10px;color:#c1d9d9;background:#213645;border-radius:6px;padding:5px 7px}.history-details{margin-top:9px;border-top:1px solid #345361;padding-top:9px}.history-details summary{cursor:pointer;color:#8ee3d0;font-size:11px;font-weight:700}
 </style>
 </head>
 <body>
@@ -531,21 +532,21 @@ body{min-height:0}
 <div id="coach" class="coach hidden" role="status" aria-live="polite"><div class="coach-top"><span class="coach-kicker">新手航行指引 <b id="coachIndex">1 / 7</b></span><button class="coach-x" id="skipTutorial" title="结束教学">×</button></div><strong id="coachTitle"></strong><p id="coachText"></p><div class="coach-actions"><button class="btn tiny ghost" id="coachSkip">跳过教学</button><button class="btn tiny teal hidden" id="coachNext">开始教学</button></div></div>
 <div id="toastStack" class="toast-stack" aria-live="polite"></div>
 <div class="overlay" id="menuOverlay"><div class="modal">
-  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V4.6 · 单机 · 自动存档</div><h2>浮光纪 · 裂隙棋航</h2><div class="subtitle" style="margin:0">当群星碎裂，最后一支舰队将续写黎明。</div></div></div>
+  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V4.6.1 · 公平竞技 · 自动存档</div><h2>浮光纪 · 裂隙棋航</h2><div class="subtitle" style="margin:0">当群星碎裂，最后一支舰队将续写黎明。</div></div></div>
   <p class="subtitle">指挥浮岛舰队，招募 42 位特色船员，探索 6 大阵营与 8 种职业羁绊，打造装备与祝福组合。自定义你的舰长和对手人数，在每轮自动对战中淘汰竞争者，成为最后的星航者。</p><p class="audio-promise">♫ 原创动态背景音乐将在点击开始后播放（可随时静音）。首次开局会提供互动教学。</p>
   <div class="feature-grid"><div class="feature"><b>⚔ 完整赛季</b><small>经济运营、部署布阵、自动攻防与最终淘汰</small></div><div class="feature"><b>✥ 每局不同</b><small>随机商店、掉落装备、三选一永久奇遇</small></div><div class="feature"><b>◈ 无需联网</b><small>单文件离线运行，准备阶段与战后自动存档</small></div></div>
   <div class="start-settings" aria-label="新航程设置">
     <label class="setup-name">舰长姓名<input id="captainName" type="text" maxlength="14" placeholder="输入你的舰长名字" value="蓝舰长" autocomplete="off" spellcheck="false"></label>
     <label>电脑对手<select id="opponentCount"><option value="1">1 名 · 快速决战</option><option value="3" selected>3 名 · 标准航程</option><option value="5">5 名 · 星海竞赛</option><option value="7">7 名 · 大型淘汰赛</option></select></label>
     <label>电脑难度<select id="difficultySelect"><option value="easy">休闲 · 较宽容</option><option value="normal" selected>标准 · 稳健运营</option><option value="hard">挑战 · 积极调整</option></select></label>
-    <div id="setupTip" class="setup-tip">4 名舰长参赛 · 对手遵循金币与商店刷新规则</div>
+    <div id="setupTip" class="setup-tip">4 名舰长参赛 · 对手同样获得永久奇遇</div>
   </div>
   <div class="modal-buttons"><button class="btn gold" id="newBtn">✧ 开始全新航程</button><button class="btn" id="continueBtn" style="display:none">↪ 继续上次航程</button><button class="btn ghost" id="resumeBtn" style="display:none">返回当前棋局</button><button class="btn ghost" id="historyBtn">◷ 历史战绩</button></div><div class="menu-save-tools"><button class="btn tiny ghost" id="exportSaveBtn">导出当前存档</button><button class="btn tiny ghost" id="importSaveBtn">导入备份存档</button><input id="importSaveInput" type="file" accept=".json,application/json" style="display:none"></div>
 </div></div>
 <div class="overlay hidden" id="equipOverlay"><div class="modal equip-modal"><div class="modal-eyebrow">⬡ 装备替换</div><h2 id="equipHeading">选择替换的装备</h2><p class="subtitle" id="equipSubheading">每位船员最多穿戴两件。</p><div id="equipOptions" class="equip-options"></div><div class="modal-buttons"><button class="btn ghost" id="cancelEquipReplace">取消替换</button></div></div></div>
 <div class="overlay hidden" id="relicOverlay"><div class="modal"><div class="modal-eyebrow">✥ 星界回响 · 永久效果</div><h2>在裂隙中，选择命运</h2><p class="subtitle">古老的航路留下三种奇迹。只能带走其中一枚印记，它将在本局所有后续战斗中生效。</p><div id="relicOptions" class="relic-options"></div></div></div>
 <div class="overlay hidden" id="resultOverlay"><div class="modal" id="resultContent"></div></div>
-<div class="overlay hidden" id="historyOverlay"><div class="modal history-modal"><div class="modal-eyebrow">航行日志 · 本地战绩</div><h2>历史航程</h2><p class="subtitle">最多保存近 20 次完整结算，可从这里回顾以前的战绩。</p><div id="historyContent" class="history-scroll"></div><div class="modal-buttons"><button class="btn teal" id="closeHistoryBtn">返回主菜单</button></div></div></div>
+<div class="overlay hidden" id="historyOverlay"><div class="modal history-modal"><div class="modal-eyebrow">航行日志 · 本地战绩</div><h2>历史航程</h2><p class="subtitle">保存近 20 次完整结算，点击战绩可展开耐久变化和关键升级节点。</p><div id="historyContent" class="history-scroll"></div><div class="modal-buttons"><button class="btn teal" id="closeHistoryBtn">返回主菜单</button></div></div></div>
 <div class="overlay hidden" id="helpOverlay"><div class="modal"><button class="close-modal" id="closeHelp" title="关闭说明">×</button><div class="modal-eyebrow">舰长战术手册</div><h2>从招募到最后胜利</h2><div class="help-copy"><b>一、准备阶段：</b>在「星港招募」购买棋子，再点击候补甲板的棋子，点击棋盘下方三行上阵。上阵人数不能超过等级。直接点击其他棋子可切换选择；先选棋子再点空位可以移动，按住拖动棋子到另一枚棋子上可以交换位置。右键点击已上阵棋子可以撤回候补。<br><b>二、羁绊与站位：</b>全游戏有 6 种阵营和 8 种职业，每个阵营 7 名船员。阵营在 2／4／6 人生效，同阵营第 7 人不会继续加成；职业有独立门槛。每名船员具有一个阵营和一个职业。将多个不同名称、相同属性的船员部署到场上，可激活族群和职业共鸣。护卫适合前排，远程和治疗适合后排，刺客能扑向敌方后排。先遣在战斗前 6 秒更强，蓄势需要撑过 8 秒才发力。<br><b>三、升星与装备：</b>拥有三名同名同星船员会自动合成更高一星，最高三星。战斗会掉落遗物，先选中船员，再点工坊中的物品即可装备。选中棋子即可看到「出售 +金币」，点击装备图标后可直接选择另一名船员转移；「卸装备」把装备退回背包。<br><b>四、金币与经验：</b>每航段结算获得基础金币、连胜/连败奖励与每 10 金币 1 点的利息（至多 5 点）。刷新商店花费 2 金币，购买 4 点经验花费 4 金币。升级能增加上阵人数并解锁高费船员：3级只会出现1–2费棋子，4级开始出现3费，5级解锁4费，7级解锁5费。可在商店底部查看当前概率。<br><b>五、战斗与胜利：</b>点击「开始交战」，船员自动移动、普攻、积攒能量并施放专属技能。战败会损失舰队耐久；所有敌方舰长被淘汰后获胜。战斗时可使用双倍速或跳过演算。<br><b>六、键盘操作：</b>数字 1–5 购买对应商店船员，R 刷新，E 购买经验，空格开始战斗，Esc 取消选择。<br><b>七、进度记录：</b>准备阶段和战后自动保存到当前浏览器本地存储。顶部「⌂」安全返回主页，能继续游戏、查看历史或导出存档；新航程会确认覆盖并保存一份备份。无需安装或连接网络。</div><div class="modal-buttons"><button class="btn teal" id="helpOkay">明白，返回棋局</button><button class="btn ghost" id="helpStartTutorial">跟随新手教学操作</button></div></div></div>
 <script>
 'use strict';
@@ -778,16 +779,17 @@ function sfx(type){if(!audioPreference||!audioContext||audioContext.state!=='run
  else tone(68,now,.105,.035,'sine',effectsGain);
 }
 
+const VERSION_LABEL='V4.6.1';
 const SETUP_KEY='rift_fleet_setup_v45';
 const VALID_OPPONENTS=[1,3,5,7],VALID_DIFFICULTIES=['easy','normal','hard'];
 function readSetup(){const n=Number($('opponentCount').value);const d=$('difficultySelect').value;
  return {captainName:($('captainName').value||'').trim().replace(/[<>\u0000-\u001f]/g,'').slice(0,14)||'蓝舰长',opponents:VALID_OPPONENTS.includes(n)?n:3,difficulty:VALID_DIFFICULTIES.includes(d)?d:'normal'};}
-function updateSetupTip(){const {opponents,difficulty}=readSetup();$('setupTip').textContent=(opponents+1)+' 名舰长参赛 · '+({easy:'休闲',normal:'标准',hard:'挑战'})[difficulty]+'难度 · 所有电脑正常支付招募与刷新费用';}
+function updateSetupTip(){const {opponents,difficulty}=readSetup();$('setupTip').textContent=(opponents+1)+' 名舰长参赛 · '+({easy:'休闲',normal:'标准',hard:'挑战'})[difficulty]+'难度 · 所有电脑同样获得永久奇遇，并支付招募与刷新费用';}
 function saveSetup(settings){try{localStorage.setItem(SETUP_KEY,JSON.stringify(settings))}catch(e){}}
 function hydrateSetup(){try{const v=JSON.parse(localStorage.getItem(SETUP_KEY)||'null');if(!v)return;if(typeof v.captainName==='string')$('captainName').value=v.captainName.slice(0,14);if(VALID_OPPONENTS.includes(v.opponents))$('opponentCount').value=v.opponents;if(VALID_DIFFICULTIES.includes(v.difficulty))$('difficultySelect').value=v.difficulty}catch(e){}updateSetupTip()}
 function applySetup(settings){$('captainName').value=settings.captainName||'蓝舰长';$('opponentCount').value=VALID_OPPONENTS.includes(settings.opponents)?settings.opponents:3;$('difficultySelect').value=VALID_DIFFICULTIES.includes(settings.difficulty)?settings.difficulty:'normal';updateSetupTip()}
 
-function createCaptain(isPlayer=false,aiIndex=0){return {name:isPlayer?'我的浮光舰队':NAMES[aiIndex].name,icon:isPlayer?'✺':NAMES[aiIndex].icon,color:isPlayer?'#80e6d4':NAMES[aiIndex].color,aiIndex:isPlayer?-1:aiIndex,hp:80,maxHp:80,gold:10,level:3,xp:0,board:Array(21).fill(null),bench:Array(10).fill(null),streak:0,eliminated:false,focus:isPlayer?'':NAMES[aiIndex].faction,focusRole:isPlayer?'':NAMES[aiIndex].role,bag:[]};}
+function createCaptain(isPlayer=false,aiIndex=0){return {name:isPlayer?'我的浮光舰队':NAMES[aiIndex].name,icon:isPlayer?'✺':NAMES[aiIndex].icon,color:isPlayer?'#80e6d4':NAMES[aiIndex].color,aiIndex:isPlayer?-1:aiIndex,hp:80,maxHp:80,gold:10,level:3,xp:0,board:Array(21).fill(null),bench:Array(10).fill(null),streak:0,eliminated:false,focus:isPlayer?'':NAMES[aiIndex].faction,focusRole:isPlayer?'':NAMES[aiIndex].role,bag:[],relics:[]};}
 function makeUnit(key,star=1){return {uid:'u'+(++G.seq),key,star,items:[]}}
 function addBench(p,u){const i=p.bench.indexOf(null);if(i<0)return false;p.bench[i]=u;return true}
 function incomingUpgradePossible(p,key){return allUnits(p).filter(u=>u.key===key&&u.star===1).length>=2}
@@ -799,11 +801,11 @@ function receiveUnit(p,key){
  const survivor=duo[0],consumed=duo[1];
  for(const id of consumed.items){if(survivor.items.length<2)survivor.items.push(id);else (p===G.player?G.bag:p.bag).push(id)}
  removeWhere(p,consumed.uid);if(selectedUid===consumed.uid)selectedUid=survivor.uid;
- survivor.star=2;if(p===G.player){G.stats.upgrades++;notif('✦ '+UNITS[key].name+' 升至二星（候补席满员合成）');sfx('win')}
+ survivor.star=2;if(p===G.player){recordMilestone(UNITS[key].name+' 升至二星');G.stats.upgrades++;notif('✦ '+UNITS[key].name+' 升至二星（候补席满员合成）');sfx('win')}
  mergeTriples(p);return true;
 }
 function removeWhere(p,uid){for(const location of ['board','bench']){let i=p[location].findIndex(u=>u&&u.uid===uid);if(i>=0){p[location][i]=null;return true}}return false}
-function gainXp(p,amount){if(p.level>=9)return; p.xp+=amount;while(p.level<9&&p.xp>=LEVEL_XP[p.level]){p.xp-=LEVEL_XP[p.level];p.level++;if(p===G.player)notif('✧ 舰队升至 '+p.level+' 级！');}if(p.level>=9)p.xp=0}
+function gainXp(p,amount){if(p.level>=9)return; p.xp+=amount;while(p.level<9&&p.xp>=LEVEL_XP[p.level]){p.xp-=LEVEL_XP[p.level];p.level++;if(p===G.player){notif('✧ 舰队升至 '+p.level+' 级！');recordMilestone('舰队升至 '+p.level+' 级')}}if(p.level>=9)p.xp=0}
 function weightedTier(lvl){const weights=SHOP_WEIGHTS[clamp(lvl,2,9)],n=rand(0,100);let count=0;for(let t=1;t<=5;t++){count+=weights[t-1];if(n<count&&POOLS[t].length)return t}return 1}
 function randomUnitKey(level,p=G?.player){const tier=weightedTier(level),pool=POOLS[tier];if(!p)return choose(pool);const owned=allUnits(p);const candidates=pool.map(k=>({k,w:1+Math.min(2,owned.filter(u=>u.key===k&&u.star<3).length)*.20}));let roll=rand(0,candidates.reduce((n,x)=>n+x.w,0));for(const x of candidates){roll-=x.w;if(roll<=0)return x.k}return choose(pool)}
 function rollShop(force=false){if(!G||G.phase!=='prep')return;if(G.shopLocked&&!force)return;G.shop=Array.from({length:5},()=>randomUnitKey(G.player.level,G.player));}
@@ -872,16 +874,16 @@ function renderAdvice(){if(!G)return;const m=getAdvice(),p=G.player;
 }
 function hasRelic(id){return !!G&&G.relics.includes(id)}
 function mergeTriples(p){let changed=false,again=true,guard=0;while(again&&guard++<40){again=false;const units=allUnits(p);for(const unit of units){if(unit.star>=3)continue;const match=units.filter(u=>u.key===unit.key&&u.star===unit.star);if(match.length<3)continue;const priority=u=>p.board.includes(u)?0:1;match.sort((a,b)=>priority(a)-priority(b));const [survivor,...used]=match.slice(0,3);for(const dead of used){for(const item of dead.items){if(survivor.items.length<2)survivor.items.push(item);else (p===G.player?G.bag:p.bag).push(item)}removeWhere(p,dead.uid);if(selectedUid===dead.uid)selectedUid=survivor.uid}
- survivor.star++;if(p===G.player){notif('✦ '+UNITS[survivor.key].name+' 升至 '+survivor.star+' 星！');G.stats.upgrades++;sfx('win')}
+ survivor.star++;if(p===G.player){notif('✦ '+UNITS[survivor.key].name+' 升至 '+survivor.star+' 星！');G.stats.upgrades++;recordMilestone(UNITS[survivor.key].name+' 升至 '+survivor.star+' 星');sfx('win')}
  again=true;changed=true;break;}}
  return changed;}
 function storageSave(){try{if(G&&(G.phase==='prep'||G.phase==='result'||G.phase==='gameover')){const data={...G,battle:null};localStorage.setItem(SAVE_KEY,JSON.stringify(data));$('continueBtn').style.display=''}}catch(e){}}
-function storedGame(){try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(OLD_SAVE_KEY);const v=JSON.parse(raw);if(v&&[3,4].includes(v.version)&&v.player&&Array.isArray(v.enemies)&&Array.isArray(v.shop)){v.version=4;v.enemies.forEach(e=>{e.bag??=[]});v.player.bag??=[];v.enemies.forEach(e=>{e.shop??=[]});v.combatSummary??=null;v.roundHistory??=[];v.eliminationOrder??=[];v.finalSaved??=false;v.setup??={captainName:v.player.name||'蓝舰长',opponents:v.enemies.length,difficulty:'normal'};return v}}catch(e){}return null}
+function storedGame(){try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(OLD_SAVE_KEY);const v=JSON.parse(raw);if(v&&[3,4].includes(v.version)&&v.player&&Array.isArray(v.enemies)&&Array.isArray(v.shop)){if(!v.balanceVersion&&localStorage.getItem(SAVE_KEY)===raw&&!localStorage.getItem('riftFleet_v46_original_backup'))try{localStorage.setItem('riftFleet_v46_original_backup',raw)}catch(e){}v.balanceVersion='4.6.1';v.version=4;v.enemies.forEach(e=>{e.bag??=[];e.relics??=[]});v.player.bag??=[];v.enemies.forEach(e=>{e.shop??=[]});v.combatSummary??=null;v.roundHistory??=[];v.eliminationOrder??=[];v.finalSaved??=false;v.milestones??=[];v.stats??={};v.stats.peakStreak??=0;v.stats.lowestHp??=Math.min(80,...v.roundHistory.map(x=>Number.isFinite(x.hp)?x.hp:80));v.enemies.forEach(e=>{const due=Math.min(6,Math.floor(v.round/4));while(e.relics.length<due)grantAiRelic(e)});v.setup??={captainName:v.player.name||'蓝舰长',opponents:v.enemies.length,difficulty:'normal'};return v}}catch(e){}return null}
 function newGame(settingsOverride=null){
  chosenTraitKey=null;equipReturnToBag=false;
  const settings=settingsOverride&&VALID_OPPONENTS.includes(settingsOverride.opponents)?settingsOverride:readSetup();
  saveSetup(settings);
- G={version:4,setup:{...settings},roundHistory:[],eliminationOrder:[],finalSaved:false,seq:0,round:1,phase:'prep',player:createCaptain(true),enemies:Array.from({length:settings.opponents},(_,i)=>createCaptain(false,i)),shop:[],shopLocked:false,bag:[],relics:[],pendingChoices:[],nextEnemy:0,battle:null,combatSummary:null,log:['旗舰已抵达星港，准备招募与部署。'],stats:{wins:0,losses:0,upgrades:0,bought:0,kills:0,spent:0,items:0,rounds:1},speed:1};
+ G={version:4,balanceVersion:'4.6.1',setup:{...settings},roundHistory:[],eliminationOrder:[],finalSaved:false,milestones:[],seq:0,round:1,phase:'prep',player:createCaptain(true),enemies:Array.from({length:settings.opponents},(_,i)=>createCaptain(false,i)),shop:[],shopLocked:false,bag:[],relics:[],pendingChoices:[],nextEnemy:0,battle:null,combatSummary:null,log:['旗舰已抵达星港，准备招募与部署。'],stats:{wins:0,losses:0,upgrades:0,bought:0,kills:0,spent:0,items:0,rounds:1,lowestHp:80,peakStreak:0},speed:1};
  G.player.name=settings.captainName;
  const starterKeys=['a1','b3','c1','f2'],backKeys=['a2','b4','d1','e2'];
  G.player.board[3]=makeUnit(choose(starterKeys));G.player.board[17]=makeUnit(choose(backKeys));
@@ -918,12 +920,30 @@ function returnHome(){
  $('helpOverlay').classList.add('hidden');closePanel();$('menuOverlay').classList.remove('hidden');
  ensureMenuButtons();
 }
+function buildHpSparkline(records){
+ const values=[80,...(records||[]).map(x=>Number.isFinite(x.hp)?x.hp:80)];
+ if(values.length<2)return '<div class="codex-small">旧版存档没有耐久曲线记录。</div>';
+ const data=values.map((n,i)=>({x:5+i/(values.length-1)*90,y:100-Math.min(80,Math.max(0,n))/80*82-9}));
+ const points=data.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ');
+ const last=data[data.length-1];
+ return `<svg class="progress-sparkline" viewBox="0 0 100 105" role="img" aria-label="舰队耐久趋势，第1航段至第${values.length-1}航段，剩余${values.at(-1)}点耐久" preserveAspectRatio="none"><line x1="5" x2="95" y1="91" y2="91" stroke="#547987" stroke-width=".7"/><line x1="5" x2="95" y1="50" y2="50" stroke="#547987" stroke-width=".4" stroke-dasharray="2 2"/><polyline points="${points}" fill="none" stroke="#8de9d6" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${last.x}" cy="${last.y}" r="2.2" fill="#f8cf85"/><text x="6" y="8" font-size="5" fill="#c7e6e5">80 HP</text><text x="93" y="101" text-anchor="end" font-size="5" fill="#c7e6e5">航段 ${values.length-1}</text></svg>`;
+}
+function progressHighlights(records){const a=records||[];if(!a.length)return {lowest:80,peak:0,turn:'暂无'};
+ const lowest=Math.min(80,...a.map(x=>Number.isFinite(x.hp)?x.hp:80));let peak=0,cur=0,bestRound=null;
+ for(const x of a){cur=x.win?cur+1:0;if(cur>peak){peak=cur;bestRound=x.round}}
+ const index=a.findIndex(x=>x.hp===lowest);
+ const recovered=a.slice(index+1).find(x=>x.win);
+ return {lowest,peak,turn:recovered?`第${recovered.round}航段开始赢回优势`:'未记录明确反攻点',bestRound};
+}
+function renderGrowthRecord(records,milestones=[]){const info=progressHighlights(records);
+ return `<div class="progress-summary"><span>最低耐久 <b>${info.lowest} / 80</b></span><span>最长连续获胜 <b>${info.peak} 场</b></span><span>${esc(info.turn)}</span></div>${buildHpSparkline(records)}<div class="progress-milestones">${(milestones||[]).slice(-12).map(x=>`<span>第${x.round}航段 · ${esc(x.text)}</span>`).join('')||'<span>暂无关键升级记录（旧存档可能未追踪）</span>'}</div>`;
+}
 function saveFinishedHistory(){if(!G||G.finalSaved)return;G.finalSaved=true;
  const rank=G.player.hp>0&&G.enemies.every(e=>e.eliminated)?1:1+G.enemies.filter(e=>e.hp>0).length;
- const item={id:String(Date.now())+'-'+Math.floor(Math.random()*99999),date:new Date().toISOString(),name:G.player.name,opponents:G.enemies.length,difficulty:G.setup?.difficulty||'normal',rank,round:G.round,wins:G.stats.wins,losses:G.stats.losses,level:G.player.level,gold:G.player.gold,roster:G.player.board.filter(Boolean).map(u=>({name:UNITS[u.key].name,star:u.star,faction:UNITS[u.key].faction,role:UNITS[u.key].role,items:u.items.slice()})),roundHistory:(G.roundHistory||[]).slice(-30)};
+ const item={id:String(Date.now())+'-'+Math.floor(Math.random()*99999),date:new Date().toISOString(),name:G.player.name,opponents:G.enemies.length,difficulty:G.setup?.difficulty||'normal',rank,round:G.round,wins:G.stats.wins,losses:G.stats.losses,level:G.player.level,gold:G.player.gold,roster:G.player.board.filter(Boolean).map(u=>({name:UNITS[u.key].name,star:u.star,faction:UNITS[u.key].faction,role:UNITS[u.key].role,items:u.items.slice()})),roundHistory:(G.roundHistory||[]).slice(-100),milestones:(G.milestones||[]).slice(-100),lowestHp:progressHighlights(G.roundHistory).lowest,peakStreak:progressHighlights(G.roundHistory).peak};
  const data=[item,...latestHistory()].slice(0,20);try{localStorage.setItem(HISTORY_KEY,JSON.stringify(data))}catch(e){}
 }
-function renderHistory(){const records=latestHistory();$('historyContent').innerHTML=records.length?records.map(item=>`<div class="history-card"><strong>${esc(item.name)} · 第 ${item.rank}/${item.opponents+1} 名</strong><small>${new Date(item.date).toLocaleString('zh-CN')} · ${item.round} 航段 · ${item.wins}胜 ${item.losses}负 · ${({easy:'休闲',normal:'标准',hard:'挑战'})[item.difficulty]||'标准'}难度 · 等级 ${item.level}</small><div class="history-roster">最终阵容：${item.roster.map(x=>esc(x.name)+' '+stars(x.star)).join('、')||'未上阵'}</div></div>`).join(''):'<div class="muted" style="padding:25px 10px">尚无完整对局战绩，结束第一局后会记录在这里。</div>'}
+function renderHistory(){const records=latestHistory();$('historyContent').innerHTML=records.length?records.map(item=>`<div class="history-card"><strong>${esc(item.name)} · 第 ${item.rank}/${item.opponents+1} 名</strong><small>${new Date(item.date).toLocaleString('zh-CN')} · ${item.round} 航段 · ${item.wins}胜 ${item.losses}负 · ${({easy:'休闲',normal:'标准',hard:'挑战'})[item.difficulty]||'标准'}难度 · 等级 ${item.level}</small><div class="history-roster">最终阵容：${(item.roster||[]).map(x=>esc(x.name)+' '+stars(x.star)).join('、')||'未上阵'}</div><details class="history-details"><summary>查看耐久走势与成长节点</summary>${renderGrowthRecord(item.roundHistory||[],item.milestones||[])}</details></div>`).join(''):'<div class="muted" style="padding:25px 10px">尚无完整对局战绩，结束第一局后会记录在这里。</div>'}
 function exportCurrentSave(){const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(BACKUP_KEY);if(!raw){alert('目前没有可导出的存档。');return}const blob=new Blob([raw],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='浮光纪_V4.6_存档_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 async function importCurrentSave(file){if(!file)return;try{
  const raw=await file.text(),v=JSON.parse(raw);
@@ -933,7 +953,34 @@ async function importCurrentSave(file){if(!file)return;try{
  }catch(e){alert('导入失败：'+e.message)}finally{$('importSaveInput').value=''}}
 function loadGame(){chosenTraitKey=null;equipReturnToBag=false;const data=storedGame();if(!data){notif('找不到有效的本地存档');return}G=data;G.setup??={captainName:G.player.name||'蓝舰长',opponents:G.enemies.length,difficulty:'normal'};applySetup(G.setup);if(G.phase==='battle')G.phase='prep';G.battle=null;selectedUid=null;selectedItem=null;selectedTransfer=null;pendingTransfer=null;G.speed=1;fx={particles:[],floaters:[],projectiles:[],rings:[]};$('menuOverlay').classList.add('hidden');$('resultOverlay').classList.add('hidden');if(G.phase==='result')showResult();if(G.phase==='gameover')showEnd();if(G.phase==='prep'&&G.pendingChoices?.length)showRelics();renderAll();startMusic();if(Number.isInteger(G.tutorialStep))renderCoach();notif('↪ 已恢复上次航程')}
 function chooseNextEnemy(){const alive=G.enemies.filter(e=>!e.eliminated&&e.hp>0);if(!alive.length){G.nextEnemy=-1;return}const i=(G.round-1)%alive.length;G.nextEnemy=G.enemies.indexOf(alive[i]);}
-function gainIncome(p,won){let base=5,interest=Math.min(5,Math.floor(p.gold/10)),streak=0;const abs=Math.abs(p.streak);if(abs>=2)streak=abs>=5?3:abs>=3?2:1;const extra=p===G.player?(hasRelic('income')?2:0)+(won&&hasRelic('golden')?3:0):0;const amt=base+interest+streak+extra;p.gold+=amt;return {base,interest,streak,extra,total:amt};}
+// AI receives the same once-per-four-round relic choices as the player.
+// Old saves receive catch-up choices to prevent a v4.6 AI having an artificial deficit.
+function aiRelicScore(p,id){const role=p.focusRole||'',faction=p.focus||'';
+ const board=p.board.filter(Boolean),roles=board.map(u=>UNITS[u.key]?.role||role);
+ const has=(...names)=>roles.some(x=>names.includes(x));let n=1;
+ if(id==='fortune')n=p.level<8?6:1;
+ if(id==='income')n=p.gold<35?6:2;
+ if(id==='golden')n=4;
+ if(id==='solar')n=6+(has('ranger','assassin','fighter')?4:0);
+ if(id==='heart')n=6+(has('guard','fighter')?3:0);
+ if(id==='armor')n=6+(has('guard')?4:0);
+ if(id==='spark')n=6+(has('mage','charge')?6:0);
+ if(id==='speed')n=6+(has('ranger','vanguard')?5:0);
+ if(id==='well')n=5+(faction==='grove'?5:0);
+ if(id==='fury')n=5+(has('assassin','ranger')?5:0);
+ if(id==='barrier')n=5+(faction==='tide'?4:0);
+ if(id==='life')n=5+(has('healer')?6:0);
+ return n;
+}
+function grantAiRelic(p){p.relics??=[];if(p.relics.length>=6)return null;
+ const available=RELICS.filter(r=>!p.relics.includes(r.id));if(!available.length)return null;
+ const options=shuffle([...available]).slice(0,3);
+ options.sort((a,b)=>aiRelicScore(p,b.id)-aiRelicScore(p,a.id));
+ const chosen=options[0].id;p.relics.push(chosen);return chosen;
+}
+function ensureAiRelics(p){p.relics??=[];const due=Math.min(6,Math.floor(G.round/4));while(p.relics.length<due)grantAiRelic(p);}
+function recordMilestone(message){if(!G||G.player.hp<=0)return;G.milestones??=[];const entry={round:G.round,text:String(message)};if(!G.milestones.some(x=>x.round===entry.round&&x.text===entry.text))G.milestones.push(entry);if(G.milestones.length>100)G.milestones.shift();}
+function gainIncome(p,won){let base=5,interest=Math.min(5,Math.floor(p.gold/10)),streak=0;const abs=Math.abs(p.streak);if(abs>=2)streak=abs>=5?3:abs>=3?2:1;const blessings=p===G.player?G.relics:(p.relics||[]);const extra=(blessings.includes('income')?2:0)+(won&&blessings.includes('golden')?3:0);const amt=base+interest+streak+extra;p.gold+=amt;return {base,interest,streak,extra,total:amt};}
 // 电脑招募、升星与真实棋盘布局：与玩家使用相同的角色与属性系统。
 // V4.6: 阵容整体评估、羁绊协同及可反制的站位。所有电脑仍正常支付金币。
 function aiSquadValue(units,p,scout=false){
@@ -1001,12 +1048,12 @@ function aiRecruit(p){
   if(own().length<p.level)score+=18;
   if(own().length>p.level+6&&!copies&&t.cost<=2)score-=16;
   if(difficulty==='easy')score=score*.68+rand(-12,15);
-  if(difficulty==='hard')score+=copies*7+(opponentWeak?2:0);
+  if(difficulty==='hard')score+=copies*14+(copies>=2?16:0)+(opponentWeak?2:0);
   return score;
  };
- let reserve=G.round<3?0:difficulty==='easy'?Math.min(12,G.round*2):difficulty==='hard'?Math.min(12,3+G.round*.6):Math.min(16,G.round*1.2);
+ let reserve=G.round<3?0:difficulty==='easy'?Math.min(12,G.round*2):difficulty==='hard'?Math.min(12,4+G.round*.35):Math.min(16,G.round*1.2);if(difficulty==='hard'&&aiUpgradeCandidates(p).pairs)reserve=Math.min(reserve,4);const levelFloor=clamp(3+Math.floor((G.round-1)/4),3,9);if(difficulty==='hard'&&p.level<levelFloor)reserve=Math.max(reserve,10+4*(levelFloor-p.level));
  if(p.hp<32)reserve=0;
- const rerollLimit=difficulty==='easy'?1:difficulty==='hard'?5:3;
+ const rerollLimit=difficulty==='easy'?1:difficulty==='hard'?(p.level<levelFloor?1:aiUpgradeCandidates(p).pairs?8:4):3;
  let rerolls=0,purchases=0;
  while(purchases<(difficulty==='hard'?10:7)&&allUnits(p).length<31){
   const choices=p.shop.map((key,i)=>key?{key,i,score:evaluations(key)}:null).filter(Boolean).filter(x=>UNITS[x.key].cost<=p.gold&&(benchCount(p)<10||incomingUpgradePossible(p,x.key)));
@@ -1064,17 +1111,29 @@ function growAIEquipment(p,first=false){
  const squad=p.board.filter(Boolean).sort((a,b)=>(b.star-a.star)*6+UNITS[b.key].cost-UNITS[a.key].cost);
  for(const u of squad){while(u.items.length<2&&p.bag.length){const t=UNITS[u.key];let best=0;for(let i=1;i<p.bag.length;i++)if(aiItemValue(t,p.bag[i])>aiItemValue(t,p.bag[best]))best=i;u.items.push(p.bag.splice(best,1)[0])}}
 }
+function aiUpgradeCandidates(p){const units=allUnits(p),groups=new Map();for(const u of units){if(u.star>=3)continue;const k=u.key+':'+u.star;groups.set(k,(groups.get(k)||0)+1)};
+ const pairs=[...groups.values()].filter(n=>n>=2).length;
+ const twoStars=units.filter(u=>u.star>=2).length;
+ return {pairs,twoStars,shortage:Math.max(0,Math.min(p.level,9)-unitCount(p))};
+}
 function prepareAI(p,first=false){
- const difficulty=G.setup?.difficulty||'normal';
+ const difficulty=G.setup?.difficulty||'normal';p.shop??=[];p.relics??=[];
  if(!first){
-  gainXp(p,2);
-  const pace=difficulty==='easy'?4:difficulty==='hard'?2:3;
+  gainXp(p,2);ensureAiRelics(p);
+  const core=aiUpgradeCandidates(p);
+  const pace=difficulty==='easy'?4:difficulty==='hard'?3:3;
   const target=clamp(3+Math.floor((G.round-1)/pace),3,9);
-  const minimum=difficulty==='easy'?11:difficulty==='hard'?2:6;
+  // Challenging AI builds a real core before over-investing in expensive extra population.
+  const coreGoal=G.round<7?0:G.round<11?1:G.round<15?2:3;
+  const levelFloor=clamp(3+Math.floor((G.round-1)/4),3,9);
+  const focusOnStars=difficulty==='hard'&&core.twoStars<coreGoal&&p.level>=levelFloor;
+  let reserve=difficulty==='easy'?12:difficulty==='hard'?8:11;
+  if(p.hp<32)reserve=0;
   let count=0;
-  while(p.level<target&&p.gold>=minimum+4&&count++<24){p.gold-=4;gainXp(p,4)}
-  // When threatened, invest remaining coins in the next level rather than hoarding them.
-  if(difficulty==='hard'&&p.level<9&&p.hp<38&&p.gold>=12){let extra=0;while(p.level<9&&p.gold>=8&&extra++<3){p.gold-=4;gainXp(p,4)}}
+  while(p.level<target&&(!focusOnStars||p.level<levelFloor)&&p.gold>=reserve+4&&count++<20){
+    p.gold-=4;gainXp(p,4+(p.relics.includes('fortune')?2:0));
+  }
+  if(difficulty==='hard'&&p.hp<22&&p.level<Math.min(target,7)&&p.gold>=4){p.gold-=4;gainXp(p,4+(p.relics.includes('fortune')?2:0))}
   p.shop=Array.from({length:5},()=>randomUnitKey(p.level,p));
  }
  aiRecruit(p);aiArrange(p);growAIEquipment(p,first);
@@ -1153,7 +1212,7 @@ function nextRound(){if(!G||G.phase!=='result')return;G.round++;G.stats.rounds=G
  if(G.round%4===0&&G.relics.length<6){let choices=shuffle(RELICS.filter(r=>!G.relics.includes(r.id))).slice(0,3);if(choices.length){G.pendingChoices=choices.map(c=>c.id);showRelics()}}
  renderAll();storageSave();}
 function showRelics(){if(!G||!G.pendingChoices?.length)return;const wrap=$('relicOptions');wrap.innerHTML=G.pendingChoices.map(id=>{const r=RELIC_BY_ID[id];return `<button class="relic-opt" data-relic="${id}"><span class="relic-glyph">${r.icon}</span><b>${r.name}</b><small>${r.desc}</small></button>`}).join('');$('relicOverlay').classList.remove('hidden')}
-function takeRelic(id){if(!G||G.phase!=='prep'||!G.pendingChoices.includes(id))return;G.relics.push(id);G.pendingChoices=[];$('relicOverlay').classList.add('hidden');renderAll();storageSave();notif('✥ 已获得奇遇：'+RELIC_BY_ID[id].name);sfx('win')}
+function takeRelic(id){if(!G||G.phase!=='prep'||!G.pendingChoices.includes(id))return;G.relics.push(id);recordMilestone('获得奇遇：'+RELIC_BY_ID[id].name);G.pendingChoices=[];$('relicOverlay').classList.add('hidden');renderAll();storageSave();notif('✥ 已获得奇遇：'+RELIC_BY_ID[id].name);sfx('win')}
 function renderBattleReport(list){if(!list?.length)return '';
  const sorted=[...list].sort((a,b)=>b.damage-a.damage),maxD=Math.max(1,...list.map(x=>x.damage)),maxH=Math.max(1,...list.map(x=>x.healing)),maxT=Math.max(1,...list.map(x=>x.tanked));
  const topD=sorted[0],topHeal=[...list].sort((a,b)=>b.healing-a.healing)[0],topTank=[...list].sort((a,b)=>b.tanked-a.tanked)[0];
@@ -1173,10 +1232,10 @@ function showEnd(){if(!G)return;saveFinishedHistory();
  const finalCrew=G.player.board.filter(Boolean).map(u=>{const t=UNITS[u.key];return `<div class="final-unit"><strong>${esc(t.name)} ${stars(u.star)}</strong><small>${esc(FACTIONS[t.faction].name)} · ${esc(CLASSES[t.role].name)} · ${t.cost}费</small><small>${u.items.map(id=>esc(ITEM_BY_ID[id]?.name||id)).join('、')||'无装备'}</small></div>`}).join('');
  const traits=[...Object.entries(buffs.f).filter(([k,v])=>v>0).map(([k,v])=>FACTIONS[k].name+' '+FACTIONS[k].tiers[v-1]+'人'),...Object.entries(buffs.r).filter(([k,v])=>v>0).map(([k,v])=>CLASSES[k].name+' '+CLASSES[k].tiers[v-1]+'人')];
  $('resultContent').innerHTML=`<div class="modal-eyebrow">✺ 航路终章 · ${esc(setup.captainName||G.player.name)}的战绩</div><h2 style="color:${won?'#f6d99f':'#a9bdd4'}">${won?'🏆 航程冠军':'航程结束 · 第 '+rank+' 名'}</h2><p class="subtitle">${won?'你击败了全部电脑舰长。':'本次比赛已结束。'} ${labels[setup.difficulty]||'标准'}难度 · 共 ${G.enemies.length+1} 位舰长</p><div class="final-dashboard">
- <div class="final-overview"><div><b>#${rank}/${G.enemies.length+1}</b><small>最终排名</small></div><div><b>${G.round}</b><small>结束航段</small></div><div><b>${G.stats.wins}胜 ${G.stats.losses}负</b><small>个人战绩</small></div></div>
+ <div class="final-overview"><div><b>#${rank}/${G.enemies.length+1}</b><small>最终排名</small></div><div><b>${G.round}</b><small>结束航段</small></div><div><b>${G.stats.wins}胜 ${G.stats.losses}负</b><small>个人战绩</small></div></div><div class="progress-summary"><span>最低耐久 <b>${progressHighlights(G.roundHistory).lowest} / 80</b></span><span>最长连胜 <b>${progressHighlights(G.roundHistory).peak} 场</b></span><span>${esc(progressHighlights(G.roundHistory).turn)}</span></div>
  <div class="final-section"><h3>完整最终排名</h3><div class="final-ranking">${standings.map(({p},i)=>`<div class="final-rank ${p===G.player?'you':''} ${p.hp<=0?'eliminated':''}"><span>#${i+1}</span><b>${esc(p.name)}${p===G.player?'（你）':''}</b><small>${p.level}级 · ${p.hp>0?'剩余耐久 '+p.hp:'已淘汰'}</small><small>${p.board.filter(Boolean).length}枚上阵</small></div>`).join('')}</div></div>
  <div class="final-section"><h3>最终阵容 · ${G.player.board.filter(Boolean).length}枚船员</h3><div class="final-roster">${finalCrew||'<span class="codex-small">没有上阵船员</span>'}</div><p class="codex-small">激活羁绊：${esc(traits.join(' · ')||'无')}。本局升星 ${G.stats.upgrades} 次、招募 ${G.stats.bought} 枚、奇遇 ${G.relics.length} 枚。</p></div>
- <div class="final-section"><h3>关键航段回顾</h3><div class="final-timeline">${(G.roundHistory||[]).slice(-8).map(x=>`<div><b>第${x.round}航段 · ${x.win?'胜':'负'}</b><br>${esc(x.enemy)} · ${x.win?'+':'-'}${x.damage}耐久<br>结束生命 ${x.hp} · 等级${x.level}</div>`).join('')||'<span class="codex-small">旧版存档没有历史航段记录</span>'}</div></div>
+ <div class="final-section"><h3>整局耐久变化与成长节点</h3>${renderGrowthRecord(G.roundHistory||[],G.milestones||[])}</div><div class="final-section"><h3>关键航段回顾</h3><div class="final-timeline">${(G.roundHistory||[]).slice(-8).map(x=>`<div><b>第${x.round}航段 · ${x.win?'胜':'负'}</b><br>${esc(x.enemy)} · ${x.win?'+':'-'}${x.damage}耐久<br>结束生命 ${x.hp} · 等级${x.level}</div>`).join('')||'<span class="codex-small">旧版存档没有历史航段记录</span>'}</div></div>
  ${renderMechanicalSummary(s.machineReport)}${renderBattleReport(s.report||[])}
  </div><div class="modal-buttons"><button id="restartBtn" class="btn gold">✧ 新一局</button><button id="endHomeBtn" class="btn teal">⌂ 返回主页</button><button id="closeEndBtn" class="btn ghost">回看最终棋局</button></div>`;
  $('resultOverlay').classList.remove('hidden');try{localStorage.removeItem(SAVE_KEY)}catch(e){}
@@ -1186,7 +1245,7 @@ function renderAll(){if(!G)return;const p=G.player,battle=G.phase==='battle',pre
  $('headHp').textContent=p.hp+' / '+p.maxHp;$('headGold').textContent=p.gold;$('headLevel').textContent=p.level+' 级';const rank=[p,...G.enemies].sort((a,b)=>b.hp-a.hp).indexOf(p)+1;$('headRank').textContent=rank+' / '+(G.enemies.length+1);$('bagBadge').textContent=G.bag.length;$('bagBadge').classList.toggle('hidden',!G.bag.length);
  $('roundTitle').textContent='第 '+G.round+' 航段 · '+(prep?'战术准备':battle?'交火中':G.phase==='result'?'战斗结束':'航路终章');
  const foe=G.enemies[G.nextEnemy];
- $('arenaFoeName').textContent=foe?foe.name:'航路已清空';$('arenaFoeStats').textContent=foe?'等级 '+foe.level+' · 耐久 '+foe.hp+' / 80':'恭喜完成全部对决';
+ $('arenaFoeName').textContent=foe?foe.name:'航路已清空';$('arenaFoeStats').textContent=foe?'等级 '+foe.level+' · 耐久 '+foe.hp+' / 80 · 奇遇 '+(foe.relics||[]).length+'枚':'恭喜完成全部对决';if(foe)$('arenaFoeStats').title=(foe.relics||[]).map(id=>RELIC_BY_ID[id]?.name||id).join('、')||'对手尚无永久奇遇';
  $('roundDesc').textContent=foe?(prep?'下一位对手：':'交战对手：')+foe.name+' · 等级 '+foe.level+' · 耐久 '+foe.hp:'所有对手已被击败';
  $('fightBtn').style.display=prep?'':'none';if(!battle)$('combatTactics').classList.add('hidden');$('fightBtn').disabled=!!G.pendingChoices?.length;
  $('speedBtn').style.display=battle?'':'none';$('skipBtn').style.display=battle?'':'none';$('speedBtn').textContent=G.speed===1?'▶ 1 倍速':'▶▶ 2 倍速';
@@ -1210,7 +1269,7 @@ function renderAll(){if(!G)return;const p=G.player,battle=G.phase==='battle',pre
  $('synergyBrief').classList.add('hidden');paintTraitRibbon(info);paintUnitPeek(chosen);
  renderRanks();renderBench();renderShop();renderTraits();renderInspector();renderInventory();renderRelicList();renderLog();}
 function renderRanks(){const captains=[G.player,...G.enemies].sort((a,b)=>b.hp-a.hp);$('rankList').innerHTML=captains.map((p,i)=>{const you=p===G.player,next=!you&&G.enemies.indexOf(p)===G.nextEnemy;
- return `<div class="rank-card ${you?'you':''} ${next?'next':''} ${p.eliminated?'dead':''}"><div class="rank-top"><div class="rank-avatar" style="color:${p.color};background:${p.color}1b">${p.icon}</div><div style="min-width:0;flex:1"><div class="rank-name">${i+1}. ${esc(p.name)}</div><div class="rank-sub">Lv.${p.level} · ${p.hp>0?p.hp+' / 80 耐久':'已淘汰'}</div></div>${next?'<span class="rank-badge">即将交战</span>':''}</div><div class="rank-life"><i style="width:${clamp(p.hp/80*100,0,100)}%"></i></div></div>`}).join('')}
+ return `<div class="rank-card ${you?'you':''} ${next?'next':''} ${p.eliminated?'dead':''}"><div class="rank-top"><div class="rank-avatar" style="color:${p.color};background:${p.color}1b">${p.icon}</div><div style="min-width:0;flex:1"><div class="rank-name">${i+1}. ${esc(p.name)}</div><div class="rank-sub">Lv.${p.level} · ${p.hp>0?p.hp+' / 80 耐久':'已淘汰'} · 奇遇 ${(you?G.relics:(p.relics||[])).length}枚</div><div class="rank-sub" title="${(you?G.relics:(p.relics||[])).map(id=>RELIC_BY_ID[id]?.name||id).join('、')||'尚无永久奇遇'}">${(you?G.relics:(p.relics||[])).map(id=>RELIC_BY_ID[id]?.icon||'✧').join(' ')||'尚无奇遇'}</div></div>${next?'<span class="rank-badge">即将交战</span>':''}</div><div class="rank-life"><i style="width:${clamp(p.hp/80*100,0,100)}%"></i></div></div>`}).join('')}
 function renderBench(){$('benchSlots').innerHTML=G.player.bench.map((u,i)=>{if(!u)return `<button class="bench-slot" data-bench="${i}" title="空候补位置 ${i+1}"><span class="idx">${i+1}</span><span>＋</span></button>`;
  const t=UNITS[u.key],f=FACTIONS[t.faction];return `<button class="bench-slot occupied rarity${t.cost} ${selectedUid===u.uid?'picked':''}" data-bench="${i}" draggable="true" title="${t.name} · ${stars(u.star)} · ${f.name} / ${CLASSES[t.role].name}"><span class="rarity-line" style="background:${f.color}"></span><span class="idx">${i+1}</span><span class="star-mini">${stars(u.star)}</span><span class="small-icon">${crewArt(t)}</span><span class="bench-name">${t.name}</span>${u.items.length?`<span class="bench-equip">${u.items.map(id=>ITEM_BY_ID[id].icon).join(' ')}</span>`:''}</button>`}).join('')}
 function renderShop(){const recommendations=G.shop.map((key,i)=>({i,score:key?shopJudgement(key).score:-1})).sort((a,b)=>b.score-a.score);const best=recommendations[0]?.score>=5?recommendations[0].i:-1; $('shopGrid').innerHTML=G.shop.map((key,i)=>{if(!key)return `<div class="shop-entry"><div class="shop-card empty"><span style="font-size:23px">◇</span><span style="font-size:10px;margin-top:8px">已招募</span></div></div>`;const t=UNITS[key],f=FACTIONS[t.faction],can=G.phase==='prep'&&G.player.gold>=t.cost&&(benchCount(G.player)<10||incomingUpgradePossible(G.player,key));
@@ -1262,7 +1321,7 @@ function renderInventory(){
 }
 
 function renderRelicList(){$('relicCount').textContent=G.relics.length+' 枚印记';$('relicList').innerHTML=G.relics.length?G.relics.map(id=>{const r=RELIC_BY_ID[id];return `<div class="relic-mini"><span class="sig" style="color:var(--gold)">${r.icon}</span><div><b>${r.name}</b><small>${r.desc}</small></div></div>`}).join(''):'<div class="muted">第 4、8、12… 航段可从三个永久奇遇中选择一个。</div>'}
-function logEvent(msg){if(!G)return;G.log.push(msg);if(G.log.length>65)G.log.shift();if(performance.now()-lastLogTime>250){renderLog();lastLogTime=performance.now()}}
+function logEvent(msg){if(!G||G.battle?.headless)return;G.log.push(msg);if(G.log.length>65)G.log.shift();if(performance.now()-lastLogTime>250){renderLog();lastLogTime=performance.now()}}
 function renderLog(){if(!G)return;const last=G.log[G.log.length-1],showNotice=G.lastNotice&&Date.now()-G.lastNotice<3100;const advice=G.phase==='prep'?getAdvice().lead:'';
  $('battleLogText').innerHTML=G.phase==='prep'&&!showNotice?'<b>⚑ 舰长建议</b> · '+esc(advice):'<b>航行日志</b> · '+esc(last||'星海平静，等待指令。');
  $('adviceBtn').style.display=G.phase==='prep'?'':'none';
@@ -1270,7 +1329,7 @@ function renderLog(){if(!G)return;const last=G.log[G.log.length-1],showNotice=G.
 }
 // ─── 真实时间自动战斗模拟器：移动、射程、普攻、投射物、技能、护盾、状态、召唤 ───
 function distance(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
-function createFighter(u,team,c,r,buffs){
+function createFighter(u,team,c,r,buffs,captain=null){
  const t=UNITS[u.key],multi=[0,1,1.76,3.10][u.star];let h=t.hp*multi,a=t.atk*multi,armor=t.armor,mr=t.mr,speed=t.aspd,spell=0,crit=.06,critDmg=1.5,shield=0,mana=0,healMult=1,regen=0,regenPct=0,lifesteal=0;
  const rlv=buffs.r[t.role]||0,flv=buffs.f[t.faction]||0;
  if(buffs.r.guard===2)armor+=6;
@@ -1279,7 +1338,7 @@ function createFighter(u,team,c,r,buffs){
  if(buffs.r.mage)spell+=buffs.r.mage===2?.25:.15;
  if(t.faction==='tide'&&flv)shield+=90;
  for(const id of u.items){const s=ITEM_BY_ID[id]?.stat||{};if(s.hp)h+=s.hp;if(s.atkPct)a*=1+s.atkPct;if(s.armor)armor+=s.armor;if(s.mr)mr+=s.mr;if(s.aspd)speed*=1+s.aspd;if(s.crit)crit+=s.crit;if(s.critDmg)critDmg+=s.critDmg;if(s.spell)spell+=s.spell;if(s.healing)healMult+=s.healing;if(s.regen)regen+=s.regen;if(s.mana)mana+=s.mana}
- if(team===0&&G){for(const id of G.relics){const s=RELIC_BY_ID[id]?.stat||{};if(s.atkPct)a*=1+s.atkPct;if(s.hpPct)h*=1+s.hpPct;if(s.armor)armor+=s.armor;if(s.mr)mr+=s.mr;if(s.aspd)speed*=1+s.aspd;if(s.spell)spell+=s.spell;if(s.healing)healMult+=s.healing;if(s.crit)crit+=s.crit;if(s.regenPct)regenPct+=s.regenPct;if(s.shield)shield+=s.shield}}
+ {const relicIds=captain?(captain===G?.player?G.relics:(captain.relics||[])):(team===0&&G?G.relics:[]);for(const id of relicIds){const s=RELIC_BY_ID[id]?.stat||{};if(s.atkPct)a*=1+s.atkPct;if(s.hpPct)h*=1+s.hpPct;if(s.armor)armor+=s.armor;if(s.mr)mr+=s.mr;if(s.aspd)speed*=1+s.aspd;if(s.spell)spell+=s.spell;if(s.healing)healMult+=s.healing;if(s.crit)crit+=s.crit;if(s.regenPct)regenPct+=s.regenPct;if(s.shield)shield+=s.shield}}
  h=Math.round(h);return {id:u.uid,team,u,t,metrics:{damage:0,healing:0,tanked:0,shieldUsed:0},x:c+.5,y:r+.5,hp:h,maxHp:h,atk:Math.round(a),armor,mr,shield,speed,baseSpeed:speed,range:t.range,move:t.move,spell,crit:clamp(crit,0,.85),critDmg,regen,regenPct,lifesteal,healMult,mana:Math.min(100,mana),atkClock:rand(.05,.36),stunUntil:0,silenceUntil:0,slowUntil:0,hasteUntil:0,attackFlash:0,hitFlash:0,jumped:false,fromSummon:false,summonCount:0,effects:[],castTimes:0,kills:0,armorShredUntil:0,armorShred:0,burnStacks:0,burnUntil:0,seed:[],guardReady:0,stealthUntil:0,healCutUntil:0,starSealUntil:0,rangerLast:null,rangerStack:0,rangerShots:0,vanguardUntil:0,chargeStage:0,mechBoostUntil:0,shadeBuffUntil:0};
 }
 const ZERO_BUFFS={f:{},r:{}};
@@ -1292,8 +1351,8 @@ function statRows(f){return {生命:Math.round(f.maxHp),攻击:Math.round(f.atk)
 function startBattle(){selectedTransfer=null;pendingTransfer=null;if(!G||G.phase!=='prep'||G.pendingChoices?.length)return;const foe=G.enemies[G.nextEnemy];if(!foe){notif('没有可交战的对手');return}
  if(G.tutorialStep===7)finishTutorial();closePanel();G.phase='battle';G.speed=1;G.log=[];const myBuff=getBuffs(G.player),foeBuff=getBuffs(foe),fighters=[];
  G.player.board.forEach((u,i)=>{if(u)fighters.push(createFighter(u,0,i%7,3+Math.floor(i/7),myBuff))});
- foe.board.forEach((u,i)=>{if(u)fighters.push(createFighter(u,1,i%7,Math.floor(i/7),foeBuff))});
- fx={particles:[],floaters:[],projectiles:[],rings:[]};G.battle={fighters,t:0,enemy:foe,foeIndex:G.nextEnemy,buffs:[myBuff,foeBuff],period:0,grovePeriod:0,groveBloom:0,ended:false,logCooldown:0,teams:[0,1].map(()=>({casts:0,starCasts:0,tideMeter:0,tideBursts:0,shadeMark:null,shadePursuits:0,fireChains:0,fireEnergy:0,mechOverdrive:false}))};
+ foe.board.forEach((u,i)=>{if(u)fighters.push(createFighter(u,1,i%7,Math.floor(i/7),foeBuff,foe))});
+ const prepSnapshot={hp:G.player.hp,gold:G.player.gold,level:G.player.level,star2:G.player.board.filter(u=>u?.star===2).length,star3:G.player.board.filter(u=>u?.star===3).length,traits:getBuffs(G.player)};fx={particles:[],floaters:[],projectiles:[],rings:[]};G.battle={fighters,prepSnapshot,t:0,enemy:foe,foeIndex:G.nextEnemy,buffs:[myBuff,foeBuff],period:0,grovePeriod:0,groveBloom:0,ended:false,logCooldown:0,teams:[0,1].map(()=>({casts:0,starCasts:0,tideMeter:0,tideBursts:0,shadeMark:null,shadePursuits:0,fireChains:0,fireEnergy:0,mechOverdrive:false}))};
  initializeBattleTraits();
  selectedUid=null;selectedItem=null;logEvent('⚔ 开始迎战 '+foe.name+'！双方船员将自动出击。');renderAll();sfx('click');storageSave();
  if(!fighters.some(f=>f.team===0)||!fighters.some(f=>f.team===1)){decideBattle();return}
@@ -1491,7 +1550,7 @@ function updateBattle(dt){if(!G||G.phase!=='battle'||!G.battle||G.battle.ended)r
  for(let team=0;team<2;team++)if(b.buffs[team].f.gear===3&&!b.teams[team].mechOverdrive&&b.t>=9){b.teams[team].mechOverdrive=true;const owner=teamFighters(team).find(x=>x.t.faction==='gear');if(owner){for(const d of teamFighters(team).filter(x=>x.fromSummon))d.mechBoostUntil=b.t+8;for(const e of opposing(team))hurt(e,25+owner.atk*.57,'magic',owner);emitRing(3.5,3,'#83e5d5',3.8);logEvent('⚙ 机械超载！')}}
  updateFX(dt);
  const player=b.fighters.some(f=>f.team===0&&f.hp>0&&!f.fromSummon),enemy=b.fighters.some(f=>f.team===1&&f.hp>0&&!f.fromSummon);
- if(!player||!enemy||b.t>=35)decideBattle();
+ if(!player||!enemy||b.t>=35){if(b.headless)b.ended=true;else decideBattle();}
 }
 function updateFX(dt){for(const arr of [fx.floaters,fx.particles,fx.rings])for(let i=arr.length-1;i>=0;i--){const v=arr[i];v.life-=dt;if(v.life<=0){arr.splice(i,1);continue}if(arr===fx.floaters)v.y-=dt*.64;if(arr===fx.particles){v.x+=v.vx*dt;v.y+=v.vy*dt;v.vy+=dt*1.5}if(arr===fx.rings)v.r+=dt*(v.max-v.r)*6}}
 function battleScore(p){const units=p.board.filter(Boolean);if(!units.length)return .1;return aiSquadValue(units,p,true)}
@@ -1505,28 +1564,58 @@ function finalStandings(){if(!G)return [];
  });
 }
 function damageToLoser(round,remaining){return Math.max(4,Math.round(2+round*.56+remaining.reduce((s,f)=>s+f.u.star,0)*.86))}
+// Headless AI-vs-AI battle uses the exact same fighter, skill, summon and equipment
+// engine as the player's battle. Only presentation and per-frame rendering are omitted.
+function duelTiebreak(a,b){
+ const live0=a.filter(f=>f.hp>0&&!f.fromSummon),live1=b.filter(f=>f.hp>0&&!f.fromSummon);
+ if(!live0.length&&!live1.length)return Math.random()<.5;
+ if(!live0.length)return false;if(!live1.length)return true;
+ const score=arr=>arr.reduce((n,f)=>n+(f.hp+f.shield*.4)/Math.max(1,f.maxHp),0);
+ const delta=score(live0)-score(live1);
+ if(Math.abs(delta)<.00001)return Math.random()<.5;
+ return delta>0;
+}
+function simulateAiDuel(left,right){
+ const originalBattle=G.battle,originalPhase=G.phase,originalFX=fx,originalLog=G.log;
+ let result=null;
+ try{
+  const buff0=getBuffs(left),buff1=getBuffs(right),fighters=[];
+  left.board.forEach((u,i)=>{if(u)fighters.push(createFighter(u,0,i%7,3+Math.floor(i/7),buff0,left))});
+  right.board.forEach((u,i)=>{if(u)fighters.push(createFighter(u,1,i%7,Math.floor(i/7),buff1,right))});
+  G.phase='battle';G.log=[];fx={particles:[],floaters:[],projectiles:[],rings:[]};
+  G.battle={fighters,t:0,enemy:right,headless:true,buffs:[buff0,buff1],period:0,grovePeriod:0,groveBloom:0,ended:false,logCooldown:0,teams:[0,1].map(()=>({casts:0,starCasts:0,tideMeter:0,tideBursts:0,shadeMark:null,shadePursuits:0,fireChains:0,fireEnergy:0,mechOverdrive:false}))};
+  initializeBattleTraits();
+  let ticks=0;while(!G.battle.ended&&ticks++<355)updateBattle(.10);
+  const group0=fighters.filter(f=>f.team===0),group1=fighters.filter(f=>f.team===1);
+  const leftWin=duelTiebreak(group0,group1);
+  const alive=(leftWin?group0:group1).filter(f=>f.hp>0&&!f.fromSummon);
+  result={winner:leftWin?left:right,loser:leftWin?right:left,damage:damageToLoser(G.round,alive),seconds:Math.min(G.battle.t,35)};
+ }finally{G.battle=originalBattle;G.phase=originalPhase;fx=originalFX;G.log=originalLog}
+ return result;
+}
 function otherAiBattles(excluded){
  const competitors=shuffle(G.enemies.filter(e=>e!==excluded&&!e.eliminated&&e.hp>0));
  const records=[];
  for(let i=0;i<competitors.length;i+=2){
   const a=competitors[i],b=competitors[i+1];
   if(!b){gainIncome(a,false);records.push(a.name+' 本轮轮空，获得正常结算金币。');continue;}
-  const s1=battleScore(a)*rand(.95,1.05),s2=battleScore(b)*rand(.95,1.05),winner=s1>=s2?a:b,loser=winner===a?b:a;
-  const damage=Math.max(4,Math.round(2+G.round*.6+unitCount(winner)*.75));
-  loser.hp=Math.max(0,loser.hp-damage);winner.streak=winner.streak>=0?winner.streak+1:1;loser.streak=loser.streak<=0?loser.streak-1:-1;
+  const result=simulateAiDuel(a,b),winner=result.winner,loser=result.loser,damage=result.damage;
+  loser.hp=Math.max(0,loser.hp-damage);
+  winner.streak=winner.streak>=0?winner.streak+1:1;
+  loser.streak=loser.streak<=0?loser.streak-1:-1;
   if(loser.hp===0){loser.eliminated=true;recordElimination(loser)}
   gainIncome(winner,true);gainIncome(loser,false);
-  records.push(winner.name+' 战胜 '+loser.name+'（-'+damage+' 耐久）'+(loser.eliminated?'，后者已淘汰':''));
+  records.push(winner.name+' 战胜 '+loser.name+'（-'+damage+' 耐久，实战演算 '+Math.round(result.seconds)+' 秒）'+(loser.eliminated?'，后者已淘汰':''));
  }
  return records.join('　');
 }
 function decideBattle(){if(!G||G.phase!=='battle'||!G.battle||G.battle.ended)return;const b=G.battle;b.ended=true;const alive0=b.fighters.filter(f=>f.team===0&&f.hp>0&&!f.fromSummon),alive1=b.fighters.filter(f=>f.team===1&&f.hp>0&&!f.fromSummon);let win;
- if(!alive0.length)win=false;else if(!alive1.length)win=true;else{const ratio=arr=>arr.reduce((s,f)=>s+(f.hp+f.shield*.4)/f.maxHp,0);win=ratio(alive0)>=ratio(alive1)}
+ win=duelTiebreak(b.fighters.filter(f=>f.team===0),b.fighters.filter(f=>f.team===1));
  const loser=win?b.enemy:G.player,remaining=win?alive0:alive1,damage=damageToLoser(G.round,remaining);loser.hp=Math.max(0,loser.hp-damage);
  if(b.enemy.hp<=0){b.enemy.eliminated=true;recordElimination(b.enemy)}if(G.player.hp<=0){G.player.eliminated=true;recordElimination(G.player)}
  G.player.streak=win?(G.player.streak>=0?G.player.streak+1:1):(G.player.streak<=0?G.player.streak-1:-1);
  b.enemy.streak=!win?(b.enemy.streak>=0?b.enemy.streak+1:1):(b.enemy.streak<=0?b.enemy.streak-1:-1);
- if(win)G.stats.wins++;else G.stats.losses++;
+ if(win)G.stats.wins++;else G.stats.losses++;G.stats.lowestHp=Math.min(G.stats.lowestHp??80,G.player.hp);G.stats.peakStreak=Math.max(G.stats.peakStreak??0,G.player.streak);
  const income=gainIncome(G.player,win);gainIncome(b.enemy,!win);
  const sideResult=otherAiBattles(b.enemy);
  const report=b.fighters.filter(f=>f.team===0&&!f.fromSummon).map(f=>({uid:f.u.uid,key:f.u.key,star:f.u.star,items:f.u.items.slice(),damage:f.metrics.damage,healing:f.metrics.healing,tanked:f.metrics.tanked,shieldUsed:f.metrics.shieldUsed,kills:f.kills,casts:f.castTimes,remaining:f.hp}));
@@ -1535,7 +1624,7 @@ function decideBattle(){if(!G||G.phase!=='battle'||!G.battle||G.battle.ended)ret
  const name=({turret:'炮台',bee:'机械蜂',arm:'机械臂',scout:'发条斥候'})[m.mechKind]||'机械';
  const entry=machineReport[name]??={count:0,damage:0,tanked:0,lost:0};entry.count++;entry.damage+=m.metrics.damage;entry.tanked+=m.metrics.tanked;if(m.hp<=0)entry.lost++;
  }
- G.roundHistory??=[];G.roundHistory.push({round:G.round,enemy:b.enemy.name,win,damage,hp:G.player.hp,gold:G.player.gold,level:G.player.level,report:report.map(x=>({key:x.key,damage:x.damage,kills:x.kills})),machineReport});
+ G.roundHistory??=[];G.roundHistory.push({round:G.round,enemy:b.enemy.name,win,damage,hp:G.player.hp,hpBefore:b.prepSnapshot?.hp??null,gold:G.player.gold,goldBefore:b.prepSnapshot?.gold??null,level:G.player.level,levelBefore:b.prepSnapshot?.level??null,star2:G.player.board.filter(u=>u?.star===2).length,star3:G.player.board.filter(u=>u?.star===3).length,streak:G.player.streak,relicCount:G.relics.length,report:report.map(x=>({key:x.key,damage:x.damage,kills:x.kills})),machineReport});
  G.combatSummary={win,damage,income,enemyName:b.enemy.name,enemyKilled:b.enemy.eliminated,sideResult,report,alliesAlive:alive0.length,machineReport};G.battle=null;G.phase='result';renderAll();storageSave();sfx(win?'win':'hit');
  if(G.player.hp<=0||G.enemies.every(p=>p.eliminated)){G.phase='gameover';renderAll();showEnd()}else showResult();
 }
@@ -1799,7 +1888,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey||e.altKey||e.metaKey||['INP
  if(!G)return;if(e.code==='Space'){e.preventDefault();if(G.phase==='prep')startBattle();return}
  if(G.phase==='prep'){if(e.key.toLowerCase()==='r'){e.preventDefault();reroll()}if(e.key.toLowerCase()==='e'){e.preventDefault();buyXp()}if(/^[1-5]$/.test(e.key)){e.preventDefault();buyShop(+e.key-1)}}});
 // 辅助测试接口不会加载任何脚本或资源，不影响正常游戏操作。
-window.__riftGame={getState:()=>G,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
+window.__riftGame={getState:()=>G,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,aiDuel:simulateAiDuel,aiRelic:grantAiRelic,progress:progressHighlights,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
 hydrateSetup();['captainName','opponentCount','difficultySelect'].forEach(id=>$(id).addEventListener('input',updateSetupTip));if(storedGame())$('continueBtn').style.display='';updateSoundButton();
 renderLog();requestAnimationFrame(frame);
 })();
