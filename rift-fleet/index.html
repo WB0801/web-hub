@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080e1b">
-<title>浮光纪：裂隙棋航 V5.4 · 职业与混搭</title>
+<title>浮光纪：裂隙棋航 V5.5 · 装备与奇遇</title>
 <style>
 /* V5.4 compact default information; tooltip retains details */
 
@@ -570,7 +570,7 @@ body #shopOdds{display:none!important}body .shop-explain:empty{display:none!impo
 <div id="coach" class="coach hidden" role="status" aria-live="polite"><div class="coach-top"><span class="coach-kicker">新手航行指引 <b id="coachIndex">1 / 7</b></span><button class="coach-x" id="skipTutorial" title="结束教学">×</button></div><strong id="coachTitle"></strong><p id="coachText"></p><div class="coach-actions"><button class="btn tiny ghost" id="coachSkip">跳过教学</button><button class="btn tiny teal hidden" id="coachNext">开始教学</button></div></div>
 <div id="toastStack" class="toast-stack" aria-live="polite"></div>
 <div class="overlay" id="menuOverlay"><div class="modal">
-  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V5.4</div><h2>浮光纪 · 裂隙棋航</h2></div></div>
+  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V5.5</div><h2>浮光纪 · 裂隙棋航</h2></div></div>
   <p class="subtitle">42 位船员 · 6 大阵营 · 8 种职业</p><p class="audio-promise">♫ 原创动态背景音乐将在点击开始后播放（可随时静音）。首次开局会提供互动教学。</p>
   <div class="feature-grid"><div class="feature"><b>⚔ 完整赛季</b><small>经济运营、部署布阵、自动攻防与最终淘汰</small></div><div class="feature"><b>✥ 每局不同</b><small>随机商店、掉落装备、三选一永久奇遇</small></div><div class="feature"><b>◈ 无需联网</b><small>单文件离线运行，准备阶段与战后自动存档</small></div></div>
   <div class="start-settings" aria-label="新航程设置">
@@ -703,33 +703,33 @@ const PORTRAITS={};
 function initializePortraits(){for(const t of Object.values(UNITS)){const img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(crewArt(t));PORTRAITS[t.key]=img}}
 initializePortraits();
 const ITEMS=[
- {id:'blade',name:'星蚀刀刃',icon:'⚔',desc:'攻击力 +24%，暴击率 +8%',stat:{atkPct:.24,crit:.08}},
- {id:'bow',name:'追风弦轴',icon:'➶',desc:'攻击速度 +26%，攻击力 +8%',stat:{aspd:.26,atkPct:.08}},
- {id:'plate',name:'熔日甲壳',icon:'⬡',desc:'生命 +160，护甲 +18',stat:{hp:160,armor:18}},
- {id:'pearl',name:'潮银明珠',icon:'◉',desc:'生命 +120，魔抗 +22',stat:{hp:120,mr:22}},
- {id:'moss',name:'古木之心',icon:'❀',desc:'生命 +220，每秒恢复 4 生命',stat:{hp:220,regen:4}},
- {id:'glass',name:'夜神单镜',icon:'◈',desc:'暴击率 +27%，暴击伤害 +25%',stat:{crit:.27,critDmg:.25}},
- {id:'engine',name:'星轨转轮',icon:'✧',desc:'攻击速度 +17%，初始法力 +35',stat:{aspd:.17,mana:35}},
- {id:'droplet',name:'鲸歌晶滴',icon:'❊',desc:'技能威力 +19%，治疗效果 +35%',stat:{spell:.19,healing:.35}},
- {id:'crown',name:'裂隙王冠',icon:'♛',desc:'攻击力 +12%，生命 +120，技能威力 +12%',stat:{atkPct:.12,hp:120,spell:.12}},
- {id:'anchor',name:'夜航铁锚',icon:'⚑',desc:'护甲 +13，魔抗 +13，生命 +100',stat:{armor:13,mr:13,hp:100}},
- {id:'flame',name:'余烬符文',icon:'☀',desc:'攻击力 +12%，技能威力 +26%',stat:{atkPct:.12,spell:.26}},
- {id:'frost',name:'霜月坠饰',icon:'☾',desc:'最大生命 +100，初始法力 +45',stat:{hp:100,mana:45}}
+ {id:'blade',name:'星蚀刀刃',icon:'⚔',desc:'攻击力 +16%，暴击率 +5%；普攻命中降低目标8护甲，持续3秒（不叠加）',stat:{atkPct:.16,crit:.05}},
+ {id:'bow',name:'追风弦轴',icon:'➶',desc:'攻速 +18%，攻击力 +5%；每4次普攻命中额外获得12法力',stat:{aspd:.18,atkPct:.05}},
+ {id:'plate',name:'熔日甲壳',icon:'⬡',desc:'生命 +110，护甲 +12；首次存活且生命≤35%时获得最大生命15%护盾',stat:{hp:110,armor:12}},
+ {id:'pearl',name:'潮银明珠',icon:'◉',desc:'生命 +85，魔抗 +14；每4秒抵消一次法术伤害的25%',stat:{hp:85,mr:14}},
+ {id:'moss',name:'古木之心',icon:'❀',desc:'生命 +145，每秒恢复2生命；首次存活且生命≤45%时恢复最大生命10%',stat:{hp:145,regen:2}},
+ {id:'glass',name:'夜神单镜',icon:'◈',desc:'暴击率 +19%，暴击伤害 +15%；暴击后获得8法力（冷却1秒）',stat:{crit:.19,critDmg:.15}},
+ {id:'engine',name:'星轨转轮',icon:'✧',desc:'攻速 +10%，初始法力 +22；首次施法后返还20法力',stat:{aspd:.10,mana:22}},
+ {id:'droplet',name:'鲸歌晶滴',icon:'❊',desc:'技能威力 +12%，治疗效果 +22%；对其他船员的溢出治疗30%转护盾（每次最多45，冷却2秒）',stat:{spell:.12,healing:.22}},
+ {id:'crown',name:'裂隙王冠',icon:'♛',desc:'攻击力 +8%，生命 +80，技能威力 +8%；首次击败敌方船员后攻击力 +15%',stat:{atkPct:.08,hp:80,spell:.08}},
+ {id:'anchor',name:'夜航铁锚',icon:'⚑',desc:'护甲 +9，魔抗 +9，生命 +65；开战5秒内受到的非持续伤害降低12%',stat:{armor:9,mr:9,hp:65}},
+ {id:'flame',name:'余烬符文',icon:'☀',desc:'攻击力 +8%，技能威力 +17%；首次施法后对主目标额外造成60%攻击力法术伤害',stat:{atkPct:.08,spell:.17}},
+ {id:'frost',name:'霜月坠饰',icon:'☾',desc:'生命 +65，初始法力 +28；首次施法使主目标减速2秒',stat:{hp:65,mana:28}}
 ];
 const ITEM_BY_ID=Object.fromEntries(ITEMS.map(x=>[x.id,x]));
 const RELICS=[
- {id:'solar',icon:'☀',name:'余火王令',desc:'所有友军攻击力 +13%',stat:{atkPct:.13}},
- {id:'heart',icon:'♥',name:'不息舰心',desc:'所有友军最大生命 +17%',stat:{hpPct:.17}},
- {id:'armor',icon:'⬡',name:'钢铁誓约',desc:'全队护甲与魔抗 +12',stat:{armor:12,mr:12}},
- {id:'spark',icon:'✧',name:'秘法透镜',desc:'所有技能威力 +19%',stat:{spell:.19}},
- {id:'speed',icon:'➹',name:'追星之翼',desc:'全队攻击速度 +13%',stat:{aspd:.13}},
+ {id:'solar',icon:'☀',name:'余火王令',desc:'全队攻击力 +8%；首次击败敌方船员后，存活船员攻速 +10%持续5秒',stat:{atkPct:.08}},
+ {id:'heart',icon:'♥',name:'不息舰心',desc:'全队最大生命 +10%；每名船员首次存活且生命≤30%时获得最大生命8%护盾',stat:{hpPct:.10}},
+ {id:'armor',icon:'⬡',name:'钢铁誓约',desc:'全队护甲与魔抗 +7；开战5秒内非持续伤害降低8%',stat:{armor:7,mr:7}},
+ {id:'spark',icon:'✧',name:'秘法透镜',desc:'全队技能威力 +12%；每名船员首次施法返还12法力',stat:{spell:.12}},
+ {id:'speed',icon:'➹',name:'追星之翼',desc:'全队攻速 +8%；开战前5秒额外攻速 +12%',stat:{aspd:.08}},
  {id:'income',icon:'◈',name:'商会特许',desc:'以后每轮结算额外收入 2 金币',stat:{income:2}},
- {id:'well',icon:'❀',name:'万物灵泉',desc:'全队每秒额外恢复 2% 生命',stat:{regenPct:.02}},
+ {id:'well',icon:'❀',name:'万物灵泉',desc:'全队每秒恢复1%最大生命；战斗第8秒一次性恢复存活船员6%最大生命',stat:{regenPct:.01}},
  {id:'fortune',icon:'♧',name:'航运契约',desc:'所有购买经验的收益额外增加 2 点',stat:{xpBonus:2}},
- {id:'fury',icon:'✣',name:'暗月之刃',desc:'全队暴击率 +12%',stat:{crit:.12}},
- {id:'barrier',icon:'❖',name:'星穹庇佑',desc:'所有友军开战时获得 100 护盾',stat:{shield:100}},
+ {id:'fury',icon:'✣',name:'暗月之刃',desc:'全队暴击率 +7%；战斗第8秒起额外暴击率 +8%',stat:{crit:.07}},
+ {id:'barrier',icon:'❖',name:'星穹庇佑',desc:'全队开局获得60护盾；战斗第8秒为存活船员补充55护盾',stat:{shield:60}},
  {id:'golden',icon:'♛',name:'征服者烙印',desc:'每场胜利额外获得 3 金币',stat:{winGold:3}},
- {id:'life',icon:'✚',name:'愈合纹章',desc:'所有友军治疗效果 +35%，生命 +7%',stat:{healing:.35,hpPct:.07}}
+ {id:'life',icon:'✚',name:'愈合纹章',desc:'全队治疗效果 +22%，生命 +4%；战斗第8秒清除存活船员减疗并恢复5%最大生命',stat:{healing:.22,hpPct:.04}}
 ];
 const RELIC_BY_ID=Object.fromEntries(RELICS.map(x=>[x.id,x]));
 const NAMES=[
@@ -818,7 +818,7 @@ function sfx(type){if(!audioPreference||!audioContext||audioContext.state!=='run
  else tone(68,now,.105,.035,'sine',effectsGain);
 }
 
-const VERSION_LABEL='V5.4';
+const VERSION_LABEL='V5.5';
 const SETUP_KEY='rift_fleet_setup_v45_v50preview';
 const VALID_OPPONENTS=[1,3,5,7],VALID_DIFFICULTIES=['easy','normal','hard'];
 function readSetup(){const n=Number($('opponentCount').value);const d=$('difficultySelect').value;
@@ -1001,7 +1001,7 @@ function aiRelicScore(p,id){const role=p.focusRole||'',faction=p.focus||'';
  const has=(...names)=>roles.some(x=>names.includes(x));let n=1;
  if(id==='fortune')n=p.level<8?6:1;
  if(id==='income')n=p.gold<35?6:2;
- if(id==='golden')n=4;
+ if(id==='golden')n=p.streak>0?6:3;
  if(id==='solar')n=6+(has('ranger','assassin','fighter')?4:0);
  if(id==='heart')n=6+(has('guard','fighter')?3:0);
  if(id==='armor')n=6+(has('guard')?4:0);
@@ -1157,6 +1157,7 @@ function aiItemValue(t,id){const x=ITEM_BY_ID[id].stat;let s=1;
  if(x.crit)s+=x.crit*(t.role==='assassin'||t.role==='vanguard'?12:7);
  if(x.regen)s+=x.regen*(t.role==='guard'?1:.4);
  if(x.mana)s+=x.mana*(['mage','healer','charge'].includes(t.role)?.095:['guard','fighter'].includes(t.role)?.06:.045);
+ const role=t.role,front=['guard','fighter','vanguard'].includes(role),caster=['mage','healer','charge'].includes(role);s+=({blade:1.4,bow:caster?1.8:1.2,plate:front?2.6:1.4,pearl:front?2.1:1.3,moss:front?2.2:1.1,glass:role==='assassin'||role==='ranger'?1.8:.8,engine:caster?2.4:1.1,droplet:role==='healer'?2.1:.2,crown:role==='ranger'||role==='assassin'?1.7:.9,anchor:front?2.1:1.2,flame:caster?2:1.1,frost:caster?1.8:1.2}[id]||0);
  if(x.critDmg)s+=x.critDmg*(['assassin','vanguard','ranger'].includes(t.role)?8:3);
  return s;
 }
@@ -1166,7 +1167,7 @@ function growAIEquipment(p,first=false){
  if(first)p.bag.push(choose(ITEMS).id);
  else if(G.round%2===1){const n=G.round%6===1?2:1;for(let i=0;i<n;i++)p.bag.push(choose(ITEMS).id)}
  const squad=p.board.filter(Boolean).sort((a,b)=>(b.star-a.star)*6+UNITS[b.key].cost-UNITS[a.key].cost);
- while(p.bag.length&&squad.some(u=>u.items.length<2)){let best=null;for(const u of squad.filter(u=>u.items.length<2))for(let i=0;i<p.bag.length;i++){const score=aiItemValue(UNITS[u.key],p.bag[i])*(1+.10*(u.star-1))*(u.items.length?.94:1);if(!best||score>best.score)best={u,i,score}}best.u.items.push(p.bag.splice(best.i,1)[0]);}
+ while(p.bag.length&&squad.some(u=>u.items.length<2)){let best=null;for(const u of squad.filter(u=>u.items.length<2))for(let i=0;i<p.bag.length;i++){const score=aiItemValue(UNITS[u.key],p.bag[i])*(1+.10*(u.star-1))*(u.items.includes(p.bag[i])?.65:u.items.length?.94:1);if(!best||score>best.score)best={u,i,score}}best.u.items.push(p.bag.splice(best.i,1)[0]);}
 }
 function aiUpgradeCandidates(p){const units=allUnits(p),groups=new Map();for(const u of units){if(u.star>=3)continue;const k=u.key+':'+u.star;groups.set(k,(groups.get(k)||0)+1)};
  const pairs=[...groups.values()].filter(n=>n>=2).length;
@@ -1406,8 +1407,8 @@ function createFighter(u,team,c,r,buffs,captain=null){
  if(buffs.r.mage)spell+=buffs.r.mage===2?.22:.13;
  if(t.faction==='tide'&&flv)shield+=90;
  for(const id of u.items){const s=ITEM_BY_ID[id]?.stat||{};if(s.hp)h+=s.hp;if(s.atkPct)a*=1+s.atkPct;if(s.armor)armor+=s.armor;if(s.mr)mr+=s.mr;if(s.aspd)speed*=1+s.aspd;if(s.crit)crit+=s.crit;if(s.critDmg)critDmg+=s.critDmg;if(s.spell)spell+=s.spell;if(s.healing)healMult+=s.healing;if(s.regen)regen+=s.regen;if(s.mana)mana+=s.mana}
- {const relicIds=captain?(captain===G?.player?G.relics:(captain.relics||[])):(team===0&&G?G.relics:[]);for(const id of relicIds){const s=RELIC_BY_ID[id]?.stat||{};if(s.atkPct)a*=1+s.atkPct;if(s.hpPct)h*=1+s.hpPct;if(s.armor)armor+=s.armor;if(s.mr)mr+=s.mr;if(s.aspd)speed*=1+s.aspd;if(s.spell)spell+=s.spell;if(s.healing)healMult+=s.healing;if(s.crit)crit+=s.crit;if(s.regenPct)regenPct+=s.regenPct;if(s.shield)shield+=s.shield}}
- h=Math.round(h);return {id:u.uid,team,u,t,metrics:{damage:0,healing:0,tanked:0,shieldUsed:0,allyHealing:0,intercepted:0},x:c+.5,y:r+.5,hp:h,maxHp:h,atk:Math.round(a),armor,mr,shield,speed,baseSpeed:speed,range:t.range,move:t.move,spell,crit:clamp(crit,0,.85),critDmg,regen,regenPct,lifesteal,healMult,mana:Math.min(100,mana),atkClock:G?.phase==='battle'?rand(.05,.36):.20,stunUntil:0,silenceUntil:0,slowUntil:0,hasteUntil:0,attackFlash:0,hitFlash:0,jumped:false,fromSummon:false,summonCount:0,effects:[],castTimes:0,kills:0,armorShredUntil:0,armorShred:0,burnStacks:0,burnUntil:0,seed:[],guardReady:0,stealthUntil:0,healCutUntil:0,starSealUntil:0,rangerLast:null,rangerStack:0,rangerShots:0,vanguardUntil:0,chargeStage:0,mechBoostUntil:0,shadeBuffUntil:0};
+ const relicIds=captain?(captain===G?.player?G.relics:(captain.relics||[])):(team===0&&G?G.relics:[]);for(const id of relicIds){const s=RELIC_BY_ID[id]?.stat||{};if(s.atkPct)a*=1+s.atkPct;if(s.hpPct)h*=1+s.hpPct;if(s.armor)armor+=s.armor;if(s.mr)mr+=s.mr;if(s.aspd)speed*=1+s.aspd;if(s.spell)spell+=s.spell;if(s.healing)healMult+=s.healing;if(s.crit)crit+=s.crit;if(s.regenPct)regenPct+=s.regenPct;if(s.shield)shield+=s.shield}
+ h=Math.round(h);return {id:u.uid,team,u,t,passives:[...new Set(u.items)],blessings:[...relicIds],proc:{},metrics:{damage:0,healing:0,tanked:0,shieldUsed:0,allyHealing:0,intercepted:0},x:c+.5,y:r+.5,hp:h,maxHp:h,atk:Math.round(a),armor,mr,shield,speed,baseSpeed:speed,range:t.range,move:t.move,spell,crit:clamp(crit,0,.85),critDmg,regen,regenPct,lifesteal,healMult,mana:Math.min(100,mana),atkClock:G?.phase==='battle'?rand(.05,.36):.20,stunUntil:0,silenceUntil:0,slowUntil:0,hasteUntil:0,attackFlash:0,hitFlash:0,jumped:false,fromSummon:false,summonCount:0,effects:[],castTimes:0,kills:0,armorShredUntil:0,armorShred:0,burnStacks:0,burnUntil:0,seed:[],guardReady:0,stealthUntil:0,healCutUntil:0,starSealUntil:0,rangerLast:null,rangerStack:0,rangerShots:0,vanguardUntil:0,chargeStage:0,mechBoostUntil:0,shadeBuffUntil:0};
 }
 const ZERO_BUFFS={f:{},r:{}};
 function finalAttributes(u,p=G?.player,team=0){
@@ -1463,9 +1464,10 @@ function spawnMachine(owner,kind='bee'){if(!G?.battle||!owner||owner.hp<=0)retur
  const base={bee:[150,.48,1.18,1.50,0],turret:[100,.45,3.85,0,0],arm:[300,.36,1.20,.72,18],scout:[85,.35,1.30,1.75,0]}[kind]||[115,.34,1.18,1.50,0];
  const buff=b.buffs[owner.team].f.gear||0,hp=Math.round(base[0]*(buff>=2?.92:.83)+owner.maxHp*(buff>=3?.30:buff===2?.18:.10)+(buff>=3?85:buff===2?45:0)),atk=Math.round(8+owner.atk*base[1])*(buff>=3?1.40:buff===2?1.08:1);
  const turretIndex=allies.filter(x=>x.fromSummon&&x.mechKind==='turret').length;const px=kind==='turret'?clamp(1.65+(turretIndex%3)*1.75,.55,6.45):clamp(owner.x+rand(-.4,.4),.55,6.45),py=kind==='turret'?(owner.team===0?4.85:1.15):clamp(owner.y+(owner.team===0?-.55:.55),.55,5.45);const id='mech'+(++G.seq);const drone={...owner,id,u:{uid:id,key:owner.u.key,star:1,items:[]},x:px,y:py,hp,maxHp:hp,atk,armor:8+base[4],shield:0,range:base[2],move:base[3],speed:buff>=3?1.47:buff>=2?1.06:.83,baseSpeed:1.0,atkClock:.6,mana:0,crit:0,critDmg:1.5,regen:0,regenPct:0,lifesteal:0,effects:[],fromSummon:true,mechKind:kind,attackFlash:0,hitFlash:0,stunUntil:0,silenceUntil:0,hasteUntil:0,stealthUntil:0,jumped:true,summonCount:0,castTimes:0,kills:0,metrics:{damage:0,healing:0,tanked:0,shieldUsed:0},ownerUid:owner.u.uid,seed:[],burnStacks:0,burnUntil:0,healCutUntil:0,starSealUntil:0,armorShredUntil:0,armorShred:0,guardReady:0,slowUntil:0,mechBoostUntil:0,shadeBuffUntil:0,vanguardUntil:0,rangerStack:0,rangerShots:0,rangerLast:null,deathHandled:false};
- drone.t={...owner.t,name:{bee:'机械蜂',turret:'机巧炮台',arm:'机械臂',scout:'发条斥候'}[kind],glyph:'⚙',role:kind==='arm'?'guard':'ranger',skill:null,skillName:'机械协同'};b.fighters.push(drone);emitRing(drone.x,drone.y,'#85e9dc',.8);return drone;
+ drone.passives=[];drone.blessings=[];drone.proc={};drone.solarUntil=0;drone.t={...owner.t,name:{bee:'机械蜂',turret:'机巧炮台',arm:'机械臂',scout:'发条斥候'}[kind],glyph:'⚙',role:kind==='arm'?'guard':'ranger',skill:null,skillName:'机械协同'};b.fighters.push(drone);emitRing(drone.x,drone.y,'#85e9dc',.8);return drone;
 }
 function onUnitDeath(target,attacker){const b=G.battle;if(!b)return;
+ if(attacker&&attacker.hp>0&&!target.fromSummon){if(hasItem(attacker,'crown')&&onceProc(attacker,'crown')){attacker.atk=Math.round(attacker.atk*1.15);gearSignal(attacker,'王冠')}const td=b.teams[attacker.team];if(!td.solarUsed&&teamFighters(attacker.team).some(f=>hasRelic(f,'solar'))){td.solarUsed=true;for(const a of teamFighters(attacker.team).filter(f=>!f.fromSummon))a.solarUntil=b.t+5;}}
  if(target.burnStacks>0&&attacker&&b.buffs[attacker.team].f.fire===3&&b.teams[attacker.team].fireChains<8){
  b.teams[attacker.team].fireChains++;for(const x of opposing(attacker.team).filter(x=>x!==target).sort((a,c)=>distance(a,target)-distance(c,target)).slice(0,2))applyBurn(x,attacker,2)}
  for(let team=0;team<2;team++){const td=b.teams[team];if(td.shadeMark!==target.id)continue;
@@ -1502,15 +1504,43 @@ function initializeBattleTraits(){const b=G.battle;for(let team=0;team<2;team++)
  for(const f of active){f.baseRoyalAtk=f.atk;if(f.t.skill==='clockscout')spawnMachine(f,'scout');if(f.t.skill==='starrush'){for(const a of active.filter(x=>distance(x,f)<3.3))a.mana=Math.min(100,a.mana+13)}if(f.t.skill==='ravenmark'&&buff.f.shade){const e=opposing(team).find(x=>x.id===b.teams[team].shadeMark);if(e)hurt(e,f.atk*.35,'physical',f)}}
  }
 }
+// V5.5: effects are unique per holder, reset every battle, shared by visible and headless combat.
+function hasItem(f,id){return !!f&&!f.fromSummon&&f.passives?.includes(id)}
+function hasRelic(f,id){return !!f&&!f.fromSummon&&f.blessings?.includes(id)}
+function onceProc(f,id){if(f.proc[id])return false;f.proc[id]=true;return true}
+function gearSignal(f,label){floatText(f.x,f.y-.72,label,'#efcf95',.8)}
+function lowHealthPassives(f){if(f.hp<=0||f.fromSummon)return;const ratio=f.hp/f.maxHp;
+ if(ratio<=.35&&hasItem(f,'plate')&&onceProc(f,'plate')){addShield(f,f.maxHp*.15);gearSignal(f,'甲壳')}
+ if(ratio<=.45&&hasItem(f,'moss')&&onceProc(f,'moss')){heal(f,f.maxHp*.10,true,f);gearSignal(f,'古木')}
+ if(ratio<=.30&&hasRelic(f,'heart')&&onceProc(f,'heart'))addShield(f,f.maxHp*.08);
+}
+function onBasicHit(f,e){if(f.hp<=0||f.fromSummon)return;
+ if(hasItem(f,'blade')&&e.hp>0){e.armorShred=Math.max(e.armorShredUntil>G.battle.t?e.armorShred:0,8);e.armorShredUntil=Math.max(e.armorShredUntil,G.battle.t+3)}
+ if(hasItem(f,'bow')){f.proc.bowHits=(f.proc.bowHits||0)+1;if(f.proc.bowHits%4===0){f.mana=Math.min(100,f.mana+12);gearSignal(f,'弦轴')}}
+}
+function timedPassives(f,b){if(f.fromSummon||b.t<8||!onceProc(f,'time8'))return;
+ if(hasRelic(f,'well'))heal(f,f.maxHp*.06,true,f);
+ if(hasRelic(f,'fury'))f.crit=clamp(f.crit+.08,0,.85);
+ if(hasRelic(f,'barrier'))addShield(f,55);
+ if(hasRelic(f,'life')){f.healCutUntil=0;heal(f,f.maxHp*.05,true,f)}
+}
+function castPassives(f,enemy){if(f.hp<=0||f.fromSummon||!onceProc(f,'firstCast'))return;
+ if(hasItem(f,'engine'))f.mana=Math.min(100,f.mana+20);
+ if(hasRelic(f,'spark'))f.mana=Math.min(100,f.mana+12);
+ if(hasItem(f,'flame')&&enemy.hp>0){hurt(enemy,f.atk*.60,'magic',f);gearSignal(f,'符文')}
+ if(hasItem(f,'frost')&&enemy.hp>0){enemy.slowUntil=Math.max(enemy.slowUntil,G.battle.t+2);gearSignal(f,'霜月')}
+}
 function inflictDot(target,kind,dps,time,source=null){if(target.hp<=0)return;let existing=target.effects.find(e=>e.type===kind);if(existing){existing.time=Math.max(existing.time,time);existing.dps=Math.max(existing.dps,dps);existing.source=source||existing.source}else target.effects.push({type:kind,dps,time,source})}
-function hurt(target,raw,kind='physical',attacker=null,canCrit=false){if(!target||target.hp<=0||raw<=0)return 0;
+function hurt(target,raw,kind='physical',attacker=null,canCrit=false,basic=false){if(!target||target.hp<=0||raw<=0)return 0;
  const b=G?.battle;if(b&&attacker&&kind==='physical'&&!target.fromSummon&&target.t.role!=='guard'&&b.buffs[target.team].r.guard){
  const protector=teamFighters(target.team).filter(a=>a.t.role==='guard'&&!a.fromSummon&&a!==target&&distance(a,target)<2.5&&b.t>=a.guardReady).sort((a,c)=>distance(a,target)-distance(c,target))[0];
  if(protector){protector.guardReady=b.t+(b.buffs[target.team].r.guard===2?2.4:3.2);if(b.buffs[target.team].r.guard===2)attacker.hp>0&&hurt(attacker,protector.atk*.40,'physical',protector,false);target=protector;protector.metrics.intercepted=(protector.metrics.intercepted||0)+1;floatText(target.x,target.y-.54,'拦截','#bde9ff',.8)}
  }
  if(b&&attacker&&attacker.team!==target.team&&attacker.t.faction==='shade'&&b.buffs[attacker.team].f.shade&&b.teams[attacker.team].shadeMark===target.id)raw*=1.12;
  if(kind==='magic'&&b&&target.starSealUntil>b.t&&attacker&&attacker.team!==target.team)raw*=1.16;
+ if(b&&kind!=='dot'){if(b.t<5){if(hasItem(target,'anchor'))raw*=.88;if(hasRelic(target,'armor'))raw*=.92;}if(kind==='magic'&&hasItem(target,'pearl')&&b.t>=(target.proc.pearlReady||0)){target.proc.pearlReady=b.t+4;raw*=.75;gearSignal(target,'明珠')}}
  const crit=canCrit&&attacker&&Math.random()<attacker.crit,attack=crit?raw*(attacker.critDmg||1.5):raw;
+ if(crit&&b&&attacker.hp>0&&hasItem(attacker,'glass')&&b.t>=(attacker.proc.glassReady||0)){attacker.proc.glassReady=b.t+1;attacker.mana=Math.min(100,attacker.mana+8);}
  const resistance=(kind==='magic'||kind==='dot')?target.mr:target.armor-(b?.t<target.armorShredUntil?(target.armorShred||0):0);
  const dmg=attack*100/(100+Math.max(-35,resistance)),damage=kind==='dot'?dmg:Math.max(1,Math.round(dmg));
  const oldShield=target.shield,absorbed=Math.min(target.shield,damage);target.shield-=absorbed;
@@ -1520,11 +1550,13 @@ function hurt(target,raw,kind='physical',attacker=null,canCrit=false){if(!target
  if(attacker&&actual>0&&attacker.lifesteal)heal(attacker,actual*attacker.lifesteal,false,attacker);
  if(kind!=='dot'){if(crit)floatText(target.x,target.y-.32,'✦'+Math.round(damage),'#ffd17c',1.18);else if(visualRandom()<.48)floatText(target.x,target.y-.28,Math.round(damage),kind==='magic'?'#c8baff':'#f5ccaa');emitDust(target.x,target.y,kind==='magic'?'#d1b1ff':'#ffae86',crit?12:5)}else if(visualRandom()<.04)floatText(target.x,target.y-.28,Math.round(damage*18),'#b6d5a3',.7);
  if(b&&oldShield>0&&absorbed>0)onShieldAbsorbed(target,absorbed,attacker,target.shield<=0);
+ if(b&&basic&&attacker)onBasicHit(attacker,target);
+ if(b)lowHealthPassives(target);
  if(b&&attacker&&attacker.team!==target.team&&kind==='physical'&&!target.fromSummon&&b.buffs[target.team].f.grove===3&&target.seed?.some(x=>x.matured)&&b.t>=(target.groveCounterUntil||0)){target.groveCounterUntil=b.t+1.0;const owner=teamFighters(target.team).find(x=>x.t.faction==='grove');if(owner&&attacker.hp>0)hurt(attacker,24+Math.min(45,damage*.38),'magic',owner,false)}
  if(target.hp<=0&&!target.deathHandled){target.deathHandled=true;target.hp=0;emitRing(target.x,target.y,'#ffba98',.72);emitDust(target.x,target.y,'#fdd5a1',20);if(attacker){attacker.kills++;if(attacker.team===0&&!b?.headless)G.stats.kills++}onUnitDeath(target,attacker);if(attacker&&visualRandom()<.22)logEvent('✦ '+attacker.t.name+' 击败 '+target.t.name)}
  return actual;
 }
-function heal(target,raw,show=true,source=null){if(!target||target.hp<=0||raw<=0)return 0;const reduction=G?.battle?.t<target.healCutUntil?.70:1;const v=Math.max(0,Math.min(target.maxHp-target.hp,(show?Math.round(raw):raw)*reduction));target.hp+=v;if(source?.metrics){source.metrics.healing+=v;if(source!==target)source.metrics.allyHealing=(source.metrics.allyHealing||0)+v;}if(show&&v>0){floatText(target.x,target.y-.55,'+'+v,'#8ff3aa');emitDust(target.x,target.y,'#91f7ba',5)}return v}
+function heal(target,raw,show=true,source=null){if(!target||target.hp<=0||raw<=0)return 0;const reduction=G?.battle?.t<target.healCutUntil?.70:1;const v=Math.max(0,Math.min(target.maxHp-target.hp,(show?Math.round(raw):raw)*reduction));target.hp+=v;if(G?.battle&&source!==target&&!target.fromSummon&&hasItem(source,'droplet')&&source.hp>0&&G.battle.t>=(source.proc.dropletReady||0)){const overflow=Math.max(0,(show?Math.round(raw):raw)*reduction-v);if(overflow>0){source.proc.dropletReady=G.battle.t+2;addShield(target,Math.min(45,overflow*.30));}}if(source?.metrics){source.metrics.healing+=v;if(source!==target)source.metrics.allyHealing=(source.metrics.allyHealing||0)+v;}if(show&&v>0){floatText(target.x,target.y-.55,'+'+v,'#8ff3aa');emitDust(target.x,target.y,'#91f7ba',5)}return v}
 function addShield(target,amount){if(target.hp<=0)return;const value=Math.round(amount);target.shield=Math.min(target.maxHp*1.25,target.shield+value);floatText(target.x,target.y-.45,'⬡'+value,'#93dce8',.80)}
 function castSkill(f){if(f.hp<=0||!G?.battle)return;const b=G.battle,enemy=enemyOf(f);if(!enemy)return;
  f.mana=Math.max(0,f.mana-100);f.castTimes++;const power=f.t.power,s=1+f.spell,allies=teamFighters(f.team),enemies=opposing(f.team),color=FACTIONS[f.t.faction].color;
@@ -1579,6 +1611,7 @@ function castSkill(f){if(f.hp<=0||!G?.battle)return;const b=G.battle,enemy=enemy
  default:{strike(enemy,f.atk*power);break}
  }
  if(f.t.faction==='fire'&&b.buffs[f.team].f.fire>=2&&!['detonate','blazecharging'].includes(f.t.skill)&&enemy.hp>0&&enemy.burnStacks>=3)detonateBurn(enemy,f,1.40);
+ castPassives(f,enemy);
  onCastSynergies(f,enemy);
 }
 function makeAttack(f,e){if(e.hp<=0||f.hp<=0)return;const b=G.battle;f.mana=Math.min(100,f.mana+(f.fromSummon?0:24));f.attackFlash=.16;
@@ -1586,7 +1619,7 @@ function makeAttack(f,e){if(e.hp<=0||f.hp<=0)return;const b=G.battle;f.mana=Math
  const dmg=f.atk*rand(.90,1.11)*(f.t.role==='fighter'&&b.buffs[f.team].r.fighter===2?1+(1-f.hp/f.maxHp)*.32:1);
  const isRanged=f.range>1.6;
  if(isRanged)fx.projectiles.push({x:f.x,y:f.y,target:e,source:f,raw:dmg,canCrit:true,team:f.team,color:FACTIONS[f.t.faction].color,speed:9,burnOnHit:f.t.faction==='fire'&&!!b.buffs[f.team].f.fire});
- else hurt(e,dmg,'physical',f,true);
+ else hurt(e,dmg,'physical',f,true,true);
  if(!isRanged&&f.t.faction==='fire'&&b.buffs[f.team].f.fire&&e.hp>0)applyBurn(e,f,1);
  if(!isRanged)rangerHit(f,e,dmg);
 }
@@ -1594,6 +1627,7 @@ function rangerHit(f,e,dmg){const b=G.battle;if(f.fromSummon||f.t.role!=='ranger
 }
 function updateBattle(dt){if(!G||G.phase!=='battle'||!G.battle||G.battle.ended)return;const b=G.battle;b.t+=dt;b.period+=dt;b.grovePeriod+=dt;b.groveBloom+=dt;
  const tickOrder=[...b.fighters];b.tickIndex=(b.tickIndex||0)+1;if(b.tickIndex%2===0)tickOrder.reverse();for(const f of tickOrder){if(f.hp<=0)continue;f.hitFlash=Math.max(0,f.hitFlash-dt);f.attackFlash=Math.max(0,f.attackFlash-dt);
+  timedPassives(f,b);
   if(f.regen||f.regenPct)heal(f,(f.regen+f.maxHp*f.regenPct)*dt,false,f);
   for(const seed of f.seed||[]){seed.age+=dt;seed.life-=dt;heal(f,f.maxHp*(b.buffs[f.team].f.grove===3?.012:.020)*dt,false,seed.source);if(!seed.matured&&seed.age>=2&&b.buffs[f.team].f.grove>=2){seed.matured=true;addShield(f,55+f.maxHp*.05)}}f.seed=(f.seed||[]).filter(x=>x.life>0);
   for(const effect of f.effects){const remaining=Math.min(dt,effect.time);effect.time-=dt;if(remaining>0)hurt(f,remaining*effect.dps,'dot',effect.source||null,false)}f.effects=f.effects.filter(e=>e.time>0);if(f.hp<=0)continue;
@@ -1603,7 +1637,7 @@ function updateBattle(dt){if(!G||G.phase!=='battle'||!G.battle||G.battle.ended)r
   if(!f.fromSummon&&f.mana>=100&&b.t>=f.silenceUntil){castSkill(f);continue}
   const enemy=enemyOf(f);if(!enemy)continue;const d=distance(f,enemy);
   if(f.move>0&&d>f.range*.92){const mv=Math.min(d-f.range*.80,f.move*dt*(b.t<f.slowUntil?.75:1));f.x=clamp(f.x+(enemy.x-f.x)/d*mv,.35,6.65);f.y=clamp(f.y+(enemy.y-f.y)/d*mv,.35,5.65)}
-  let effectiveSpeed=f.speed*(b.t<f.hasteUntil?1.35:1)*(b.t<f.slowUntil?.75:1);
+  let effectiveSpeed=f.speed*(b.t<f.hasteUntil?1.35:1)*(b.t<f.slowUntil?.75:1)*(hasRelic(f,'speed')&&b.t<5?1.12:1)*(b.t<(f.solarUntil||0)?1.10:1);
   if(f.t.role==='vanguard'&&b.t<f.vanguardUntil)effectiveSpeed*=1.24;
   if(!f.fromSummon&&f.t.role==='ranger'&&b.buffs[f.team].r.ranger)effectiveSpeed*=1+Math.min(3,f.rangerStack||0)*.11;
   if(f.t.faction==='shade'&&b.t<f.shadeBuffUntil)effectiveSpeed*=1.25;
@@ -1616,7 +1650,7 @@ function updateBattle(dt){if(!G||G.phase!=='battle'||!G.battle||G.battle.ended)r
  const alive=b.fighters.filter(f=>f.hp>0);for(let i=0;i<alive.length;i++)for(let j=i+1;j<alive.length;j++){
   const a=alive[i],c=alive[j],d=distance(a,c);if(d<.46&&d>.001&&a.move>0&&c.move>0){const n=(.46-d)*.13,dx=(a.x-c.x)/d,dy=(a.y-c.y)/d;a.x=clamp(a.x+dx*n,.35,6.65);a.y=clamp(a.y+dy*n,.35,5.65);c.x=clamp(c.x-dx*n,.35,6.65);c.y=clamp(c.y-dy*n,.35,5.65)}
  }
- for(let i=fx.projectiles.length-1;i>=0;i--){const z=fx.projectiles[i];if(z.target.hp<=0||z.source.hp<=0){fx.projectiles.splice(i,1);continue}const d=distance(z,z.target),step=z.speed*dt;if(d<=step+.15){hurt(z.target,z.raw,'physical',z.source,z.canCrit);rangerHit(z.source,z.target,z.raw);if(z.burnOnHit&&z.target.hp>0)applyBurn(z.target,z.source,1);fx.projectiles.splice(i,1)}else{z.x+=(z.target.x-z.x)/d*step;z.y+=(z.target.y-z.y)/d*step}}
+ for(let i=fx.projectiles.length-1;i>=0;i--){const z=fx.projectiles[i];if(z.target.hp<=0||z.source.hp<=0){fx.projectiles.splice(i,1);continue}const d=distance(z,z.target),step=z.speed*dt;if(d<=step+.15){hurt(z.target,z.raw,'physical',z.source,z.canCrit,true);rangerHit(z.source,z.target,z.raw);if(z.burnOnHit&&z.target.hp>0)applyBurn(z.target,z.source,1);fx.projectiles.splice(i,1)}else{z.x+=(z.target.x-z.x)/d*step;z.y+=(z.target.y-z.y)/d*step}}
  if(b.grovePeriod>=3){b.grovePeriod-=3;for(let team=0;team<2;team++){const lvl=b.buffs[team].f.grove;if(lvl){const target=weakest(team),owner=teamFighters(team).find(x=>x.t.faction==='grove');if(target&&owner)plantSeed(target,owner)}}}
  if(b.groveBloom>=8){b.groveBloom-=8;for(let team=0;team<2;team++)if(b.buffs[team].f.grove===3){const owner=teamFighters(team).find(x=>x.t.faction==='grove');if(owner){for(const f of teamFighters(team)){if(f.seed?.some(s=>s.matured)){heal(f,f.maxHp*.075,true,owner);addShield(f,50)}}for(const e of opposing(team))hurt(e,36+owner.atk*.55,'magic',owner);emitRing(3.5,3,'#a7efb3',3.2)}}}
  if(b.period>=4){b.period-=4;for(let team=0;team<2;team++){const lvl=b.buffs[team].r.healer,from=teamFighters(team).find(x=>!x.fromSummon&&x.t.role==='healer');const target=weakest(team);if(lvl&&target&&from){heal(target,(lvl===2?105+target.maxHp*.04:70+target.maxHp*.03)*from.healMult,true,from);if(lvl===2){target.effects=target.effects.filter(e=>!['poison','burn','curse'].includes(e.type));target.burnStacks=0;target.healCutUntil=0}}}}
@@ -1862,7 +1896,7 @@ function unitTooltip(u,p=G?.player){if(!u||!G)return'';
 }
 
 function templateTooltip(t){const f=FACTIONS[t.faction],role=CLASSES[t.role];return `<b style="color:${f.color}">${esc(t.name)} · ${t.cost} 费</b><small>${f.name} · ${role.name} · ${rangeLabel(t.range)} ${t.range.toFixed(2)} 格</small><div><strong>${esc(t.skillName)}</strong> ${esc(t.skillDesc)}</div><div class="tooltip-muted">生命 ${t.hp} · 攻击 ${t.atk} · 攻速 ${t.aspd}</div><div class="tip-upcoming">${shopCopies(t.key)||'尚未拥有'}${candidateTraits({key:t.key}).length?' · 上阵可激活 '+candidateTraits({key:t.key}).join('、'):''}</div>`}
-function itemTooltip(id){const it=ITEM_BY_ID[id];return it?`<b>${it.icon} ${esc(it.name)}</b><div>${esc(it.desc)}</div><small>适合：${esc(itemFit(id))}</small>`:''}
+function itemTooltip(id){const it=ITEM_BY_ID[id];return it?`<b>${it.icon} ${esc(it.name)}</b><div>${esc(it.desc)}</div><small>适合：${esc(itemFit(id))} · 同名特效不叠加</small>`:''}
 function tooltipMove(e){if(v51Drag?.active)return;const piece=e.target.closest('[data-transfer-slot],[data-shop],[data-shop-info],[data-bench],[data-item],[data-trait-kind],[data-mixed-tip],.trait-row,.relic-mini,.top-chip,.equip-chip,.peek-gear-entry');if(!piece){hideHoverTip();return}if(!G)return;
  let message='';if(piece.matches('[data-transfer-slot]')){const u=selectedUid&&findUnit(G.player,selectedUid);message=itemTooltip(u?.items[+piece.dataset.transferSlot])}else if(piece.matches('.top-chip')){const p=G.player;if(piece.querySelector('#headGold'))message=`<b>金币 ${p.gold}</b><div>基础收入 +5 · 利息 +${Math.min(5,Math.floor(p.gold/10))}（每10金币 +1，最多5）</div><small>当前连胜 / 连败：${p.streak||0}</small>`;else if(piece.querySelector('#headLevel'))message=`<b>等级 ${p.level}</b><div>经验 ${p.xp}/${LEVEL_XP[p.level]??'满级'} · 上阵 ${unitCount(p)}/${p.level}</div><div>${oddsSummary(p.level)}</div>`;}else if(piece.matches('[data-shop-info]')){const k=G.shop[+piece.dataset.shopInfo];if(k)message=templateTooltip(UNITS[k])}else if(piece.matches('[data-shop]')){const key=G.shop[+piece.dataset.shop];if(key)message=templateTooltip(UNITS[key])}
  else if(piece.matches('[data-bench]'))message=unitTooltip(G.player.bench[+piece.dataset.bench]);
@@ -1971,7 +2005,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey||e.altKey||e.metaKey||['INP
  if(!G)return;if(e.code==='Space'){e.preventDefault();if(G.phase==='prep')startBattle();return}
  if(G.phase==='prep'){if(e.key.toLowerCase()==='r'){e.preventDefault();reroll()}if(e.key.toLowerCase()==='e'){e.preventDefault();buyXp()}if(/^[1-5]$/.test(e.key)){e.preventDefault();buyShop(+e.key-1)}}});
 // 辅助测试接口不会加载任何脚本或资源，不影响正常游戏操作。
-window.__riftGame={getState:()=>G,rangeSelection:()=>({selectedUid,enemyRangeUid}),sortBench,matchAwards,finishTournament,showEnd,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiRecruit,aiArrange,aiItemValue,aiBenchReplacement,prepareAI,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,aiDuel:simulateAiDuel,aiRelic:grantAiRelic,progress:progressHighlights,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
+window.__riftGame={itemDefs:()=>ITEMS,relicDefs:()=>RELICS,testFighter:createFighter,testHurt:hurt,testHeal:heal,testHit:onBasicHit,testCast:castPassives,testTimed:timedPassives,getState:()=>G,rangeSelection:()=>({selectedUid,enemyRangeUid}),sortBench,matchAwards,finishTournament,showEnd,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiRecruit,aiArrange,aiItemValue,aiBenchReplacement,prepareAI,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,aiDuel:simulateAiDuel,aiRelic:grantAiRelic,progress:progressHighlights,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
 
 // Desktop UI feedback is independent of game rules and save state.
 for(const id of ['headGold','headHp','headLevel']){
