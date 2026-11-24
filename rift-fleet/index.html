@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080e1b">
-<title>浮光纪：裂隙棋航 V5.5 · 装备与奇遇</title>
+<title>浮光纪：裂隙棋航 V5.6 · 共享棋池</title>
 <style>
 /* V5.4 compact default information; tooltip retains details */
 
@@ -511,6 +511,9 @@ button,input,select{font-family:inherit}button{transition:background .16s var(--
 .v51-result-body .modal-eyebrow{margin-bottom:5px}.v51-result-body h2{margin:4px 0 8px}.v51-result-body .subtitle{margin:6px 0 10px}.v51-result-body .result-stats{margin:10px 0}.v51-result-body .report-section{margin-top:12px}.v51-result-body .v51-side-results{margin:5px 0}.report-title small{display:none}.final-dashboard{gap:12px}.final-section h3{margin:0 0 10px}
 
 body #shopOdds{display:none!important}body .shop-explain:empty{display:none!important}
+
+/* V5.6 compact shared-pool and scout UI */
+.pool-tabs,.pool-controls{display:flex;gap:6px;padding:0 10px 9px}.pool-tabs button{flex:1}.pool-controls input,.pool-controls select{min-width:0;background:#171e29;border:1px solid #ffffff24;color:var(--white);border-radius:9px;padding:8px;font:inherit;font-size:12px}.pool-controls input{flex:1;width:0}.pool-controls select{max-width:100px}.pool-muted{font-size:11px;color:var(--faint);line-height:1.5}.pool-row{border:1px solid #ffffff1b;border-radius:10px;background:#ffffff06;padding:8px 9px}.pool-row summary{display:grid;grid-template-columns:18px 1fr auto;gap:5px;align-items:center;cursor:pointer;font-size:12px;list-style:none}.pool-row summary small{color:var(--faint);font-size:10px}.pool-row summary b{font-variant-numeric:tabular-nums;color:#a5e8d6}.pool-row summary b.scarce,.pool-remaining.scarce{color:#ffc777}.pool-bar{height:3px;background:#ffffff14;border-radius:8px;overflow:hidden;margin:6px 0}.pool-bar i{display:block;height:100%;background:#7fcaba}.pool-owner{font-size:12px;line-height:1.6;margin-top:5px}.rank-list{display:flex!important;flex-direction:column!important}.rank-card summary{cursor:pointer;list-style:none}.rank-card summary::-webkit-details-marker,.pool-row summary::-webkit-details-marker{display:none}.scout-roster{display:flex;flex-direction:column;gap:4px;padding-top:8px}.scout-roster>b{font-size:11px;color:var(--faint);margin-top:4px}.scout-unit{border:1px solid #ffffff15;border-radius:8px;padding:5px 7px;text-align:left;background:#ffffff06;color:var(--white);font-size:12px}.scout-unit b{color:#f5cb7a}.scout-traits{display:none;font-size:11px;color:var(--faint);padding:5px 0 0}.rank-card[open] .scout-traits{display:block}.rank-card:not([open]) .scout-roster{display:none}.rank-card[open].dead{opacity:.8}.pool-remaining{position:absolute;top:5px;right:22px;z-index:2;font-size:10px;font-weight:650;color:#b3e6d5;background:#101923dd;padding:2px 5px;border-radius:7px;pointer-events:none;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -538,7 +541,7 @@ body #shopOdds{display:none!important}body .shop-explain:empty{display:none!impo
 </header>
 <div class="layout">
   <aside class="sidebar leftbar">
-    <section class="panel rank-panel" data-panel-body="rank"><div class="panel-heading"><h2>◉ 星域战况</h2><small>最后生存者获胜</small></div><div id="rankList" class="rank-list"></div></section>
+    <section class="panel rank-panel" data-panel-body="rank"><div class="panel-heading"><h2>对手与棋池</h2></div><div class="pool-tabs"><button id="scoutTab" class="codex-tab active">对手</button><button id="poolTab" class="codex-tab">共享棋池</button></div><div id="poolControls" class="pool-controls hidden"><input id="poolSearch" placeholder="搜索船员或阵营" aria-label="搜索棋池"><select id="poolTier" aria-label="费用筛选"><option value="0">全部费用</option><option value="1">1费</option><option value="2">2费</option><option value="3">3费</option><option value="4">4费</option><option value="5">5费</option></select></div><div id="rankList" class="rank-list"></div></section>
     <section class="panel relic-panel" data-panel-body="relics"><div class="panel-heading"><h2>✥ 奇遇</h2><small id="relicCount">0 枚印记</small></div><div id="relicList" class="relic-list"><div class="muted">每逢奇遇回合，可获得改变战术的永久祝福。</div></div></section>
     <section class="panel guide-panel" data-panel-body="guide"><div class="panel-heading"><h2>▤ 舰长速记</h2></div><div class="hint-list">① 商店招募，点击候补棋子，再点己方半场部署。<br>② 三个同名同星棋子自动合成高星。<br>③ 部署不同的族群与职业，点亮羁绊。<br>④ 装备可先选棋子，再点右侧物品。<br>⑤ 战斗全自动，胜负影响全场耐久。<br><br><span class="kbd">R</span> 刷新商店　<span class="kbd">E</span> 买经验<br><span class="kbd">空格</span> 出战　<span class="kbd">1–5</span> 招募</div></section>
   </aside>
@@ -570,7 +573,7 @@ body #shopOdds{display:none!important}body .shop-explain:empty{display:none!impo
 <div id="coach" class="coach hidden" role="status" aria-live="polite"><div class="coach-top"><span class="coach-kicker">新手航行指引 <b id="coachIndex">1 / 7</b></span><button class="coach-x" id="skipTutorial" title="结束教学">×</button></div><strong id="coachTitle"></strong><p id="coachText"></p><div class="coach-actions"><button class="btn tiny ghost" id="coachSkip">跳过教学</button><button class="btn tiny teal hidden" id="coachNext">开始教学</button></div></div>
 <div id="toastStack" class="toast-stack" aria-live="polite"></div>
 <div class="overlay" id="menuOverlay"><div class="modal">
-  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V5.5</div><h2>浮光纪 · 裂隙棋航</h2></div></div>
+  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V5.6</div><h2>浮光纪 · 裂隙棋航</h2></div></div>
   <p class="subtitle">42 位船员 · 6 大阵营 · 8 种职业</p><p class="audio-promise">♫ 原创动态背景音乐将在点击开始后播放（可随时静音）。首次开局会提供互动教学。</p>
   <div class="feature-grid"><div class="feature"><b>⚔ 完整赛季</b><small>经济运营、部署布阵、自动攻防与最终淘汰</small></div><div class="feature"><b>✥ 每局不同</b><small>随机商店、掉落装备、三选一永久奇遇</small></div><div class="feature"><b>◈ 无需联网</b><small>单文件离线运行，准备阶段与战后自动存档</small></div></div>
   <div class="start-settings" aria-label="新航程设置">
@@ -818,7 +821,7 @@ function sfx(type){if(!audioPreference||!audioContext||audioContext.state!=='run
  else tone(68,now,.105,.035,'sine',effectsGain);
 }
 
-const VERSION_LABEL='V5.5';
+const VERSION_LABEL='V5.6';
 const SETUP_KEY='rift_fleet_setup_v45_v50preview';
 const VALID_OPPONENTS=[1,3,5,7],VALID_DIFFICULTIES=['easy','normal','hard'];
 function readSetup(){const n=Number($('opponentCount').value);const d=$('difficultySelect').value;
@@ -845,9 +848,34 @@ function receiveUnit(p,key){
 }
 function removeWhere(p,uid){for(const location of ['board','bench']){let i=p[location].findIndex(u=>u&&u.uid===uid);if(i>=0){p[location][i]=null;return true}}return false}
 function gainXp(p,amount){if(p.level>=9)return; p.xp+=amount;while(p.level<9&&p.xp>=LEVEL_XP[p.level]){p.xp-=LEVEL_XP[p.level];p.level++;if(p===G.player){notif('✧ 舰队升至 '+p.level+' 级！');recordMilestone('舰队升至 '+p.level+' 级')}}if(p.level>=9)p.xp=0}
-function weightedTier(lvl){const weights=SHOP_WEIGHTS[clamp(lvl,2,9)],n=rand(0,100);let count=0;for(let t=1;t<=5;t++){count+=weights[t-1];if(n<count&&POOLS[t].length)return t}return 1}
-function randomUnitKey(level,p=G?.player){const tier=weightedTier(level),pool=POOLS[tier];if(!p)return choose(pool);const owned=allUnits(p);const candidates=pool.map(k=>({k,w:1+Math.min(2,owned.filter(u=>u.key===k&&u.star<3).length)*.20}));let roll=rand(0,candidates.reduce((n,x)=>n+x.w,0));for(const x of candidates){roll-=x.w;if(roll<=0)return x.k}return choose(pool)}
-function rollShop(force=false){if(!G||G.phase!=='prep')return;if(G.shopLocked&&!force)return;G.shop=Array.from({length:5},()=>randomUnitKey(G.player.level,G.player));}
+// Shared inventory is derived from real holdings and reserved shop slots, never a second mutable ledger.
+const POOL_CAP={1:30,2:24,3:18,4:12,5:9};
+const poolCap=key=>POOL_CAP[UNITS[key].cost];
+const poolAlive=p=>p&&p.hp>0&&!p.eliminated;
+const poolShop=p=>p===G.player?G.shop:(p.shop||[]);
+function poolSnapshot(){const out={};for(const key of Object.keys(UNITS))out[key]={cap:poolCap(key),held:0,reserved:0,free:0,owners:[],offers:[]};
+ if(!G)return out;
+ for(const p of [G.player,...G.enemies]){if(!poolAlive(p))continue;
+  const owned={},offers={};for(const u of allUnits(p)){if(!out[u.key])continue;owned[u.key]=(owned[u.key]||0)+3**(u.star-1)}
+  for(const key of poolShop(p)){if(out[key])offers[key]=(offers[key]||0)+1}
+  for(const [key,n] of Object.entries(owned)){out[key].held+=n;out[key].owners.push({name:p.name,n,own:p===G.player})}
+  for(const [key,n] of Object.entries(offers)){out[key].reserved+=n;out[key].offers.push({name:p.name,n,own:p===G.player})}
+ }
+ for(const x of Object.values(out))x.free=Math.max(0,x.cap-x.held-x.reserved);return out;
+}
+function clearPoolShop(p){if(p===G.player)G.shop=[];else p.shop=[];}
+function drawPoolKey(level,stock){const weights=SHOP_WEIGHTS[clamp(level,2,9)];const tiers=[1,2,3,4,5].filter(t=>weights[t-1]>0&&POOLS[t].some(k=>stock[k].free>0));if(!tiers.length)return null;
+ let roll=rand(0,tiers.reduce((a,t)=>a+weights[t-1],0)),tier=tiers.at(-1);for(const t of tiers){roll-=weights[t-1];if(roll<0){tier=t;break}}
+ const keys=POOLS[tier].filter(k=>stock[k].free>0);let pick=rand(0,keys.reduce((a,k)=>a+stock[k].free,0));for(const key of keys){pick-=stock[key].free;if(pick<0)return key}return keys.at(-1);
+}
+function refreshPoolShop(p){clearPoolShop(p);const shop=poolShop(p),stock=poolSnapshot();for(let i=0;i<5;i++){const key=drawPoolKey(p.level,stock);shop.push(key);if(key)stock[key].free--}return shop;}
+function migratePool(){if(G.poolVersion===1)return;const active=[G.player,...G.enemies].filter(poolAlive),previous=active.map(p=>[p,poolShop(p).slice()]);for(const p of active)clearPoolShop(p);
+ const stock=poolSnapshot();for(const [p,old] of previous){const shop=poolShop(p);for(let i=0;i<5;i++){const key=old[i];if(key&&stock[key]?.free>0){shop.push(key);stock[key].free--}else shop.push(null)}}G.poolVersion=1;}
+function rollShop(force=false){if(!G||G.phase!=='prep')return;if(G.shopLocked&&!force)return;refreshPoolShop(G.player);}
+function preparePoolRound(first=false){const active=G.enemies.filter(poolAlive);for(const p of active)clearPoolShop(p);if(!G.shopLocked)clearPoolShop(G.player);
+ const actors=shuffle([...active,...(poolAlive(G.player)&&!G.shopLocked?[G.player]:[])]);for(const p of actors){if(p===G.player)refreshPoolShop(p);else prepareAI(p,first)}
+}
+
 function getTraitCounts(p){let f={},r={};const seen=new Set();for(const u of p.board){if(!u||seen.has(u.key))continue;seen.add(u.key);let t=UNITS[u.key];f[t.faction]=(f[t.faction]||0)+1;r[t.role]=(r[t.role]||0)+1}return {f,r};}
 function traitStage(q,trait){let n=0;for(const t of trait.tiers)if(q>=t)n++;return n}
 function mixedSynergy(f){const stages=Object.values(f);return stages.filter(n=>n>0).length>=2&&!stages.includes(3)}
@@ -923,16 +951,12 @@ function newGame(settingsOverride=null){enemyRangeUid=null;
  chosenTraitKey=null;equipReturnToBag=false;
  const settings=settingsOverride&&VALID_OPPONENTS.includes(settingsOverride.opponents)?settingsOverride:readSetup();
  saveSetup(settings);
- G={version:4,balanceVersion:'4.6.1',reportVersion:47,setup:{...settings},roundHistory:[],eliminationOrder:[],finalSaved:false,milestones:[],seq:0,round:1,phase:'prep',player:createCaptain(true),enemies:Array.from({length:settings.opponents},(_,i)=>createCaptain(false,i)),shop:[],shopLocked:false,bag:[],relics:[],pendingChoices:[],nextEnemy:0,battle:null,combatSummary:null,log:['旗舰已抵达星港，准备招募与部署。'],stats:{wins:0,losses:0,upgrades:0,bought:0,kills:0,spent:0,items:0,rounds:1,lowestHp:80,peakStreak:0},speed:1};
+ G={version:4,poolVersion:1,balanceVersion:'4.6.1',reportVersion:47,setup:{...settings},roundHistory:[],eliminationOrder:[],finalSaved:false,milestones:[],seq:0,round:1,phase:'prep',player:createCaptain(true),enemies:Array.from({length:settings.opponents},(_,i)=>createCaptain(false,i)),shop:[],shopLocked:false,bag:[],relics:[],pendingChoices:[],nextEnemy:0,battle:null,combatSummary:null,log:['旗舰已抵达星港，准备招募与部署。'],stats:{wins:0,losses:0,upgrades:0,bought:0,kills:0,spent:0,items:0,rounds:1,lowestHp:80,peakStreak:0},speed:1};
  G.player.name=settings.captainName;
  const starterFront=POOLS[1].filter(k=>['guard','fighter','vanguard'].includes(UNITS[k].role)),starterBack=POOLS[1].filter(k=>!['guard','fighter','vanguard'].includes(UNITS[k].role));
- function dealStarter(p){p.board[p===G.player?3:17]=makeUnit(choose(starterFront));p.board[p===G.player?17:3]=makeUnit(choose(starterBack))}
- dealStarter(G.player);
- for(const enemy of G.enemies){
-  dealStarter(enemy);
-  prepareAI(enemy,true);
- }
- rollShop(true);chooseNextEnemy();G.bag.push(choose(ITEMS).id);
+ function dealStarter(p){for(const [slot,keys] of [[p===G.player?3:17,starterFront],[p===G.player?17:3,starterBack]]){const stock=poolSnapshot(),available=keys.filter(k=>stock[k].free>0);if(available.length)p.board[slot]=makeUnit(choose(available));}}
+ for(const p of shuffle([G.player,...G.enemies]))dealStarter(p);
+ preparePoolRound(true);chooseNextEnemy();G.bag.push(choose(ITEMS).id);
  selectedUid=null;selectedItem=null;selectedTransfer=null;pendingTransfer=null;fx={particles:[],floaters:[],projectiles:[],rings:[]};
  $('menuOverlay').classList.add('hidden');$('resultOverlay').classList.add('hidden');$('relicOverlay').classList.add('hidden');$('equipOverlay').classList.add('hidden');closePanel();
  renderAll();storageSave();startMusic();startTutorial(true);notif('✥ '+G.player.name+' 启航！共 '+(G.enemies.length+1)+' 位舰长，已赠送两名船员和一件遗物。');
@@ -992,7 +1016,7 @@ async function importCurrentSave(file){if(!file)return;try{
  if(!window.confirm('导入存档将覆盖当前游戏进度。继续之前会备份原存档，确定导入？'))return;
  storePreNewGameBackup();localStorage.setItem(SAVE_KEY,raw);G=null;loadGame();
  }catch(e){alert('导入失败：'+e.message)}finally{$('importSaveInput').value=''}}
-function loadGame(){chosenTraitKey=null;equipReturnToBag=false;const data=storedGame();if(!data){notif('找不到有效的本地存档');return}G=data;G.setup??={captainName:G.player.name||'蓝舰长',opponents:G.enemies.length,difficulty:'normal'};applySetup(G.setup);if(G.phase==='battle')G.phase='prep';if(G.phase==='result'&&(G.player.hp<=0||G.enemies.every(e=>e.eliminated)))G.phase='gameover';G.battle=null;selectedUid=null;selectedItem=null;selectedTransfer=null;pendingTransfer=null;G.speed=1;fx={particles:[],floaters:[],projectiles:[],rings:[]};$('menuOverlay').classList.add('hidden');$('resultOverlay').classList.add('hidden');if(G.phase==='result')showResult();if(G.phase==='gameover')showEnd();if(G.phase==='prep'&&G.pendingChoices?.length)showRelics();renderAll();startMusic();if(Number.isInteger(G.tutorialStep))renderCoach();notif('↪ 已恢复上次航程')}
+function loadGame(){chosenTraitKey=null;equipReturnToBag=false;const data=storedGame();if(!data){notif('找不到有效的本地存档');return}G=data;migratePool();G.setup??={captainName:G.player.name||'蓝舰长',opponents:G.enemies.length,difficulty:'normal'};applySetup(G.setup);if(G.phase==='battle')G.phase='prep';if(G.phase==='result'&&(G.player.hp<=0||G.enemies.every(e=>e.eliminated)))G.phase='gameover';G.battle=null;selectedUid=null;selectedItem=null;selectedTransfer=null;pendingTransfer=null;G.speed=1;fx={particles:[],floaters:[],projectiles:[],rings:[]};$('menuOverlay').classList.add('hidden');$('resultOverlay').classList.add('hidden');if(G.phase==='result')showResult();if(G.phase==='gameover')showEnd();if(G.phase==='prep'&&G.pendingChoices?.length)showRelics();renderAll();startMusic();if(Number.isInteger(G.tutorialStep))renderCoach();notif('↪ 已恢复上次航程')}
 function chooseNextEnemy(){const alive=G.enemies.filter(e=>!e.eliminated&&e.hp>0);if(!alive.length){G.nextEnemy=-1;return}const i=(G.round-1)%alive.length;G.nextEnemy=G.enemies.indexOf(alive[i]);}
 // AI receives the same once-per-four-round relic choices as the player.
 // Old saves receive catch-up choices to prevent a v4.6 AI having an artificial deficit.
@@ -1089,15 +1113,15 @@ function aiBenchReplacement(p,key){
 }
 function aiRecruit(p){
  const difficulty=G.setup?.difficulty||'normal';
- p.shop??=Array.from({length:5},()=>randomUnitKey(p.level,p));
+ if(!p.shop?.length)refreshPoolShop(p);
  const own=()=>allUnits(p),opponentWeak=G.player?.hp>0&&G.player.hp<36;
  const evaluations=key=>{
-  const t=UNITS[key],units=own(),copies=units.filter(u=>u.key===key&&u.star<3).length;
+  const t=UNITS[key],units=own(),copies=units.filter(u=>u.key===key&&u.star<3).length;const owned=units.filter(u=>u.key===key).reduce((n,u)=>n+3**(u.star-1),0);
   const deployed=p.board.filter(Boolean),sameF=deployed.filter(u=>UNITS[u.key].faction===t.faction).length,
     sameR=deployed.filter(u=>UNITS[u.key].role===t.role).length;
   let score=10+t.cost*2.4+copies*12+(copies>=2?26:0)+(t.faction===p.focus?11:0)
    +(t.role===p.focusRole?5:0)+sameF*3+sameR*2.0;
-  if([1,3,5].includes(sameF))score+=8;
+  if([1,3,5].includes(sameF))score+=8;if(owned>=9)score-=70;const stock=poolSnapshot()[key];if(owned>=3&&owned<9&&owned+stock.free+stock.offers.filter(x=>x.name===p.name).reduce((n,x)=>n+x.n,0)<9)score-=14;
   if(own().length<p.level)score+=18;
   if(own().length>p.level+6&&!copies&&t.cost<=2)score-=16;
   if(difficulty==='easy')score=score*.68+rand(-12,15);
@@ -1118,7 +1142,7 @@ function aiRecruit(p){
     if(receiveUnit(p,best.key)){p.gold-=UNITS[best.key].cost;p.shop[best.i]=null;purchases++;continue}
   }
   if(rerolls>=rerollLimit||p.gold<2+reserve||(full&&difficulty==='easy'))break;
-  p.gold-=2;rerolls++;p.shop=Array.from({length:5},()=>randomUnitKey(p.level,p));
+  p.gold-=2;rerolls++;refreshPoolShop(p);
  }
 }
 function aiArrange(p){
@@ -1192,7 +1216,7 @@ function prepareAI(p,first=false){
     p.gold-=4;gainXp(p,4+(p.relics.includes('fortune')?2:0));
   }
   if(difficulty==='hard'&&p.hp<22&&p.level<Math.min(target,7)&&p.gold>=4){p.gold-=4;gainXp(p,4+(p.relics.includes('fortune')?2:0))}
-  p.shop=Array.from({length:5},()=>randomUnitKey(p.level,p));
+  refreshPoolShop(p);
  }
  aiArrange(p);aiRecruit(p);aiArrange(p);growAIEquipment(p,first);
 }
@@ -1212,8 +1236,8 @@ function onBenchClick(i,forcedSwap=false){if(!G||G.phase!=='prep')return;enemyRa
  const source=locateUnit(p,selectedUid);if(!source){selectedUid=null;renderAll();return}swapOrMove(source,'bench',i)}
 function benchRetreat(index){if(!G||G.phase!=='prep')return;const i=index-21;if(i<0)return;const u=G.player.board[i];if(!u)return;const free=G.player.bench.indexOf(null);if(free<0){notif('候补席已满，无法撤回');return}G.player.board[i]=null;G.player.bench[free]=u;selectedUid=u.uid;renderAll();storageSave();notif(UNITS[u.key].name+' 已返回候补席')}
 function buyShop(i){if(!G||G.phase!=='prep'||G.pendingChoices?.length)return;const key=G.shop[i];if(!key)return;const t=UNITS[key],p=G.player;if(p.gold<t.cost){notif('金币不足，无法招募');return}if(benchCount(p)>=p.bench.length&&!incomingUpgradePossible(p,key)){notif('候补席已满；同名棋子已有两枚时仍可直接合成');return}
- p.gold-=t.cost;G.stats.spent+=t.cost;G.stats.bought++;receiveUnit(p,key);G.shop[i]=null;selectedUid=allUnits(p).filter(x=>x.key===key).sort((a,b)=>b.star-a.star)[0]?.uid||null;renderAll();storageSave();sfx('click');if(G.tutorialStep===1){G.tutorialBaseline=unitCount(G.player);advanceTutorial(2)}}
-function reroll(){if(!G||G.phase!=='prep'||G.pendingChoices?.length)return;if(G.player.gold<2){notif('需要 2 枚金币刷新商店');return}G.player.gold-=2;G.stats.spent+=2;G.shop=Array.from({length:5},()=>randomUnitKey(G.player.level,G.player));renderAll();storageSave();sfx('click')}
+ if(!receiveUnit(p,key))return;p.gold-=t.cost;G.stats.spent+=t.cost;G.stats.bought++;G.shop[i]=null;selectedUid=allUnits(p).filter(x=>x.key===key).sort((a,b)=>b.star-a.star)[0]?.uid||null;renderAll();storageSave();sfx('click');if(G.tutorialStep===1){G.tutorialBaseline=unitCount(G.player);advanceTutorial(2)}}
+function reroll(){if(!G||G.phase!=='prep'||G.pendingChoices?.length)return;if(G.player.gold<2){notif('需要 2 枚金币刷新商店');return}G.player.gold-=2;G.stats.spent+=2;refreshPoolShop(G.player);renderAll();storageSave();sfx('click')}
 function buyXp(){if(!G||G.phase!=='prep'||G.pendingChoices?.length)return;if(G.player.level>=9){notif('舰队已达到 9 级');return}if(G.player.gold<4){notif('需要 4 枚金币购买经验');return}G.player.gold-=4;G.stats.spent+=4;gainXp(G.player,4+(hasRelic('fortune')?2:0));renderAll();storageSave();sfx('click');if(G.tutorialStep===5)advanceTutorial(6)}
 function sellSelected(){if(!G||G.phase!=='prep'||!selectedUid)return;let u=findUnit(G.player,selectedUid);if(!u)return;const refund=sellValue(u);G.player.gold+=refund;selectedTransfer=null;selectedItem=null;G.bag.push(...u.items);removeWhere(G.player,u.uid);selectedUid=null;renderAll();storageSave();notif('已出售船员，返还 '+refund+' 金币')}
 
@@ -1263,8 +1287,7 @@ function equipItem(i,uid=selectedUid){if(!G||G.phase!=='prep'||!G.bag[i])return;
 function unequip(index){if(!G||G.phase!=='prep'||!selectedUid)return;const u=findUnit(G.player,selectedUid);if(!u||!u.items[index])return;const id=u.items.splice(index,1)[0];G.bag.push(id);renderAll();storageSave();notif('已卸下 '+ITEM_BY_ID[id].name)}
 function nextRound(){enemyRangeUid=null;if(!G||G.phase!=='result')return;G.round++;G.stats.rounds=G.round;G.phase='prep';G.combatSummary=null;G.battle=null;G.log=[];G.speed=1;selectedItem=null;selectedTransfer=null;pendingTransfer=null;fx={particles:[],floaters:[],projectiles:[],rings:[]};
  gainXp(G.player,2);
- for(const p of G.enemies)if(!p.eliminated)prepareAI(p);
- if(!G.shopLocked)G.shop=Array.from({length:5},()=>randomUnitKey(G.player.level,G.player));
+ preparePoolRound();
  chooseNextEnemy();$('resultOverlay').classList.add('hidden');
  if(G.round%2===1&&G.round>=3){const n=G.round%6===1?2:1;for(let j=0;j<n;j++){const id=choose(ITEMS).id;G.bag.push(id);G.stats.items++}notif('✦ 探测仪发现 '+n+' 件漂流遗物！')}
  if(G.round%4===0&&G.relics.length<6){let choices=shuffle(RELICS.filter(r=>!G.relics.includes(r.id))).slice(0,3);if(choices.length){G.pendingChoices=choices.map(c=>c.id);showRelics()}}
@@ -1327,17 +1350,24 @@ function renderAll(){if(!G)return;document.body.dataset.phase=G.phase;const p=G.
  const activeTraits=[...Object.entries(info.f).filter(([k,stage])=>stage).map(([k,stage])=>({name:FACTIONS[k].name,stage,n:info.counts.f[k],next:FACTIONS[k].tiers[1]})),...Object.entries(info.r).filter(([k,stage])=>stage).map(([k,stage])=>({name:CLASSES[k].name,stage,n:info.counts.r[k],next:CLASSES[k].tiers[1]}))];
  $('synergyBrief').classList.add('hidden');paintTraitRibbon(info);paintUnitPeek(chosen);
  renderRanks();renderBench();renderShop();renderTraits();renderInspector();renderInventory();renderRelicList();renderLog();syncTraitHighlight();}
-function renderRanks(){const captains=[G.player,...G.enemies].sort((a,b)=>b.hp-a.hp);$('rankList').innerHTML=captains.map((p,i)=>{const you=p===G.player,next=!you&&G.enemies.indexOf(p)===G.nextEnemy;
- return `<div class="rank-card ${you?'you':''} ${next?'next':''} ${p.eliminated?'dead':''}"><div class="rank-top"><div class="rank-avatar" style="color:${p.color};background:${p.color}1b">${p.icon}</div><div style="min-width:0;flex:1"><div class="rank-name">${i+1}. ${esc(p.name)}</div><div class="rank-sub">Lv.${p.level} · ${p.hp>0?p.hp+' / 80 耐久':'已淘汰'} · 奇遇 ${(you?G.relics:(p.relics||[])).length}枚</div><div class="rank-sub" title="${(you?G.relics:(p.relics||[])).map(id=>RELIC_BY_ID[id]?.name||id).join('、')||'尚无永久奇遇'}">${(you?G.relics:(p.relics||[])).map(id=>RELIC_BY_ID[id]?.icon||'✧').join(' ')||'尚无奇遇'}</div></div>${next?'<span class="rank-badge">即将交战</span>':''}</div><div class="rank-life"><i style="width:${clamp(p.hp/80*100,0,100)}%"></i></div></div>`}).join('')}
+let scoutMode='ranks';const scoutOpen=new Set();
+function scoutCrew(p,arr){return arr.filter(Boolean).map(u=>{const t=UNITS[u.key],f=FACTIONS[t.faction];return `<button class="scout-unit" data-scout-captain="${p===G.player?-1:G.enemies.indexOf(p)}" data-scout-uid="${esc(u.uid)}"><span style="color:${f.color}">${f.icon}</span> ${esc(t.name)} <b>${stars(u.star)}</b>${u.items.length?' · '+u.items.map(id=>ITEM_BY_ID[id].icon).join(' '):''}</button>`}).join('')||'<span class="pool-muted">空</span>'}
+function poolOwners(x){return [...x.owners.map(a=>`${esc(a.name)} · 持有 ${a.n}`),...x.offers.map(a=>`${esc(a.name)} · 商店 ${a.n}`)].map(a=>`<div>${a}</div>`).join('')||'无人持有或预留'}
+function renderPool(){const stock=poolSnapshot(),query=$('poolSearch').value.trim().toLowerCase(),tier=+$('poolTier').value;const roster=Object.values(UNITS).filter(t=>(!tier||t.cost===tier)&&(!query||(t.name+FACTIONS[t.faction].name+CLASSES[t.role].name).toLowerCase().includes(query))).sort((a,b)=>a.cost-b.cost||a.name.localeCompare(b.name,'zh'));
+ const open=new Set([...$('rankList').querySelectorAll('details[open][data-pool-key]')].map(x=>x.dataset.poolKey));
+ $('rankList').innerHTML=`<div class="pool-muted">余量 / 初始库存 · 已扣除所有在场及候补棋子、商店预留；淘汰后归还。</div>`+roster.map(t=>{const x=stock[t.key],f=FACTIONS[t.faction];return `<details class="pool-row" data-pool-key="${t.key}" ${open.has(t.key)?'open':''}><summary><span style="color:${f.color}">${f.icon}</span><span>${esc(t.name)} <small>${t.cost}费</small></span><b class="${x.free<=3?'scarce':''}">${x.free}/${x.cap}</b></summary><div class="pool-bar"><i style="width:${100*x.free/x.cap}%"></i></div><div class="pool-muted">持有 ${x.held} · 商店 ${x.reserved}${x.held+x.reserved>x.cap?' · 旧存档超额，暂不再抽取':''}</div><div class="pool-owner">${poolOwners(x)}</div></details>`}).join('');}
+function renderRanks(){if(!G)return;$('scoutTab').classList.toggle('active',scoutMode==='ranks');$('poolTab').classList.toggle('active',scoutMode==='pool');$('poolControls').classList.toggle('hidden',scoutMode!=='pool');if(scoutMode==='pool'){renderPool();return}
+ const captains=[G.player,...G.enemies].sort((a,b)=>b.hp-a.hp);$('rankList').innerHTML=captains.map((p,i)=>{const you=p===G.player,id=you?-1:G.enemies.indexOf(p),next=!you&&id===G.nextEnemy;const buffs=getBuffs(p),traits=[...Object.entries(buffs.f).filter(([,n])=>n).map(([k,n])=>FACTIONS[k].name+' '+FACTIONS[k].tiers[n-1]),...Object.entries(buffs.r).filter(([,n])=>n).map(([k,n])=>CLASSES[k].name+' '+CLASSES[k].tiers[n-1])];return `<details class="rank-card ${you?'you':''} ${next?'next':''} ${p.eliminated?'dead':''}" data-scout-id="${id}" ${scoutOpen.has(id)?'open':''}><summary class="rank-top"><div class="rank-avatar" style="color:${p.color};background:${p.color}1b">${p.icon}</div><div style="min-width:0;flex:1"><div class="rank-name">${i+1}. ${esc(p.name)}${you?'（你）':''}</div><div class="rank-sub">Lv.${p.level} · ${p.hp>0?p.hp+' / 80':'已淘汰'} · ${p.board.filter(Boolean).length}上阵 / ${p.bench.filter(Boolean).length}候补</div></div>${next?'<span class="rank-badge">下轮</span>':''}</summary><div class="rank-life"><i style="width:${clamp(p.hp/80*100,0,100)}%"></i></div><div class="scout-traits">${traits.join(' · ')||'未激活羁绊'}</div><div class="scout-roster"><b>上阵 ${p.eliminated?'（淘汰时）':''}</b>${scoutCrew(p,p.board)}<b>候补</b>${scoutCrew(p,p.bench)}<div class="pool-muted">奇遇：${(you?G.relics:p.relics||[]).map(id=>RELIC_BY_ID[id]?.name||id).join('、')||'无'}</div>${p.eliminated?'<div class="pool-muted">棋子已归还共享棋池</div>':''}</div></details>`}).join('');}
+
 function renderBench(){$('benchSlots').innerHTML=G.player.bench.map((u,i)=>{if(!u)return `<button class="bench-slot" data-bench="${i}" title="空候补位置 ${i+1}"><span class="idx">${i+1}</span><span>＋</span></button>`;
  const t=UNITS[u.key],f=FACTIONS[t.faction];return `<button class="bench-slot occupied rarity${t.cost} ${selectedUid===u.uid?'picked':''}" data-bench="${i}" draggable="false" title="${t.name} · ${stars(u.star)} · ${f.name} / ${CLASSES[t.role].name}"><span class="rarity-line" style="background:${f.color}"></span><span class="idx">${i+1}</span><span class="star-mini">${stars(u.star)}</span><span class="small-icon">${crewArt(t)}</span><span class="bench-name">${t.name}</span>${u.items.length?`<span class="bench-equip">${u.items.map(id=>ITEM_BY_ID[id].icon).join(' ')}</span>`:''}</button>`}).join('')}
-function renderShop(){const recommendations=G.shop.map((key,i)=>({i,score:key?shopJudgement(key).score:-1})).sort((a,b)=>b.score-a.score);const best=recommendations[0]?.score>=5?recommendations[0].i:-1; $('shopGrid').innerHTML=G.shop.map((key,i)=>{if(!key)return `<div class="shop-entry"><div class="shop-card empty"><span style="font-size:23px">◇</span><span style="font-size:10px;margin-top:8px">已招募</span></div></div>`;const t=UNITS[key],f=FACTIONS[t.faction],can=G.phase==='prep'&&G.player.gold>=t.cost&&(benchCount(G.player)<10||incomingUpgradePossible(G.player,key));
+function renderShop(){const stock=poolSnapshot();const recommendations=G.shop.map((key,i)=>({i,score:key?shopJudgement(key).score:-1})).sort((a,b)=>b.score-a.score);const best=recommendations[0]?.score>=5?recommendations[0].i:-1; $('shopGrid').innerHTML=G.shop.map((key,i)=>{if(!key)return `<div class="shop-entry"><div class="shop-card empty"><span style="font-size:23px">◇</span><span style="font-size:10px;margin-top:8px">空位</span></div></div>`;const t=UNITS[key],f=FACTIONS[t.faction],can=G.phase==='prep'&&G.player.gold>=t.cost&&(benchCount(G.player)<10||incomingUpgradePossible(G.player,key));
  const owned=allUnits(G.player).filter(u=>u.key===key&&u.star===1).length;
  const alreadyOnBoard=G.player.board.some(u=>u?.key===key),traitCounts=getTraitCounts(G.player),judgement=shopJudgement(key);
  const shopHint=judgement.reason;
 
  return `<div class="shop-entry"><button class="shop-card tier${t.cost} ${i===best?'suggested':''}" data-shop="${i}" ${!can?'disabled':''} title="${t.name}（${t.cost} 金币）
-${t.skillName}：${t.skillDesc}"><span class="shop-cost">◈ ${t.cost}</span><span class="shop-key">${i+1}</span><div class="shop-art" style="background:radial-gradient(ellipse at 50% 110%,${f.b}dd,transparent 72%),linear-gradient(150deg,${f.a},#14233a)"><span class="portrait-main">${crewArt(t)}</span></div><div class="bottom"><div class="shop-unit-name">${t.name}${shopCopies(key)?` <span class="shop-copy">${shopCopies(key)}</span>`:''}</div><div class="shop-classes crew-identity"><span class="crew-faction" style="--identity:${f.color}">${f.icon} ${f.name}</span><span class="crew-role">${CLASSES[t.role].icon} ${CLASSES[t.role].name}</span></div><div class="shop-guide">${rangeLabel(t.range)} ${t.range.toFixed(2)}格</div>${shopHint?`<div class="shop-hint">${shopHint}</div>`:''}</div></button><button class="shop-info" data-shop-info="${i}" title="查看 ${t.name} 的完整图鉴、技能及升星数值" aria-label="查看${t.name}详情">ⓘ</button></div>`}).join('')}
+${t.skillName}：${t.skillDesc}"><span class="shop-cost">◈ ${t.cost}</span><span class="shop-key">${i+1}</span><span class="pool-remaining ${stock[key].free<=3?'scarce':''}">余 ${stock[key].free}/${stock[key].cap}</span><div class="shop-art" style="background:radial-gradient(ellipse at 50% 110%,${f.b}dd,transparent 72%),linear-gradient(150deg,${f.a},#14233a)"><span class="portrait-main">${crewArt(t)}</span></div><div class="bottom"><div class="shop-unit-name">${t.name}${shopCopies(key)?` <span class="shop-copy">${shopCopies(key)}</span>`:''}</div><div class="shop-classes crew-identity"><span class="crew-faction" style="--identity:${f.color}">${f.icon} ${f.name}</span><span class="crew-role">${CLASSES[t.role].icon} ${CLASSES[t.role].name}</span></div><div class="shop-guide">${rangeLabel(t.range)} ${t.range.toFixed(2)}格</div>${shopHint?`<div class="shop-hint">${shopHint}</div>`:''}</div></button><button class="shop-info" data-shop-info="${i}" title="查看 ${t.name} 的完整图鉴、技能及升星数值" aria-label="查看${t.name}详情">ⓘ</button></div>`}).join('')}
 
 // V4.3: grounded trait tooltips are generated from the exact same active buffs and thresholds as combat.
 function traitView(kind,key){const def=kind==='f'?FACTIONS[key]:CLASSES[key];if(!def)return null;const buff=getBuffs(G.player);const count=(kind==='f'?buff.counts.f[key]:buff.counts.r[key])||0;const stage=traitStage(count,def);const next=stage<def.tiers.length?def.tiers[stage]:null;return {def,count,stage,next};}
@@ -1664,7 +1694,7 @@ function battleScore(p){const units=p.board.filter(Boolean);if(!units.length)ret
 function recordElimination(p){if(!p||p.hp>0||!G)return;G.eliminationOrder??=[];const id=p===G.player?'player':'ai'+G.enemies.indexOf(p);if(!G.eliminationOrder.includes(id))G.eliminationOrder.push(id);p.eliminatedRound??=G.round;}
 function snapshotEliminationHp(){return Object.fromEntries([['player',G.player.hp],...G.enemies.map((e,i)=>['ai'+i,e.hp])])}
 function normalizeEliminations(before){const order=G.eliminationOrder||[],current=order.filter(id=>before[id]>0),old=order.filter(id=>!(before[id]>0));current.sort((a,b)=>before[a]-before[b]||a.localeCompare(b));G.eliminationOrder=[...old,...current];}
-function finishTournament(){if(G.tournamentFinished)return;const personalRound=G.round;let round=G.tournamentRound||personalRound;try{while(G.enemies.filter(e=>e.hp>0&&!e.eliminated).length>1){G.round=++round;const before=snapshotEliminationHp();for(const e of G.enemies)if(e.hp>0&&!e.eliminated)prepareAI(e);otherAiBattles(null);normalizeEliminations(before);G.tournamentRound=round;}G.tournamentFinished=true;G.tournamentRound=round;}finally{G.round=personalRound;}}
+function finishTournament(){if(G.tournamentFinished)return;const personalRound=G.round;let round=G.tournamentRound||personalRound;try{while(G.enemies.filter(e=>e.hp>0&&!e.eliminated).length>1){G.round=++round;const before=snapshotEliminationHp();preparePoolRound();otherAiBattles(null);normalizeEliminations(before);G.tournamentRound=round;}G.tournamentFinished=true;G.tournamentRound=round;}finally{G.round=personalRound;}}
 function finalStandings(){if(!G)return [];
  const list=[{p:G.player,id:'player'},...G.enemies.map((p,i)=>({p,id:'ai'+i}))],order=G.eliminationOrder||[];
  return list.sort((a,b)=>{
@@ -1874,7 +1904,7 @@ const panelNames={advice:'战术分析',rank:'对手',traits:'羁绊',inspect:'�
 function openPanel(name){if(!panelNames[name])return;const reopen=openPanelName===name;closePanel();if(reopen)return;
  openPanelName=name;document.querySelector('.layout').classList.add('panel-visible');document.querySelector(`[data-panel-body="${name}"]`)?.classList.add('tool-open');
  document.querySelector(`[data-panel="${name}"]`)?.classList.add('active');$('panelBackdrop').classList.remove('hidden');$('panelClose').classList.remove('hidden');hideHoverTip();
- if(name==='codex')renderCodex();if(name==='advice')renderAdvice();if(G?.tutorialStep===3&&name==='traits')advanceTutorial(4);
+ if(name==='rank')renderRanks();if(name==='codex')renderCodex();if(name==='advice')renderAdvice();if(G?.tutorialStep===3&&name==='traits')advanceTutorial(4);
 }
 function closePanel(){openPanelName='';document.querySelector('.layout').classList.remove('panel-visible');document.querySelectorAll('.tool-open').forEach(e=>e.classList.remove('tool-open'));document.querySelectorAll('.tool-btn.active').forEach(e=>e.classList.remove('active'));$('panelBackdrop').classList.add('hidden');$('panelClose').classList.add('hidden')}
 function tooltipAt(html,clientX,clientY,owner){if(!html||v51Drag?.active)return;
@@ -1895,10 +1925,10 @@ function unitTooltip(u,p=G?.player){if(!u||!G)return'';
  return `<div class="tip-unit-name" style="color:${f.color}">${esc(t.name)} ${stars(u.star)} <small>◈ ${t.cost}</small></div><div class="tip-kind crew-identity"><span class="crew-faction" style="--identity:${f.color}">${f.icon} ${f.name}</span><span class="crew-role">${role.icon} ${role.name}</span></div><div class="tip-range">${rangeLabel(v.射程)} · 普攻射程 ${v.射程} 格</div><div class="tip-stat-grid">${pick.map(k=>`<span>${k} <b>${v[k]}</b></span>`).join('')}</div><div class="tip-skill"><b>${esc(t.skillName)}</b> · ${esc(t.skillDesc)}</div><div class="tip-equipment">${u.items.length?u.items.map(id=>{const x=ITEM_BY_ID[id];return `<div><b>${x.icon} ${x.name}</b> <small>${esc(x.desc)} · ${esc(itemFit(id))}</small></div>`}).join(''):'<span>装备：暂无</span>'}</div>`;
 }
 
-function templateTooltip(t){const f=FACTIONS[t.faction],role=CLASSES[t.role];return `<b style="color:${f.color}">${esc(t.name)} · ${t.cost} 费</b><small>${f.name} · ${role.name} · ${rangeLabel(t.range)} ${t.range.toFixed(2)} 格</small><div><strong>${esc(t.skillName)}</strong> ${esc(t.skillDesc)}</div><div class="tooltip-muted">生命 ${t.hp} · 攻击 ${t.atk} · 攻速 ${t.aspd}</div><div class="tip-upcoming">${shopCopies(t.key)||'尚未拥有'}${candidateTraits({key:t.key}).length?' · 上阵可激活 '+candidateTraits({key:t.key}).join('、'):''}</div>`}
+function templateTooltip(t){const f=FACTIONS[t.faction],role=CLASSES[t.role],stock=poolSnapshot()[t.key];return `<b style="color:${f.color}">${esc(t.name)} · ${t.cost} 费</b><small>${f.name} · ${role.name} · ${rangeLabel(t.range)} ${t.range.toFixed(2)} 格</small><div><strong>${esc(t.skillName)}</strong> ${esc(t.skillDesc)}</div><div class="tooltip-muted">生命 ${t.hp} · 攻击 ${t.atk} · 攻速 ${t.aspd}</div><div class="tip-upcoming">棋池 ${stock.free}/${stock.cap} · 持有 ${stock.held} · 商店预留 ${stock.reserved}</div><div class="tip-upcoming">${shopCopies(t.key)||'尚未拥有'}${candidateTraits({key:t.key}).length?' · 上阵可激活 '+candidateTraits({key:t.key}).join('、'):''}</div>`}
 function itemTooltip(id){const it=ITEM_BY_ID[id];return it?`<b>${it.icon} ${esc(it.name)}</b><div>${esc(it.desc)}</div><small>适合：${esc(itemFit(id))} · 同名特效不叠加</small>`:''}
-function tooltipMove(e){if(v51Drag?.active)return;const piece=e.target.closest('[data-transfer-slot],[data-shop],[data-shop-info],[data-bench],[data-item],[data-trait-kind],[data-mixed-tip],.trait-row,.relic-mini,.top-chip,.equip-chip,.peek-gear-entry');if(!piece){hideHoverTip();return}if(!G)return;
- let message='';if(piece.matches('[data-transfer-slot]')){const u=selectedUid&&findUnit(G.player,selectedUid);message=itemTooltip(u?.items[+piece.dataset.transferSlot])}else if(piece.matches('.top-chip')){const p=G.player;if(piece.querySelector('#headGold'))message=`<b>金币 ${p.gold}</b><div>基础收入 +5 · 利息 +${Math.min(5,Math.floor(p.gold/10))}（每10金币 +1，最多5）</div><small>当前连胜 / 连败：${p.streak||0}</small>`;else if(piece.querySelector('#headLevel'))message=`<b>等级 ${p.level}</b><div>经验 ${p.xp}/${LEVEL_XP[p.level]??'满级'} · 上阵 ${unitCount(p)}/${p.level}</div><div>${oddsSummary(p.level)}</div>`;}else if(piece.matches('[data-shop-info]')){const k=G.shop[+piece.dataset.shopInfo];if(k)message=templateTooltip(UNITS[k])}else if(piece.matches('[data-shop]')){const key=G.shop[+piece.dataset.shop];if(key)message=templateTooltip(UNITS[key])}
+function tooltipMove(e){if(v51Drag?.active)return;const piece=e.target.closest('[data-scout-uid],[data-transfer-slot],[data-shop],[data-shop-info],[data-bench],[data-item],[data-trait-kind],[data-mixed-tip],.trait-row,.relic-mini,.top-chip,.equip-chip,.peek-gear-entry');if(!piece){hideHoverTip();return}if(!G)return;
+ let message='';if(piece.matches('[data-scout-uid]')){const i=+piece.dataset.scoutCaptain,p=i===-1?G.player:G.enemies[i];message=unitTooltip(p&&findUnit(p,piece.dataset.scoutUid),p)}else if(piece.matches('[data-transfer-slot]')){const u=selectedUid&&findUnit(G.player,selectedUid);message=itemTooltip(u?.items[+piece.dataset.transferSlot])}else if(piece.matches('.top-chip')){const p=G.player;if(piece.querySelector('#headGold'))message=`<b>金币 ${p.gold}</b><div>基础收入 +5 · 利息 +${Math.min(5,Math.floor(p.gold/10))}（每10金币 +1，最多5）</div><small>当前连胜 / 连败：${p.streak||0}</small>`;else if(piece.querySelector('#headLevel'))message=`<b>等级 ${p.level}</b><div>经验 ${p.xp}/${LEVEL_XP[p.level]??'满级'} · 上阵 ${unitCount(p)}/${p.level}</div><div>${oddsSummary(p.level)}</div>`;}else if(piece.matches('[data-shop-info]')){const k=G.shop[+piece.dataset.shopInfo];if(k)message=templateTooltip(UNITS[k])}else if(piece.matches('[data-shop]')){const key=G.shop[+piece.dataset.shop];if(key)message=templateTooltip(UNITS[key])}
  else if(piece.matches('[data-bench]'))message=unitTooltip(G.player.bench[+piece.dataset.bench]);
  else if(piece.matches('[data-item]')){const item=ITEM_BY_ID[G.bag[+piece.dataset.item]];if(item)message=itemTooltip(item.id)}
  else if(piece.matches('[data-mixed-tip]'))message='<b>跨阵营协同</b><div>至少两个阵营已激活且无六人阵营：全队生命、攻击 +8%。双方规则一致。</div>';
@@ -1948,6 +1978,7 @@ canvas.addEventListener('pointermove',e=>{const i=pointerBoardIndex(e);hoverTile
  });canvas.addEventListener('pointerleave',()=>{hoverTile=null;hideHoverTip()});
 canvas.addEventListener('dragover',e=>{e.preventDefault();hoverTile=pointerBoardIndex(e)});
 canvas.addEventListener('drop',e=>{e.preventDefault();const transfer=e.dataTransfer?.getData('application/x-rift-transfer');if(transfer){const [from,slot]=transfer.split(':'),index=pointerBoardIndex(e),u=index>=21?G?.player.board[index-21]:null;if(u)doTransfer(from,+slot,u.uid);return}const item=e.dataTransfer?.getData('application/x-rift-item');if(item!==undefined&&item!==''){const index=pointerBoardIndex(e),u=index>=21?G?.player.board[index-21]:null;if(u)equipItem(+item,u.uid);return}const uid=e.dataTransfer?.getData('text/plain');if(uid&&G?.phase==='prep'){selectedUid=uid;onBoardClick(pointerBoardIndex(e),true)}});
+$('scoutTab').addEventListener('click',()=>{scoutMode='ranks';renderRanks()});$('poolTab').addEventListener('click',()=>{scoutMode='pool';renderRanks()});$('poolSearch').addEventListener('input',renderPool);$('poolTier').addEventListener('change',renderPool);$('rankList').addEventListener('toggle',e=>{if(e.target.matches('details[data-scout-id]')){const id=+e.target.dataset.scoutId;e.target.open?scoutOpen.add(id):scoutOpen.delete(id)}},true);$('rankList').addEventListener('pointerleave',hideHoverTip);
 $('sortBenchBtn').addEventListener('click',sortBench);traitRibbon.addEventListener('pointerover',e=>{const b=e.target.closest('[data-trait-kind]');if(b){tooltipAt(traitTooltip(b.dataset.traitKind,b.dataset.traitKey),e.clientX,e.clientY,b);highlightedTrait=b.dataset.traitKind+':'+b.dataset.traitKey;syncTraitHighlight()}});traitRibbon.addEventListener('pointerleave',()=>{highlightedTrait=null;syncTraitHighlight();hideHoverTip()});
 traitRibbon.addEventListener('click',e=>{const b=e.target.closest('[data-trait-kind]');if(!b)return;chosenTraitKey=null;paintTraitPeek();tooltipAt(traitTooltip(b.dataset.traitKind,b.dataset.traitKey),e.clientX,e.clientY,b)});
 traitPeek.addEventListener('click',e=>{if(e.target.closest('[data-close-trait]')){chosenTraitKey=null;paintTraitPeek();paintTraitRibbon(getBuffs(G.player));}});
@@ -2005,7 +2036,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey||e.altKey||e.metaKey||['INP
  if(!G)return;if(e.code==='Space'){e.preventDefault();if(G.phase==='prep')startBattle();return}
  if(G.phase==='prep'){if(e.key.toLowerCase()==='r'){e.preventDefault();reroll()}if(e.key.toLowerCase()==='e'){e.preventDefault();buyXp()}if(/^[1-5]$/.test(e.key)){e.preventDefault();buyShop(+e.key-1)}}});
 // 辅助测试接口不会加载任何脚本或资源，不影响正常游戏操作。
-window.__riftGame={itemDefs:()=>ITEMS,relicDefs:()=>RELICS,testFighter:createFighter,testHurt:hurt,testHeal:heal,testHit:onBasicHit,testCast:castPassives,testTimed:timedPassives,getState:()=>G,rangeSelection:()=>({selectedUid,enemyRangeUid}),sortBench,matchAwards,finishTournament,showEnd,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiRecruit,aiArrange,aiItemValue,aiBenchReplacement,prepareAI,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,aiDuel:simulateAiDuel,aiRelic:grantAiRelic,progress:progressHighlights,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
+window.__riftGame={poolSnapshot,refreshPoolShop,preparePoolRound,migratePool,poolCap,itemDefs:()=>ITEMS,relicDefs:()=>RELICS,testFighter:createFighter,testHurt:hurt,testHeal:heal,testHit:onBasicHit,testCast:castPassives,testTimed:timedPassives,getState:()=>G,rangeSelection:()=>({selectedUid,enemyRangeUid}),sortBench,matchAwards,finishTournament,showEnd,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiRecruit,aiArrange,aiItemValue,aiBenchReplacement,prepareAI,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,aiDuel:simulateAiDuel,aiRelic:grantAiRelic,progress:progressHighlights,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
 
 // Desktop UI feedback is independent of game rules and save state.
 for(const id of ['headGold','headHp','headLevel']){
