@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080e1b">
-<title>浮光纪：裂隙棋航 V5.2 · 平衡与精简</title>
+<title>浮光纪：裂隙棋航 V5.3 · 竞技与运营</title>
 <style>
+/* V5.3 compact default information; tooltip retains details */
+
 :root{color-scheme:dark;--bg:#080d19;--panel:#101b2b;--panel2:#142236;--line:#29405b;--faint:#88a5b7;--white:#ecf5ff;--teal:#6ce6d3;--gold:#f5cb7a;--red:#fe7d89;--purple:#bba5ff;--radius:15px;--shadow:0 16px 55px rgba(0,0,0,.29)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;min-width:330px;min-height:100vh;overflow-x:hidden}button{font:inherit;cursor:pointer;touch-action:manipulation}button:disabled{cursor:not-allowed;opacity:.43!important;filter:grayscale(.35)}button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--teal);outline-offset:3px}button:hover:not(:disabled){filter:brightness(1.14)}.app-bg{position:fixed;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(ellipse at 18% 4%,#123249 0%,transparent 42%),radial-gradient(ellipse at 88% 20%,#282345 0%,transparent 35%),linear-gradient(160deg,#080d18,#0c1524 60%,#090e19)}.app-bg:after{content:"";position:absolute;inset:0;opacity:.25;background-image:radial-gradient(circle,#8ba7cf 1px,transparent 1px);background-size:56px 64px;mask-image:linear-gradient(to bottom,#000,transparent 65%)}.shell{max-width:1640px;margin:auto;padding:0 21px 28px}.topbar{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #29405688;margin-bottom:16px}.brand{display:flex;align-items:center;gap:13px;min-width:0}.brand-mark{flex:none;width:49px;height:49px;border:1px solid #6bcbc4;border-radius:15px;background:linear-gradient(145deg,#1b5060,#172237);box-shadow:inset 0 0 24px #78e4d421,0 0 22px #46bcae20;display:grid;place-items:center;transform:rotate(-5deg)}.brand-mark span{font-size:30px;color:var(--gold);text-shadow:0 0 17px #ebd7a9}.brand h1{font-size:21px;letter-spacing:2.1px;margin:0;line-height:1.15;white-space:nowrap}.brand small{display:block;color:#91b0bf;letter-spacing:2.8px;font-size:10px;margin-top:6px;font-weight:600}.top-stats{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:9px}.top-chip{border:1px solid #2d4762;border-radius:12px;background:#142234ba;padding:7px 12px;min-height:47px;display:flex;gap:9px;align-items:center}.top-chip .ic{font-size:22px}.top-chip .meta{display:flex;flex-direction:column;gap:1px}.top-chip small{font-size:10px;color:#95acbf}.top-chip strong{font-size:16px;line-height:1.1;font-variant-numeric:tabular-nums}.top-chip .hp{color:#f4a8ae}.top-chip .gold{color:var(--gold)}.head-btn{border:1px solid #35516d;background:#14283c;border-radius:12px;color:#b9d2df;height:43px;width:43px;font-size:19px}.layout{display:grid;grid-template-columns:232px minmax(0,1fr) 285px;align-items:start;gap:14px}.sidebar{display:flex;flex-direction:column;gap:14px;min-width:0}.panel{border:1px solid #294057b8;background:linear-gradient(154deg,#142236e8,#0e192add);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.panel-heading{display:flex;align-items:center;justify-content:space-between;padding:15px 15px 11px;gap:7px}.panel-heading h2{font-size:13px;margin:0;letter-spacing:1.3px;color:#d4e5ee}.panel-heading small{font-size:10px;color:#87abb7}.mini-label{font-size:10px;letter-spacing:1.4px;color:#89a9bb}.rank-list{padding:0 10px 10px;display:flex;flex-direction:column;gap:8px}.rank-card{padding:10px 10px;border-radius:11px;background:#0e1a2bb8;border:1px solid #2a3f5680;position:relative;overflow:hidden}.rank-card.you{border-color:#4db3a6aa;background:linear-gradient(105deg,#1a3a40,#142334 80%)}.rank-card.next{box-shadow:inset 3px 0 var(--gold)}.rank-card.dead{opacity:.48;filter:grayscale(.7)}.rank-top{display:flex;align-items:center;gap:8px}.rank-avatar{width:35px;height:35px;border-radius:10px;flex:none;border:1px solid #ffffff23;display:grid;place-items:center;font-size:19px}.rank-name{font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rank-sub{color:#8babb9;font-size:10px;margin-top:3px}.rank-life{margin-top:9px;height:5px;border-radius:6px;background:#29374b;overflow:hidden}.rank-life i{display:block;height:100%;background:linear-gradient(90deg,#ff8798,#f9bd78);border-radius:6px}.rank-badge{margin-left:auto;color:var(--gold);font-size:10px;white-space:nowrap}.relic-list{padding:0 14px 15px;display:grid;gap:8px}.relic-mini{display:flex;gap:9px;align-items:center;font-size:12px;padding:7px;background:#0e1a2a;border:1px solid #294059;border-radius:10px}.relic-mini .sig{font-size:20px}.relic-mini small{display:block;color:#89a8b8;font-size:10px;margin-top:2px}.muted{color:#7797aa;font-size:11px;line-height:1.7}.hint-list{padding:0 15px 15px;color:#91adbd;font-size:11px;line-height:1.9}.kbd{display:inline-flex;border:1px solid #516278;border-bottom-width:2px;border-radius:4px;padding:0 4px;color:#cfe3e8;line-height:1.5;font-size:10px;background:#1e2d40}.maincol{display:flex;flex-direction:column;gap:13px;min-width:0}.arena-panel{position:relative;border:1px solid #3b5268;border-radius:17px;background:linear-gradient(#0d1b2c,#091625);box-shadow:0 14px 48px #0007;overflow:hidden}.arena-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:linear-gradient(95deg,#12283a,#131d32);border-bottom:1px solid #2b435b}.round-head{display:flex;gap:10px;align-items:center;min-width:0}.round-icon{width:37px;height:37px;border:1px solid #426077;border-radius:11px;background:#193448;display:grid;place-items:center;color:var(--gold);font-size:21px}.round-title{font-size:15px;font-weight:800;white-space:nowrap}.round-desc{color:#9db7c5;font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.arena-actions{display:flex;align-items:center;gap:7px}.btn{padding:10px 14px;color:#d6eef5;background:#1b3146;border:1px solid #395871;border-radius:10px;font-size:12px;font-weight:750;white-space:nowrap;transition:filter .14s,transform .14s}.btn:active:not(:disabled){transform:translateY(1px)}.btn.gold{color:#261c12;background:linear-gradient(135deg,#f8de9e,#d8a657);border-color:#ffe6ab;box-shadow:0 4px 19px #e9bb6733}.btn.teal{color:#052a30;background:linear-gradient(130deg,#8ff4d5,#42c5cc);border-color:#b3fff3;box-shadow:0 4px 22px #5dcaca28}.btn.ghost{background:#1a293b;color:#b8d2dc}.btn.danger{border-color:#9e5967;color:#ffadb2;background:#3d202d}.btn.tiny{padding:6px 10px;font-size:11px}.board-area{position:relative;background:#0d1929;overflow:hidden;line-height:0;user-select:none;touch-action:none}.board-area canvas{display:block;width:100%;height:auto;cursor:crosshair;aspect-ratio:980/660}.board-tag{position:absolute;z-index:1;pointer-events:none;padding:5px 11px;background:#06101c96;border:1px solid #4460788a;border-radius:8px;font-size:10px;line-height:1.4;color:#bdd2d7;backdrop-filter:blur(7px)}.board-tag.enemy{left:13px;top:13px;color:#f4abb4}.board-tag.friendly{right:13px;bottom:14px;color:#8be8d1}.board-help{position:absolute;bottom:11px;left:12px;max-width:65%;line-height:1.4;font-size:10px;color:#a1c0cd;pointer-events:none;text-shadow:0 1px 4px #000}.combat-hud{position:absolute;top:13px;left:50%;transform:translateX(-50%);min-width:125px;text-align:center;line-height:1.3;border-radius:12px;padding:7px 12px;background:#0a1425ce;border:1px solid #54839090;box-shadow:0 4px 18px #0009}.combat-hud strong{font-size:17px;font-variant-numeric:tabular-nums}.combat-hud small{display:block;color:#8eb6c4;font-size:9px;letter-spacing:1px}.battle-log{height:33px;padding:8px 13px;background:#08121dd9;color:#9db8c9;border-top:1px solid #30435b;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.battle-log b{color:#d8eaee}.bench-panel{padding:11px 11px 12px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}.section-head strong{font-size:12px;letter-spacing:.8px}.section-head small{color:#829bad;font-size:10px}.bench-slots{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}.bench-slot{position:relative;min-width:0;aspect-ratio:.83;border-radius:9px;border:1px dashed #38536a;background:#0a1726;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#4e7588;padding:0;overflow:hidden}.bench-slot.occupied{border:1px solid #527087;background:#152b3d}.bench-slot.picked{outline:2px solid #8af0da;outline-offset:-2px;background:#254445}.bench-slot .small-icon{font-size:24px;line-height:1.2;filter:drop-shadow(0 2px 3px #0008)}.bench-slot .bench-name{position:absolute;bottom:2px;font-size:9px;white-space:nowrap;transform:scale(.9);width:115%;overflow:hidden;text-overflow:ellipsis;color:#d1e7ee;text-align:center}.bench-slot .star-mini{position:absolute;top:2px;right:3px;color:#ffe8a6;font-size:9px}.bench-slot .idx{position:absolute;top:3px;left:4px;font-size:9px;opacity:.3}.bench-slot .rarity-line{position:absolute;top:0;left:0;right:0;height:2px}.shop-panel{padding:12px 13px 13px}.shop-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}.shop-heading{font-size:14px;font-weight:850;letter-spacing:1px}.shop-explain{color:#94afbe;font-size:10px;margin-left:8px}.shop-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.econ{font-size:11px;color:#b0c7d1;white-space:nowrap}.econ b{color:#f5d58f}.shop-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.shop-card{position:relative;min-width:0;min-height:169px;display:flex;flex-direction:column;padding:0;text-align:left;overflow:hidden;border:1px solid #577084;background:#122436;border-radius:12px;color:#e3f2fa;transition:transform .14s,border-color .14s,filter .14s}.shop-card:not(:disabled):hover{transform:translateY(-4px);border-color:#f9d78e;filter:brightness(1.08)}.shop-card.tier1{border-color:#718b9b}.shop-card.tier2{border-color:#66bba0}.shop-card.tier3{border-color:#679fe3}.shop-card.tier4{border-color:#b18df2}.shop-card.tier5{border-color:#efc26f}.shop-card.empty{background:#0e1b2a;border-style:dashed;justify-content:center;align-items:center;color:#56758c}.shop-art{min-height:93px;flex:1;display:grid;place-items:center;position:relative;overflow:hidden}.shop-art::before{content:"";position:absolute;width:91px;height:91px;border:1px solid #ffffff33;border-radius:20px;transform:rotate(45deg);top:8px}.shop-art::after{content:"";position:absolute;width:70px;height:70px;border:1px dashed #ffffff25;border-radius:50%;top:17px}.portrait-main{font-size:57px;line-height:1;z-index:1;color:#f4f8ff;text-shadow:0 4px 1px #0004,0 0 25px #ffffff80;filter:drop-shadow(0 8px 9px #0006)}.shop-card .bottom{padding:8px 9px 9px;background:#0d1c2df0;border-top:1px solid #ffffff15}.shop-unit-name{font-size:12px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.shop-classes{color:#9fbed0;font-size:10px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.shop-cost{position:absolute;top:7px;left:8px;z-index:2;font-size:12px;background:#0b1728c9;border-radius:8px;padding:4px 7px;color:#ffe3a0;font-weight:850}.shop-key{position:absolute;top:9px;right:10px;z-index:2;color:#e0eff7a6;font-size:10px}.market-footer{display:flex;justify-content:space-between;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap}.xp-box{flex:1;min-width:130px}.xp-top{font-size:11px;color:#afc8d8;display:flex;justify-content:space-between;gap:8px;margin-bottom:5px}.progress{height:7px;border-radius:10px;background:#223449;overflow:hidden}.progress>i{height:100%;display:block;background:linear-gradient(90deg,#55bed0,#b7f2dd);border-radius:10px;transition:width .2s}.small-note{font-size:10px;color:#718fa4}.trait-list{padding:0 11px 12px;display:grid;gap:7px}.trait-row{display:flex;align-items:center;gap:9px;padding:8px;border-radius:9px;background:#0c1a2a;border:1px solid #2b4155;opacity:.68}.trait-row.active{opacity:1;border-color:#538a7f;background:#122f37}.trait-icon{font-size:20px;min-width:23px;text-align:center}.trait-body{flex:1;min-width:0}.trait-name{font-size:11px;font-weight:750;display:flex;justify-content:space-between}.trait-desc{font-size:10px;color:#92aebb;line-height:1.5;margin-top:3px}.trait-steps{font-size:10px;color:#c8ae78}.inspect-body{padding:1px 13px 14px}.inspect-head{display:flex;align-items:center;gap:10px}.inspect-portrait{width:62px;height:65px;display:grid;place-items:center;font-size:37px;border-radius:11px;position:relative;flex:none;border:1px solid #ffffff2c}.inspect-head h3{margin:0;font-size:16px}.inspect-head p{margin:5px 0 0;color:#90b2c1;font-size:11px}.unit-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}.unit-stat{padding:7px 8px;background:#0b1a2a;border:1px solid #293e55;border-radius:8px}.unit-stat small{font-size:9px;color:#7f9eaf}.unit-stat b{display:block;margin-top:3px;font-size:12px}.skill-card{padding:10px;border-radius:9px;background:#0a1d30;border-left:2px solid #73c9bf}.skill-card strong{font-size:12px;color:#a6eee0}.skill-card div{font-size:10px;color:#a1bac7;line-height:1.65;margin-top:5px}.equip-row{display:flex;gap:7px;flex-wrap:wrap}.equip-chip{display:flex;align-items:center;gap:5px;background:#192f41;border:1px solid #45637c;border-radius:8px;padding:6px 7px;color:#cfe1e8;font-size:11px}.inspect-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px}.inventory{padding:1px 11px 12px}.inventory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-height:184px;overflow-y:auto;padding:2px}.item-btn{height:55px;border:1px solid #4b5b73;border-radius:10px;background:linear-gradient(145deg,#1c3147,#111e32);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;color:#f6e1bb}.item-btn span{font-size:23px}.item-btn small{font-size:8px;color:#aec4d1;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:0 3px}.item-btn.picked{border-color:#ffe59e;background:#33403f;box-shadow:0 0 0 1px #e5ca6d}.item-empty{height:55px;border:1px dashed #33465b;border-radius:10px;display:grid;place-items:center;color:#375369;font-size:16px}.tooltip-line{font-size:10px;line-height:1.6;color:#849fac;padding:8px 1px 1px}.toast-stack{position:fixed;z-index:30;top:90px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}.toast{color:#f0f8f9;font-size:12px;font-weight:700;padding:10px 19px;border:1px solid #65c0acb5;border-radius:10px;background:#152e38ed;box-shadow:0 8px 35px #0008;animation:popin .22s ease-out;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}@keyframes popin{from{transform:translateY(-13px);opacity:0}to{transform:translateY(0);opacity:1}}.overlay{position:fixed;z-index:20;inset:0;background:#040a13d9;backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}.overlay.hidden{display:none}.modal{position:relative;border:1px solid #467b89;border-radius:22px;background:radial-gradient(ellipse at 50% 0%,#234459,#101f33 63%,#0d182a);box-shadow:0 30px 120px #000b,0 0 80px #4cf4d313;max-width:680px;width:100%;padding:32px;overflow:hidden}.modal:before{content:"";position:absolute;top:-115px;right:-100px;width:260px;height:260px;border:1px solid #9ee2cf24;border-radius:50%;pointer-events:none}.modal h2{font-size:29px;letter-spacing:3px;margin:7px 0 9px}.modal .subtitle{font-size:12px;color:#a1bfcd;line-height:1.9;margin:0 0 18px}.modal-eyebrow{color:var(--gold);font-size:10px;letter-spacing:3px;font-weight:850}.modal-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.modal .btn{font-size:14px;padding:12px 19px}.menu-logo{display:flex;gap:14px;align-items:center;margin-bottom:14px}.menu-insignia{width:84px;height:84px;display:grid;place-items:center;border:1px solid #7bcece;border-radius:23px;transform:rotate(-8deg);font-size:57px;color:#ffda91;background:radial-gradient(circle,#265b63,#132b42);box-shadow:0 0 39px #54d5cd30}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:19px}.feature{padding:13px 10px;border:1px solid #395469;background:#0c1c2dd4;border-radius:12px}.feature b{display:block;font-size:13px}.feature small{display:block;font-size:10px;color:#8dacbd;margin-top:6px;line-height:1.7}.relic-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:21px}.relic-opt{border:1px solid #4b6076;background:linear-gradient(145deg,#1d3c51,#122035);color:#e4f3f6;border-radius:13px;min-height:184px;text-align:center;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:12px}.relic-opt:hover{border-color:#f6cd80;transform:translateY(-3px)}.relic-opt .relic-glyph{font-size:41px;text-shadow:0 0 30px #fbd4a580}.relic-opt b{font-size:14px}.relic-opt small{font-size:11px;color:#a9c2d0;line-height:1.7}.result-hero{font-size:53px;margin-bottom:10px;text-shadow:0 0 30px #a1fbec65}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}.result-stat{padding:14px;background:#0b1b2a;border:1px solid #36536b;border-radius:11px;text-align:center}.result-stat b{display:block;font-size:21px;color:#f8d58f}.result-stat small{display:block;margin-top:5px;color:#88a8b7;font-size:10px}.help-copy{color:#afc7d1;font-size:12px;line-height:2}.help-copy b{color:#8ee7d7}.close-modal{position:absolute;top:12px;right:12px;font-size:20px;width:34px;height:34px;border-radius:9px;color:#b7d4dd;background:#152c40;border:1px solid #3a586c}.mobile-nav{display:none}.gold-dot{color:#fcd082}.rarity1{--rarity:#a2b6c5}.rarity2{--rarity:#69d4a7}.rarity3{--rarity:#7cb4ff}.rarity4{--rarity:#cf9bff}.rarity5{--rarity:#ffc976}.stars{color:#ffdb87;letter-spacing:1px}.hidden{display:none!important}
 @media(max-width:1350px){.shell{padding:0 11px 20px}.layout{grid-template-columns:195px minmax(0,1fr) 250px;gap:9px}.topbar{gap:7px}.shop-card{min-height:147px}.shop-art{min-height:77px}.portrait-main{font-size:45px}.shop-card .bottom{padding:7px}.shop-unit-name{font-size:11px}.top-chip{padding:6px 9px}.brand h1{font-size:18px}.bench-slots{gap:3px}.bench-slot .small-icon{font-size:21px}}
@@ -507,6 +509,8 @@ button,input,select{font-family:inherit}button{transition:background .16s var(--
 /* V5.2: concise desktop presentation */
 .v51-result-body .result-hero,.inspect-note,.shop-explain:empty,.equipment-head small:empty{display:none!important}
 .v51-result-body .modal-eyebrow{margin-bottom:5px}.v51-result-body h2{margin:4px 0 8px}.v51-result-body .subtitle{margin:6px 0 10px}.v51-result-body .result-stats{margin:10px 0}.v51-result-body .report-section{margin-top:12px}.v51-result-body .v51-side-results{margin:5px 0}.report-title small{display:none}.final-dashboard{gap:12px}.final-section h3{margin:0 0 10px}
+
+body #shopOdds{display:none!important}body .shop-explain:empty{display:none!important}
 </style>
 </head>
 <body>
@@ -566,7 +570,7 @@ button,input,select{font-family:inherit}button{transition:background .16s var(--
 <div id="coach" class="coach hidden" role="status" aria-live="polite"><div class="coach-top"><span class="coach-kicker">新手航行指引 <b id="coachIndex">1 / 7</b></span><button class="coach-x" id="skipTutorial" title="结束教学">×</button></div><strong id="coachTitle"></strong><p id="coachText"></p><div class="coach-actions"><button class="btn tiny ghost" id="coachSkip">跳过教学</button><button class="btn tiny teal hidden" id="coachNext">开始教学</button></div></div>
 <div id="toastStack" class="toast-stack" aria-live="polite"></div>
 <div class="overlay" id="menuOverlay"><div class="modal">
-  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V5.2</div><h2>浮光纪 · 裂隙棋航</h2></div></div>
+  <div class="menu-logo"><div class="menu-insignia">✺</div><div><div class="modal-eyebrow">V5.3</div><h2>浮光纪 · 裂隙棋航</h2></div></div>
   <p class="subtitle">42 位船员 · 6 大阵营 · 8 种职业</p><p class="audio-promise">♫ 原创动态背景音乐将在点击开始后播放（可随时静音）。首次开局会提供互动教学。</p>
   <div class="feature-grid"><div class="feature"><b>⚔ 完整赛季</b><small>经济运营、部署布阵、自动攻防与最终淘汰</small></div><div class="feature"><b>✥ 每局不同</b><small>随机商店、掉落装备、三选一永久奇遇</small></div><div class="feature"><b>◈ 无需联网</b><small>单文件离线运行，准备阶段与战后自动存档</small></div></div>
   <div class="start-settings" aria-label="新航程设置">
@@ -627,7 +631,7 @@ const UNIT_ROWS=[
  ['z1','烬日熔皇',5,'fire','charge','♛','inferno','永燃熔炉','积蓄战场燃痕能量，召唤火焰风暴并点燃全体敌人。',1.85],
  ['b1','露叶医者',1,'grove','healer','❦','seedheal','晨露种子','治疗最虚弱的友军，并为其种下生命种子。',1.4],
  ['b2','苔刃斥候',1,'grove','assassin','✣','seedstrike','翠影突袭','闪向敌方后排发动刺击，同时为受伤友军种下种子。',1.75],
- ['b3','鹿角重卫',2,'grove','guard','♧','rootguard','扎根守护','进入扎根守护，获得护盾并保护附近友军。',1.35],
+ ['b3','鹿角重卫',2,'grove','guard','♧','rootguard','扎根守护','为自己与附近友军提供护盾，并提高自身护甲。',1.35],
  ['b4','荧叶猎手',2,'grove','ranger','➹','growthshot','生长狙击','同一目标连续命中越多，技能伤害越强；换目标会重新累积。',1.35],
  ['b5','古树巨灵',3,'grove','fighter','♣','treerevive','古树苏醒','震退周围敌人并恢复自身生命，受伤越重治疗越高。',1.55],
  ['b6','森梦先知',4,'grove','mage','❃','grovebloom','梦林花期','催熟友军生命种子，治疗队友并伤害附近敌人。',1.40],
@@ -636,7 +640,7 @@ const UNIT_ROWS=[
  ['z3','逐浪轻骑',1,'tide','vanguard','⚡','wavecharge','破浪先手','冲向敌人并造成短暂眩晕；适合抢占前期节奏。',1.4],
  ['c2','浪羽祭师',2,'tide','healer','❊','tideheal','潮音庇护','治疗两名伤势最重的队友，为其中更危险者补盾。',1.30],
  ['c3','涡旋术士',2,'tide','mage','◉','whirlpool','深海漩涡','将目标附近敌人拉向中心并减速、造成法术伤害。',1.30],
- ['c4','深蓝鲸卫',3,'tide','fighter','◕','whaleslam','鲸潮冲撞','击退一条直线上的敌人，并打断其技能。',1.45],
+ ['c4','深蓝鲸卫',3,'tide','fighter','◕','whaleslam','鲸潮冲撞','伤害附近敌人，短暂眩晕并将其推向敌方后方。',1.45],
  ['c5','月潮行者',4,'tide','assassin','☯','shatterdive','月镜追猎','突袭敌方后排，优先重创护盾薄弱的目标。',2.0],
  ['z4','深渊提潮者',5,'tide','charge','◈','tideultimate','潮汐逆转','吸取全队积攒的潮势，施放巨浪并为友军补盾。',1.75],
  ['d1','晶砂法徒',1,'star','mage','✧','starseal','星砂烙印','在敌人身上附加星砂印记，使后续友军法术额外爆炸。',1.25],
@@ -649,13 +653,13 @@ const UNIT_ROWS=[
  ['e1','雾刃游徒',1,'shade','assassin','☽','miststab','雾影背刺','闪入敌方后排，强力背刺后短暂隐匿。',1.85],
  ['z8','夜鸦哨兵',1,'shade','vanguard','⚡','ravenmark','夜鸦警讯','优先攻击猎印目标，迅速组织开局集火。',1.38],
  ['e2','影牙猎手',2,'shade','ranger','♠','poisonarrow','蚀夜毒矢','射入腐蚀毒箭，造成持续伤害，目标5秒内受到的治疗降低30%。',1.35],
- ['z9','碎影短刃',2,'shade','vanguard','✣','fastblades','瞬影三连','开局爆发三连击，后续持续能力较弱。',1.03],
+ ['z9','碎影短刃',2,'shade','vanguard','✣','fastblades','瞬影三连','法力充满时，对当前目标连续攻击三次。',1.03],
  ['e3','玄夜咒者',3,'shade','charge','☷','nightcurse','永夜诅咒','蓄积诅咒能量后向最多三名敌人传播暗伤。',1.33],
  ['z10','断灯司刑',4,'shade','assassin','☾','silencer','终夜裁断','扑向敌方施法者，造成强击与短暂沉默。',1.98],
  ['e4','永夜王裔',5,'shade','fighter','♛','nightking','黑夜王权','汲取目标生命；猎印目标倒下时获得本场成长。',2.80],
  ['f1','齿轮工兵',1,'gear','fighter','⚒','mechrepair','战地维修','修复己方机械单位，若缺少机械则改为保护友军。',1.03],
  ['z11','发条探路者',1,'gear','vanguard','⚡','clockscout','发条突进','开局部署发条斥候；施法时再召唤并攻击目标。',1.08],
- ['f2','银翼哨卫',2,'gear','guard','⌘','intercept','银翼拦截','优先保护后排，给予护盾并反击敌人。',1.18],
+ ['f2','银翼哨卫',2,'gear','guard','⌘','intercept','银翼拦截','为护甲最低的友军提供护盾，并攻击当前敌人。',1.18],
  ['z12','时钟装配师',2,'gear','charge','⚙','assembler','精密装配','充能后组装可持续作战的机械炮台。',1.12],
  ['f3','铜蜂机械师',3,'gear','ranger','⌬','bees','蜂群制造','持续制造自动追击敌人的机械蜂。',1.10],
  ['f4','百臂机傀',4,'gear','guard','⚙','arms','百臂防线','召唤厚甲机械臂抵挡伤害并保护友军。',1.40],
@@ -814,7 +818,7 @@ function sfx(type){if(!audioPreference||!audioContext||audioContext.state!=='run
  else tone(68,now,.105,.035,'sine',effectsGain);
 }
 
-const VERSION_LABEL='V5.2';
+const VERSION_LABEL='V5.3';
 const SETUP_KEY='rift_fleet_setup_v45_v50preview';
 const VALID_OPPONENTS=[1,3,5,7],VALID_DIFFICULTIES=['easy','normal','hard'];
 function readSetup(){const n=Number($('opponentCount').value);const d=$('difficultySelect').value;
@@ -854,18 +858,18 @@ function itemFit(id){const s=ITEM_BY_ID[id]?.stat||{};if(s.healing)return '灵�
 function situation(p){const board=p.board.filter(Boolean),roster=allUnits(p),roles={guard:0,fighter:0,ranger:0,assassin:0,mage:0,healer:0,vanguard:0,charge:0};board.forEach(u=>roles[UNITS[u.key].role]++);return {board,roster,roles,front:roles.guard+roles.fighter+roles.vanguard,back:roles.ranger+roles.mage+roles.assassin+roles.charge,heal:roles.healer,traits:getBuffs(p),boardCount:board.length,empty:p.level-board.length};}
 function sellValue(u){return UNITS[u.key].cost*Math.pow(3,u.star-1)}
 function shopJudgement(key){const p=G.player,t=UNITS[key],z=situation(p),one=z.roster.filter(u=>u.key===key&&u.star===1).length,two=z.roster.filter(u=>u.key===key&&u.star===2).length,boardHas=z.board.some(u=>u.key===key);
- const fN=z.traits.counts.f[t.faction]||0,rN=z.traits.counts.r[t.role]||0,needF=FACTIONS[t.faction].tiers[0],needR=CLASSES[t.role].tiers[0];
+ const fN=z.traits.counts.f[t.faction]||0,rN=z.traits.counts.r[t.role]||0;
  let score=0,reason='',note=ROLE_PURPOSE[t.role];
  if(one>=2){score+=13;reason=two>=2?'★ 购买可连锁升三星':'★ 买下就升二星';}
  else if(two>=2){score+=7;reason='已有两枚二星，可继续追三星';}
  else if(one||two){score+=5;reason='已有同名，利于升星';}
- if(!boardHas&&z.empty>0){if(fN===needF-1||rN===needR-1){score+=8;if(!reason)reason='上阵可激活羁绊';}
- else if((fN>0&&fN<needF)||(rN>0&&rN<needR)){score+=4;if(!reason)reason='接近羁绊门槛';}}
+ if(!boardHas){const targets=[[FACTIONS[t.faction],fN],[CLASSES[t.role],rN]].filter(([def,n])=>def.tiers.includes(n+1));
+ if(targets.length){const valid=targets.filter(([def,n])=>z.empty>0||z.board.some(u=>{const old=UNITS[u.key];return (def===FACTIONS[t.faction]?old.faction!==t.faction:old.role!==t.role)}));if(valid.length){score+=valid.reduce((a,[def,n])=>a+8+2*def.tiers.indexOf(n+1),0);const hint=(z.empty>0?'上阵':'换阵')+' '+valid.map(([def,n])=>def.name+' '+(n+1)).join(' / ');reason=reason?reason+' · '+hint:hint;}}}
  if(z.front===0&&['guard','fighter','vanguard'].includes(t.role)){score+=7;if(!reason)reason='补足前排';}
  if(z.back===0&&['ranger','mage','assassin','charge'].includes(t.role)){score+=6;if(!reason)reason='补足输出';}
  if(z.heal===0&&t.role==='healer'&&z.boardCount>=2){score+=3;if(!reason)reason='补充治疗';}
  if(t.cost>=4&&p.level>=7){score+=4;if(!reason)reason='中后期高费核心';}
- if(!reason){reason=t.cost===1?'前期过渡棋子':t.cost===2?'中期成长棋子':t.cost===3?'中期主力候选':t.cost>=4?'后期核心候选':'合理补位';}
+ if(!reason)reason='';
  return {score,reason,purpose:note,one,two};
 }
 function getAdvice(){if(!G)return {lead:'招募后开始部署。',detail:'',rows:[]};const p=G.player,z=situation(p),n=G.round,rows=[];
@@ -920,11 +924,11 @@ function newGame(settingsOverride=null){enemyRangeUid=null;
  saveSetup(settings);
  G={version:4,balanceVersion:'4.6.1',reportVersion:47,setup:{...settings},roundHistory:[],eliminationOrder:[],finalSaved:false,milestones:[],seq:0,round:1,phase:'prep',player:createCaptain(true),enemies:Array.from({length:settings.opponents},(_,i)=>createCaptain(false,i)),shop:[],shopLocked:false,bag:[],relics:[],pendingChoices:[],nextEnemy:0,battle:null,combatSummary:null,log:['旗舰已抵达星港，准备招募与部署。'],stats:{wins:0,losses:0,upgrades:0,bought:0,kills:0,spent:0,items:0,rounds:1,lowestHp:80,peakStreak:0},speed:1};
  G.player.name=settings.captainName;
- const starterKeys=['a1','b3','c1','f2'],backKeys=['a2','b4','d1','e2'];
- G.player.board[3]=makeUnit(choose(starterKeys));G.player.board[17]=makeUnit(choose(backKeys));
+ const starterFront=POOLS[1].filter(k=>['guard','fighter','vanguard'].includes(UNITS[k].role)),starterBack=POOLS[1].filter(k=>!['guard','fighter','vanguard'].includes(UNITS[k].role));
+ function dealStarter(p){p.board[p===G.player?3:17]=makeUnit(choose(starterFront));p.board[p===G.player?17:3]=makeUnit(choose(starterBack))}
+ dealStarter(G.player);
  for(const enemy of G.enemies){
-  const same=POOLS[1].filter(k=>UNITS[k].faction===enemy.focus);const other=POOLS[1].filter(k=>UNITS[k].faction!==enemy.focus);
-  enemy.board[3]=makeUnit(choose(same.length?same:POOLS[1]));enemy.board[17]=makeUnit(choose(other.length?other:POOLS[1]));
+  dealStarter(enemy);
   prepareAI(enemy,true);
  }
  rollShop(true);chooseNextEnemy();G.bag.push(choose(ITEMS).id);
@@ -1070,6 +1074,17 @@ function aiSelectLineup(p,difficulty){
  }
  return chosen;
 }
+function aiBenchReplacement(p,key){
+ const t=UNITS[key],units=allUnits(p),scout=G.setup?.difficulty==='hard',line=aiSelectLineup(p,scout?'hard':'normal'),base=aiSquadValue(line,p,scout),used=new Set(line.map(u=>u.uid));
+ const incoming={uid:'candidate',key,star:1,items:[]};
+ const improvement=Math.max(0,...line.map((u,i)=>aiSquadValue(line.map((v,j)=>j===i?incoming:v),p,scout)-base));
+ const retain=(u,other)=>{const d=UNITS[u.key],same=other.filter(v=>v.key===u.key&&v.star===u.star).length,active=p.board.filter(v=>v&&v.key===u.key),n=other.filter(v=>v.key===u.key&&v.star===1).length;return d.cost*3+(u.star-1)*15+same*12+(active.length?8:0)+(d.faction===p.focus?3:0)+(d.role===p.focusRole?2:0)+(u.star===1&&n>=2?14:0)};
+ let best=null;
+ for(const u of p.bench.filter(Boolean)){if(used.has(u.uid)||u.key===key||p.gold+sellValue(u)<t.cost)continue;
+ const others=units.filter(v=>v.uid!==u.uid),old=retain(u,others),next=retain(incoming,others),delta=next-old+Math.min(40,improvement*.7);
+ if(delta>5&&(!best||delta>best.delta))best={u,delta};}
+ return best;
+}
 function aiRecruit(p){
  const difficulty=G.setup?.difficulty||'normal';
  p.shop??=Array.from({length:5},()=>randomUnitKey(p.level,p));
@@ -1091,14 +1106,16 @@ function aiRecruit(p){
  if(p.hp<32)reserve=0;
  const rerollLimit=difficulty==='easy'?1:difficulty==='hard'?(p.level<levelFloor?1:aiUpgradeCandidates(p).pairs?8:4):3;
  let rerolls=0,purchases=0;
- while(purchases<(difficulty==='hard'?10:7)&&allUnits(p).length<31){
-  const choices=p.shop.map((key,i)=>key?{key,i,score:evaluations(key)}:null).filter(Boolean).filter(x=>UNITS[x.key].cost<=p.gold&&(benchCount(p)<10||incomingUpgradePossible(p,x.key)));
+ while(purchases<(difficulty==='hard'?10:7)){
+  const full=benchCount(p)>=10;
+  const choices=p.shop.map((key,i)=>{if(!key)return null;const merge=incomingUpgradePossible(p,key),replacement=full&&!merge&&difficulty!=='easy'?aiBenchReplacement(p,key):null;if(full&&!merge&&!replacement)return null;if(UNITS[key].cost>p.gold+(replacement?sellValue(replacement.u):0))return null;return {key,i,score:evaluations(key)+(replacement?Math.min(18,replacement.delta):0),replacement};}).filter(Boolean);
   choices.sort((a,b)=>b.score-a.score);const best=choices[0];
   if(best&&(allUnits(p).length<p.level||best.score>(difficulty==='easy'?24:32)||purchases<1)&&
-   (p.gold-UNITS[best.key].cost>=reserve||allUnits(p).length<p.level||incomingUpgradePossible(p,best.key))){
+   (p.gold+(best.replacement?sellValue(best.replacement.u):0)-UNITS[best.key].cost>=reserve||allUnits(p).length<p.level||incomingUpgradePossible(p,best.key))){
+    if(best.replacement){const u=best.replacement.u;removeWhere(p,u.uid);p.gold+=sellValue(u);p.bag??=[];p.bag.push(...u.items)}
     if(receiveUnit(p,best.key)){p.gold-=UNITS[best.key].cost;p.shop[best.i]=null;purchases++;continue}
   }
-  if(rerolls>=rerollLimit||p.gold<2+reserve)break;
+  if(rerolls>=rerollLimit||p.gold<2+reserve||(full&&difficulty==='easy'))break;
   p.gold-=2;rerolls++;p.shop=Array.from({length:5},()=>randomUnitKey(p.level,p));
  }
 }
@@ -1112,14 +1129,14 @@ function aiArrange(p){
  const front=deployed.filter(u=>['guard','fighter','vanguard'].includes(UNITS[u.key].role)),
   back=deployed.filter(u=>!['guard','fighter','vanguard'].includes(UNITS[u.key].role));
  const order=[...front,...back];
- const frontCols=difficulty==='hard'?[threatColumn,3,2,4,1,5,0,6]:[3,2,4,1,5,0,6];
+ const frontCols=difficulty==='hard'?[...new Set([threatColumn,3,2,4,1,5,0,6])]:[3,2,4,1,5,0,6];
  const backCols=difficulty==='hard'?[6,0,5,1,4,2,3]:[3,2,4,1,5,0,6];
  let frontIndex=0,backIndex=0;
  for(const u of order){const t=UNITS[u.key],isFront=['guard','fighter','vanguard'].includes(t.role),
   cols=isFront?frontCols:backCols;
   const n=isFront?frontIndex++:backIndex++;
   const row=isFront?(n<7?2:1):(n<7?0:1);
-  let idx=row*7+cols[n%7];if(p.board[idx])idx=p.board.indexOf(null);
+  let idx=row*7+cols[n%7];if(p.board[idx]){const candidates=[row,...(isFront?[2,1,0]:[0,1,2])].flatMap(r=>cols.map(c=>r*7+c));idx=candidates.find(i=>!p.board[i])??-1;}
   if(idx>=0)p.board[idx]=u;
  }
  reserve.sort((a,b)=>b.star-a.star||UNITS[b.key].cost-UNITS[a.key].cost);
@@ -1137,6 +1154,8 @@ function aiItemValue(t,id){const x=ITEM_BY_ID[id].stat;let s=1;
  if(x.healing)s+=x.healing*(t.role==='healer'?16:2);
  if(x.crit)s+=x.crit*(t.role==='assassin'||t.role==='vanguard'?12:7);
  if(x.regen)s+=x.regen*(t.role==='guard'?1:.4);
+ if(x.mana)s+=x.mana*(['mage','healer','charge'].includes(t.role)?.095:['guard','fighter'].includes(t.role)?.06:.045);
+ if(x.critDmg)s+=x.critDmg*(['assassin','vanguard','ranger'].includes(t.role)?8:3);
  return s;
 }
 function growAIEquipment(p,first=false){
@@ -1172,7 +1191,7 @@ function prepareAI(p,first=false){
   if(difficulty==='hard'&&p.hp<22&&p.level<Math.min(target,7)&&p.gold>=4){p.gold-=4;gainXp(p,4+(p.relics.includes('fortune')?2:0))}
   p.shop=Array.from({length:5},()=>randomUnitKey(p.level,p));
  }
- aiRecruit(p);aiArrange(p);growAIEquipment(p,first);
+ aiArrange(p);aiRecruit(p);aiArrange(p);growAIEquipment(p,first);
 }
 // ─── 舰长操作：部署、招募、商店、装备与航段 ───
 function locateUnit(p,uid){for(const loc of ['board','bench']){const index=p[loc].findIndex(u=>u&&u.uid===uid);if(index>=0)return {loc,index,u:p[loc][index]}}return null}
@@ -1298,7 +1317,7 @@ function renderAll(){if(!G)return;document.body.dataset.phase=G.phase;const p=G.
  renderAdvice();
  $('selectedTicker').textContent=selectedTransfer?'⬡ 正在转移 '+ITEM_BY_ID[selectedTransfer.itemId].name+' · 点目标船员':selectedItem!==null?'⬡ 已拿起 '+(ITEM_BY_ID[G.bag[selectedItem]]?.name||'装备')+' · 点击目标船员':chosen?'已选：'+UNITS[chosen.key].name+' '+stars(chosen.star)+'':'';$('cancelEquipBtn').classList.toggle('hidden',selectedItem===null&&!selectedTransfer);$('cancelEquipBtn').textContent=selectedTransfer?'✕ 取消转移':'✕ 取消装备';$('cancelEquipBtn').disabled=!prep;
  const at=chosen&&locateUnit(p,chosen.uid);$('retreatBtn').style.display=prep&&at?.loc==='board'?'':'none';
- $('xpText').textContent=p.level>=9?'等级 9 · 已达到最大等级':'等级 '+p.level+' · 经验 '+p.xp+' / '+LEVEL_XP[p.level];$('xpFill').style.width=p.level>=9?'100%':clamp(p.xp/LEVEL_XP[p.level]*100,0,100)+'%';$('deployText').textContent='已部署 '+unitCount(p)+' / '+p.level;
+ $('xpText').textContent=p.level>=9?'已满级':'经验 '+p.xp+' / '+LEVEL_XP[p.level];$('xpFill').style.width=p.level>=9?'100%':clamp(p.xp/LEVEL_XP[p.level]*100,0,100)+'%';$('deployText').textContent='已部署 '+unitCount(p)+' / '+p.level;
  const info=getBuffs(p),active=Object.values(info.f).filter(Boolean).length+Object.values(info.r).filter(Boolean).length;const rail=document.querySelector('.rail-note');if(rail)rail.textContent='已激活 '+active+' 类羁绊 · '+p.board.filter(Boolean).reduce((a,u)=>a+u.items.length,0)+' 件装备上阵。将护卫置于前线、输出与治疗放在后排。';
  $('econLine').innerHTML='基础 <b>+5</b> · 利息 <b>+'+Math.min(5,Math.floor(p.gold/10))+'</b>'+(p.streak?' · '+(p.streak>0?'连胜 ':'连败 ')+Math.abs(p.streak):'');
  $('lockBtn').textContent=G.shopLocked?'🔒 已锁定':'♧ 锁定';$('lockBtn').style.borderColor=G.shopLocked?'#f7cb78':'';$('lockBtn').disabled=!prep;$('rerollBtn').disabled=!prep||p.gold<2;$('xpBtn').disabled=!prep||p.gold<4||p.level>=9;
@@ -1312,11 +1331,10 @@ function renderBench(){$('benchSlots').innerHTML=G.player.bench.map((u,i)=>{if(!
 function renderShop(){const recommendations=G.shop.map((key,i)=>({i,score:key?shopJudgement(key).score:-1})).sort((a,b)=>b.score-a.score);const best=recommendations[0]?.score>=5?recommendations[0].i:-1; $('shopGrid').innerHTML=G.shop.map((key,i)=>{if(!key)return `<div class="shop-entry"><div class="shop-card empty"><span style="font-size:23px">◇</span><span style="font-size:10px;margin-top:8px">已招募</span></div></div>`;const t=UNITS[key],f=FACTIONS[t.faction],can=G.phase==='prep'&&G.player.gold>=t.cost&&(benchCount(G.player)<10||incomingUpgradePossible(G.player,key));
  const owned=allUnits(G.player).filter(u=>u.key===key&&u.star===1).length;
  const alreadyOnBoard=G.player.board.some(u=>u?.key===key),traitCounts=getTraitCounts(G.player),judgement=shopJudgement(key);
- const relation=!alreadyOnBoard&&((traitCounts.f[t.faction]||0)===1)?'上阵可凑'+f.name+'2':'',
- shopHint=judgement.reason;
+ const shopHint=judgement.reason;
 
  return `<div class="shop-entry"><button class="shop-card tier${t.cost} ${i===best?'suggested':''}" data-shop="${i}" ${!can?'disabled':''} title="${t.name}（${t.cost} 金币）
-${t.skillName}：${t.skillDesc}"><span class="shop-cost">◈ ${t.cost}</span><span class="shop-key">${i+1}</span><div class="shop-art" style="background:radial-gradient(ellipse at 50% 110%,${f.b}dd,transparent 72%),linear-gradient(150deg,${f.a},#14233a)"><span class="portrait-main">${crewArt(t)}</span></div><div class="bottom"><div class="shop-unit-name">${t.name}${shopCopies(key)?` <span class="shop-copy">${shopCopies(key)}</span>`:''}</div><div class="shop-classes crew-identity"><span class="crew-faction" style="--identity:${f.color}">${f.icon} ${f.name}</span><span class="crew-role">${CLASSES[t.role].icon} ${CLASSES[t.role].name}</span></div><div class="shop-guide">${rangeLabel(t.range)} ${t.range.toFixed(2)}格 · ${judgement.purpose}</div>${shopHint?`<div class="shop-hint">${shopHint}</div>`:''}</div></button><button class="shop-info" data-shop-info="${i}" title="查看 ${t.name} 的完整图鉴、技能及升星数值" aria-label="查看${t.name}详情">ⓘ</button></div>`}).join('')}
+${t.skillName}：${t.skillDesc}"><span class="shop-cost">◈ ${t.cost}</span><span class="shop-key">${i+1}</span><div class="shop-art" style="background:radial-gradient(ellipse at 50% 110%,${f.b}dd,transparent 72%),linear-gradient(150deg,${f.a},#14233a)"><span class="portrait-main">${crewArt(t)}</span></div><div class="bottom"><div class="shop-unit-name">${t.name}${shopCopies(key)?` <span class="shop-copy">${shopCopies(key)}</span>`:''}</div><div class="shop-classes crew-identity"><span class="crew-faction" style="--identity:${f.color}">${f.icon} ${f.name}</span><span class="crew-role">${CLASSES[t.role].icon} ${CLASSES[t.role].name}</span></div><div class="shop-guide">${rangeLabel(t.range)} ${t.range.toFixed(2)}格</div>${shopHint?`<div class="shop-hint">${shopHint}</div>`:''}</div></button><button class="shop-info" data-shop-info="${i}" title="查看 ${t.name} 的完整图鉴、技能及升星数值" aria-label="查看${t.name}详情">ⓘ</button></div>`}).join('')}
 
 // V4.3: grounded trait tooltips are generated from the exact same active buffs and thresholds as combat.
 function traitView(kind,key){const def=kind==='f'?FACTIONS[key]:CLASSES[key];if(!def)return null;const buff=getBuffs(G.player);const count=(kind==='f'?buff.counts.f[key]:buff.counts.r[key])||0;const stage=traitStage(count,def);const next=stage<def.tiers.length?def.tiers[stage]:null;return {def,count,stage,next};}
@@ -1366,8 +1384,8 @@ function renderInventory(){
 
 function renderRelicList(){$('relicCount').textContent=G.relics.length+' 枚印记';$('relicList').innerHTML=G.relics.length?G.relics.map(id=>{const r=RELIC_BY_ID[id];return `<div class="relic-mini"><span class="sig" style="color:var(--gold)">${r.icon}</span><div><b>${r.name}</b><small>${r.desc}</small></div></div>`}).join(''):'<div class="muted">第 4、8、12… 航段可从三个永久奇遇中选择一个。</div>'}
 function logEvent(msg){if(!G||G.battle?.headless)return;G.log.push(msg);if(G.log.length>65)G.log.shift();if(performance.now()-lastLogTime>250){renderLog();lastLogTime=performance.now()}}
-function renderLog(){if(!G)return;const last=G.log[G.log.length-1],showNotice=G.lastNotice&&Date.now()-G.lastNotice<3100;const advice=G.phase==='prep'?getAdvice().lead:'';
- $('battleLogText').innerHTML=G.phase==='prep'&&!showNotice?'<b>⚑ 舰长建议</b> · '+esc(advice):'<b>航行日志</b> · '+esc(last||'');
+function renderLog(){if(!G)return;const last=G.log[G.log.length-1],showNotice=G.lastNotice&&Date.now()-G.lastNotice<3100;const advice=G.phase==='prep'&&unitCount(G.player)<G.player.level?'空余上阵位 '+(G.player.level-unitCount(G.player)):'';
+ $('battleLogText').innerHTML=G.phase==='prep'&&!showNotice?esc(advice):esc(last||'');
  $('adviceBtn').style.display=G.phase==='prep'?'':'none';
  if(showNotice){clearTimeout(renderLog._timer);renderLog._timer=setTimeout(()=>{if(G?.phase==='prep')renderLog()},3200)}
 }
@@ -1945,7 +1963,7 @@ document.addEventListener('keydown',e=>{if(e.ctrlKey||e.altKey||e.metaKey||['INP
  if(!G)return;if(e.code==='Space'){e.preventDefault();if(G.phase==='prep')startBattle();return}
  if(G.phase==='prep'){if(e.key.toLowerCase()==='r'){e.preventDefault();reroll()}if(e.key.toLowerCase()==='e'){e.preventDefault();buyXp()}if(/^[1-5]$/.test(e.key)){e.preventDefault();buyShop(+e.key-1)}}});
 // 辅助测试接口不会加载任何脚本或资源，不影响正常游戏操作。
-window.__riftGame={getState:()=>G,rangeSelection:()=>({selectedUid,enemyRangeUid}),sortBench,matchAwards,finishTournament,showEnd,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,aiDuel:simulateAiDuel,aiRelic:grantAiRelic,progress:progressHighlights,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
+window.__riftGame={getState:()=>G,rangeSelection:()=>({selectedUid,enemyRangeUid}),sortBench,matchAwards,finishTournament,showEnd,history:latestHistory,home:returnHome,menu:ensureMenuButtons,finalStandings,aiLineup:aiSelectLineup,aiRecruit,aiArrange,aiItemValue,aiBenchReplacement,prepareAI,aiValue:aiSquadValue,setup:readSetup,applySetup,aiRound:otherAiBattles,aiDuel:simulateAiDuel,aiRelic:grantAiRelic,progress:progressHighlights,roster:()=>Object.values(UNITS),factions:()=>FACTIONS,roles:()=>CLASSES,tick:updateBattle,begin:newGame,skip:skipBattle,next:nextRound,buy:buyShop,exp:buyXp,reroll,render:renderAll,combat:startBattle,tutorial:startTutorial,goLesson:advanceTutorial,music:toggleMusic,panel:openPanel,attributes:finalAttributes,receive:receiveUnit,upgrade:mergeTriples,equip:equipItem,unequip,inspect:renderInspector,transfer:doTransfer,transferPick:beginTransfer,sell:sellSelected,advice:getAdvice,shopAdvice:shopJudgement,odds:oddsSummary,traitTooltip,traitView,peek:paintUnitPeek,chooseItemTarget:pickEquipmentTarget};
 
 // Desktop UI feedback is independent of game rules and save state.
 for(const id of ['headGold','headHp','headLevel']){
