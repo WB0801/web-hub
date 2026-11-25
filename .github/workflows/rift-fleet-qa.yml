@@ -1,0 +1,51 @@
+name: Rift Fleet browser QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'rift-fleet/**'
+      - 'qa/rift-fleet/**'
+      - '.github/workflows/rift-fleet-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: rift-fleet-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  chromium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test dependencies
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+          sudo apt-get install -y fonts-noto-cjk
+      - name: Start local static server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/rift-qa-http.log 2>&1 &
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:8765/rift-fleet/ -o /dev/null && exit 0
+            sleep 1
+          done
+          exit 1
+      - name: Run browser smoke test
+        run: node qa/rift-fleet/browser-smoke.mjs
+      - name: Include exact game build for local review
+        if: always()
+        run: |
+          mkdir -p qa-artifacts
+          cp rift-fleet/index.html qa-artifacts/tested-game.html
+      - name: Store screenshots and measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rift-fleet-browser-qa
+          path: qa-artifacts/
+          retention-days: 7
+          if-no-files-found: warn
