@@ -59,12 +59,34 @@ try{
  await page.waitForFunction(()=>['result','gameover'].includes(window.__riftGame.getState().phase),null,{timeout:45000});
  g=await state();assert(g.combatSummary?.review?.a?.units?.length);assert(g.combatSummary?.review?.b?.units?.length);
  await shot('08-report');record('real-time battle and both-side report',{round:g.round,win:g.combatSummary.win});
+ const review=g.combatSummary.review;
+ for(const k of ['alive','damage','healing','tanked']){
+  const m=page.locator('[data-review-metric="'+k+'"]');
+  for(const [cls,side] of [['ally',review.a],['enemy',review.b]])assert.equal(await m.locator('b.'+cls).textContent(),Number.isFinite(side[k])?Math.round(side[k]).toLocaleString('zh-CN'):'—');
+ }
+ assert.equal(await page.locator('.v66-side.ally .v66-row').count(),review.a.units.length);
+ assert.equal(await page.locator('.v66-side.enemy .v66-row').count(),review.b.units.length);
+ assert.equal(await page.locator('.v7-analysis').getAttribute('open'),null);
+ const visibleRows=await page.locator('.v66-side .v66-row:first-of-type').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect(),body=e.closest('.v51-result-body').getBoundingClientRect();return r.top<body.bottom&&r.bottom>body.top}));
+ assert.deepEqual(visibleRows,[true,true],'both first crew rows visible without scrolling');
+ await page.locator('[data-v66-sort="tanked"]').click();
+ assert.equal(await page.locator('[data-v66-sort="tanked"]').getAttribute('aria-pressed'),'true');
+ for(const [cls,side] of [['ally',review.a],['enemy',review.b]]){
+  const expected=[...side.units].sort((a,b)=>(Number.isFinite(b.tanked)?b.tanked:-1)-(Number.isFinite(a.tanked)?a.tanked:-1)).map(u=>Number.isFinite(u.tanked)?Math.round(u.tanked).toLocaleString('zh-CN'):'—');
+  assert.deepEqual(await page.locator('.v66-side.'+cls+' .v66-value').allTextContents(),expected);
+ }
+ await shot('08a-report-sort');
+ await page.locator('.v7-analysis > summary').click();
+ assert.notEqual(await page.locator('.v7-analysis').getAttribute('open'),null);
+ assert(await page.locator('.v7-analysis .v60-compare').isVisible());
+ await shot('08b-report-analysis');
+ record('compact report values, visible rows, sorting and expanded analysis');
  if(g.phase==='result'){await page.locator('#nextRoundBtn').click();await phase('prep');const before=await state();await page.reload({waitUntil:'load'});await page.locator('#continueBtn').click();await phase('prep');const after=await state();assert.equal(after.round,before.round);assert.equal(after.player.gold,before.player.gold);record('save and reload');await shot('09-resumed')}
  // Smaller-screen first impression; no claim of complete mobile operability.
  const small=await browser.newPage({viewport:{width:820,height:1180},deviceScaleFactor:1});
  small.on('pageerror',e=>errors.push(e.message));await small.goto(url,{waitUntil:'load'});await small.screenshot({path:out+'/10-tablet-menu.png',fullPage:true});await small.close();
  assert.deepEqual(errors,[]);record('no browser exceptions or console errors');
-}catch(e){await shot('99-failure').catch(()=>{});errors.push(String(e));process.exitCode=1}
+}catch(e){await shot('99-failure').catch(()=>{});errors.push(e.stack||String(e));process.exitCode=1}
 finally{
  const sorted=frames.filter(n=>n>0).sort((a,b)=>a-b);
  const perf=sorted.length?{samples:sorted.length,meanMs:sorted.reduce((a,b)=>a+b,0)/sorted.length,p95Ms:sorted[Math.floor((sorted.length-1)*.95)],note:'rAF cadence on headless CI, not game paint FPS or player hardware'}:null;
