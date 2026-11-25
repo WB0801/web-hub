@@ -1125,19 +1125,22 @@ const styleOf=t=>FACTIONS[t.faction];
 function notif(message){if(!G)return;G.lastNotice=Date.now();G.log.push('✦ '+message);if(G.log.length>65)G.log.shift();renderLog();const el=$('battleLog');el.classList.remove('log-flash');void el.offsetWidth;el.classList.add('log-flash')}
 // 原创动态程序配乐，纯 Web Audio 合成，音轨和音效完全离线。
 let musicTimer=null,musicStep=0,musicNext=0,musicGain=null,effectsGain=null,contextReady=false;
+const V697_AUDIO_NODES=new Set();let v697AudioEpoch=0;
+function v697TrackAudio(o,g){const n={o,g};V697_AUDIO_NODES.add(n);o.onended=()=>{V697_AUDIO_NODES.delete(n);try{o.disconnect();g.disconnect()}catch(e){}}}
+function v697CancelAudio(){for(const n of V697_AUDIO_NODES){try{n.o.stop()}catch(e){}try{n.o.disconnect();n.g.disconnect()}catch(e){}}V697_AUDIO_NODES.clear();v69LastCue=-Infinity;v696PriorityUntil=-Infinity;v696SoundRank=0;}
 let audioPreference=true;
 try{audioPreference=localStorage.getItem('rift_music_pref_v2_v50preview')!=='off'}catch(e){}
 function tone(note,at,len,volume=.12,wave='sine',sink=musicGain){
  if(!audioContext||!sink)return;
  const hz=440*Math.pow(2,(note-69)/12),o=audioContext.createOscillator(),v=audioContext.createGain();
  o.type=wave;o.frequency.setValueAtTime(hz,at);v.gain.setValueAtTime(.0001,at);v.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),at+.018);
- v.gain.exponentialRampToValueAtTime(.0001,at+len);o.connect(v);v.connect(sink);o.start(at);o.stop(at+len+.025);o.onended=()=>{o.disconnect();v.disconnect()};
+ v.gain.exponentialRampToValueAtTime(.0001,at+len);o.connect(v);v.connect(sink);o.start(at);o.stop(at+len+.025);v697TrackAudio(o,v);
 }
-function beat(at,loud=.05){if(!audioContext||!musicGain)return;const o=audioContext.createOscillator(),v=audioContext.createGain();o.type='sine';o.frequency.setValueAtTime(105,at);o.frequency.exponentialRampToValueAtTime(43,at+.13);v.gain.setValueAtTime(loud,at);v.gain.exponentialRampToValueAtTime(.0001,at+.17);o.connect(v);v.connect(musicGain);o.start(at);o.stop(at+.18);o.onended=()=>{o.disconnect();v.disconnect()}}
+function beat(at,loud=.05){if(!audioContext||!musicGain)return;const o=audioContext.createOscillator(),v=audioContext.createGain();o.type='sine';o.frequency.setValueAtTime(105,at);o.frequency.exponentialRampToValueAtTime(43,at+.13);v.gain.setValueAtTime(loud,at);v.gain.exponentialRampToValueAtTime(.0001,at+.17);o.connect(v);v.connect(musicGain);o.start(at);o.stop(at+.18);v697TrackAudio(o,v)}
 function scheduleMusic(){if(!audioContext||!audioPreference||!G||!contextReady||document.hidden)return;
  const battle=G.phase==='battle',unit=60/(battle?120:89)/2;
  const progression=[50,46,43,48],notes=[[62,65,69,74],[58,62,65,70],[55,58,62,67],[60,64,67,72]];
- if(musicNext<audioContext.currentTime-.5)musicNext=audioContext.currentTime+.05;while(musicNext<audioContext.currentTime+.24){let step=musicStep%64,bar=Math.floor(step/16)%4,pos=step%16,chord=notes[bar];
+ if(musicNext<audioContext.currentTime)musicNext=audioContext.currentTime+.035;while(musicNext<audioContext.currentTime+.24){let step=musicStep%64,bar=Math.floor(step/16)%4,pos=step%16,chord=notes[bar];
   if(pos===0){tone(progression[bar]-12,musicNext,unit*5,battle?.15:.105,'triangle');tone(chord[0]-12,musicNext,unit*7,.033,'sine')}
   if(pos%4===0)tone(chord[(Math.floor(pos/4)+bar)%4],musicNext,unit*2.8,battle?.052:.046,'triangle');
   if(pos%2===1){const seq=[0,1,2,1,3,2,1,2];tone(chord[seq[(Math.floor(step/2))%8]]+12,musicNext,unit*1.32,battle?.048:.035,'sine')}
@@ -1147,9 +1150,9 @@ function scheduleMusic(){if(!audioContext||!audioPreference||!G||!contextReady||
 }
 function startMusic(){if(!audioPreference){updateSoundButton();return}try{
  if(!audioContext){audioContext=new (window.AudioContext||window.webkitAudioContext)();musicGain=audioContext.createGain();effectsGain=audioContext.createGain();const limiter=audioContext.createDynamicsCompressor();musicGain.gain.value=.62;effectsGain.gain.value=.78;musicGain.connect(limiter);effectsGain.connect(limiter);limiter.connect(audioContext.destination)}
- audioContext.resume().then(()=>{contextReady=audioContext.state==='running';if(!contextReady)return;musicNext=audioContext.currentTime+.06;if(!musicTimer)musicTimer=setInterval(scheduleMusic,90);scheduleMusic();updateSoundButton()}).catch(()=>updateSoundButton());
+ const epoch=++v697AudioEpoch;audioContext.resume().then(()=>{if(epoch!==v697AudioEpoch||!audioPreference)return;contextReady=audioContext.state==='running';if(!contextReady)return;musicNext=audioContext.currentTime+.06;if(!musicTimer)musicTimer=setInterval(scheduleMusic,90);scheduleMusic();updateSoundButton()}).catch(()=>updateSoundButton());
  }catch(e){updateSoundButton()}}
-function stopMusic(){contextReady=false;if(musicTimer){clearInterval(musicTimer);musicTimer=null}if(audioContext){audioContext.suspend().catch(()=>{})}updateSoundButton()}
+function stopMusic(){v697AudioEpoch++;v697CancelAudio();contextReady=false;if(musicTimer){clearInterval(musicTimer);musicTimer=null}if(audioContext){audioContext.suspend().catch(()=>{})}updateSoundButton()}
 function updateSoundButton(){const btn=$('soundBtn');if(!btn)return;btn.textContent=audioPreference?'♫':'♪̸';btn.classList.toggle('sound-on',audioPreference);btn.title=audioPreference?'背景音乐与音效开启，点击静音':'音乐已静音，点击播放';btn.setAttribute('aria-pressed',String(audioPreference))}
 function toggleMusic(){audioPreference=!audioPreference;try{localStorage.setItem('rift_music_pref_v2_v50preview',audioPreference?'on':'off')}catch(e){}if(audioPreference){startMusic();sfx('win');notif('♫ 已开启原创背景音乐')}else{stopMusic();notif('音乐和音效已静音')}updateSoundButton()}
 // Audio cues are wall-clock limited; no audio is generated for AI/headless or skipped simulation.
@@ -1174,7 +1177,7 @@ function v696Sweep(at,from,to,len,volume,wave='triangle'){
  if(!audioContext||!effectsGain)return;const o=audioContext.createOscillator(),g=audioContext.createGain();o.type=wave;
  o.frequency.setValueAtTime(from,at);o.frequency.exponentialRampToValueAtTime(to,at+len);
  g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(volume,at+.009);g.gain.exponentialRampToValueAtTime(.0001,at+len);
- o.connect(g);g.connect(effectsGain);o.start(at);o.stop(at+len+.02);o.onended=()=>{o.disconnect();g.disconnect()};
+ o.connect(g);g.connect(effectsGain);o.start(at);o.stop(at+len+.02);v697TrackAudio(o,g);
 }
 function v69CombatCue(kind,faction='star',cost=1){
  if(v69SkipAudio||G?.battle?.headless||!v696Audible())return;
@@ -1210,7 +1213,7 @@ function v696DeathCue(target,attacker,b){
  if(!b||b.headless||v69SkipAudio||target.fromSummon||attacker?.team!==0||target.team!==1)return;
  const last=!b.fighters.some(f=>f!==target&&f.team===1&&!f.fromSummon&&f.hp>0);
  if(last||((target.u.star||1)<3&&target.t.cost<5&&(attacker.kills||0)!==3))return;
- sfx('keykill');floatText(target.x,target.y-.72,target.u.star===3?'三星击破':target.t.cost===5?'旗舰击破':'三连击','#f4d18c',1.0);
+ sfx('keykill');floatText(target.x,target.y-.72,target.u.star===3?'三星击破':target.t.cost===5?'旗舰击破':'三次击杀','#f4d18c',1.0);
 }
 const VERSION_LABEL='V6.9.6';
 const SETUP_KEY='rift_fleet_setup_v45_v50preview';
@@ -1908,7 +1911,7 @@ function v66Review(v){if(!v?.a?.units||!v?.b?.units)return '';const events=(v.ev
 function v66BindReviews(root,records){const sections=root.querySelectorAll('.v66-crew');sections.forEach((el,i)=>{const v=records[i];if(!v)return;el.addEventListener('click',e=>{const b=e.target.closest('[data-v66-sort]');if(!b)return;const key=b.dataset.v66Sort;if(!Object.prototype.hasOwnProperty.call(V66_SORT,key))return;el.querySelectorAll('[data-v66-sort]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));el.querySelector('.v66-sides').innerHTML=v66SideHtml(v,key)})})}
 function v60RenderReview(v,win){
  if(!v?.a||!v?.b)return '<p class="v60-note">此场战斗为旧版记录，没有完整的敌我数据。</p>';
- return '<section class="v60-review"><h3>'+ (win?'本轮胜利复盘':'为什么会输？')+'</h3><p>'+esc(v.reason)+' · '+v.duration.toFixed(1)+' 秒</p>'+v60Compare(v.a,v.b,true)+v.findings.map(x=>'<div class="v60-finding"><b>'+esc(x.title)+'</b><span>'+esc(x.evidence)+'</span></div>').join('')+'<div class="v60-actions"><h3>下一轮优先做什么</h3><ol>'+v.actions.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></div><p class="v60-note">这些是由实际战斗记录支持的差距和可能因素，不是确定的单一败因。召唤物输出纳入全队统计。</p>'+v66Review(v)+'</section>';
+ return '<section class="v60-review"><h3>'+ (win?'本轮胜利复盘':'为什么会输？')+'</h3><p>'+esc(v.reason||'战斗报告')+' · '+(Number.isFinite(v.duration)?v.duration.toFixed(1)+' 秒':'时长未记录')+'</p>'+v60Compare(v.a,v.b,true)+(v.findings||[]).map(x=>'<div class="v60-finding"><b>'+esc(x.title)+'</b><span>'+esc(x.evidence)+'</span></div>').join('')+'<div class="v60-actions"><h3>下一轮优先做什么</h3><ol>'+(v.actions||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></div><p class="v60-note">这些是由实际战斗记录支持的差距和可能因素，不是确定的单一败因。召唤物输出纳入全队统计。</p>'+v66Review(v)+'</section>';
 }
 function v60PrepData(){const p=G?.player,foe=G?.enemies[G.nextEnemy];if(!p||!foe)return null;const a=v60Roster(p),b=v60Roster(foe),warnings=[];
  if(a.count<p.level)warnings.push('空余 '+(p.level-a.count)+' 个上阵位');
@@ -2091,7 +2094,7 @@ function startBattle(){selectedCopy=null;selectedTransfer=null;pendingTransfer=n
  foe.board.forEach((u,i)=>{if(u)fighters.push(createFighter(u,1,i%7,Math.floor(i/7),foeBuff,foe))});
  const prepSnapshot={hp:G.player.hp,gold:G.player.gold,level:G.player.level,star2:G.player.board.filter(u=>u?.star===2).length,star3:G.player.board.filter(u=>u?.star===3).length,traits:getBuffs(G.player)};fx={particles:[],floaters:[],projectiles:[],rings:[]};G.battle={fighters,prepSnapshot,t:0,enemy:foe,foeIndex:G.nextEnemy,buffs:[myBuff,foeBuff],period:0,grovePeriod:0,groveBloom:0,ended:false,logCooldown:0,teams:[0,1].map(()=>({casts:0,starCasts:0,tideMeter:0,tideBursts:0,shadeMark:null,shadePursuits:0,fireChains:0,fireEnergy:0,mechOverdrive:false}))};
  G.battle.v60Initial=[v60Roster(G.player),v60Roster(foe)];
- for(const f of fighters)if(!f.fromSummon)v693Rig(f.t);
+ if(v63EffectiveMode()!=='smooth')for(const f of fighters)if(!f.fromSummon){const r=v693Rig(f.t);if(r&&v63EffectiveMode()==='balanced')v697WholeBody(r)}
  initializeBattleTraits();
  v696ClearNotice();selectedUid=null;selectedItem=null;logEvent('⚔ 开始迎战 '+foe.name+'！双方船员将自动出击。');renderAll();sfx('battle');storageSave();
  if(!fighters.some(f=>f.team===0)||!fighters.some(f=>f.team===1)){decideBattle();return}
@@ -2782,6 +2785,7 @@ function v693Rig(t){
  r.images=[r.upper,r.left,r.right,r.propMain,r.propLeft,r.propRight].filter(Boolean);V693_RIGS.set(t.key,r);return r;
 }
 function v693Ready(r){return r&&r.images.every(im=>im.complete&&im.naturalWidth>0)}
+function v697WholeBody(r){if(!r.whole)r.whole=v693Image(r.body);return r.whole}
 function v693Envelope(age,duration,anticipation=.19){
  if(!Number.isFinite(age)||age<0||age>=duration)return {wind:0,action:0,recover:0};
  const p=age/duration;if(p<anticipation)return {wind:Math.sin(p/anticipation*Math.PI/2),action:0,recover:0};
@@ -2825,7 +2829,7 @@ function v693Base(team){
  },8)
 }
 function v693DrawCrew(x,y,f,b,time,hp,mana,shield,fade,hit){
- const r=v693Rig(f.t),mode=v63EffectiveMode();
+ const mode=v63EffectiveMode(),r=mode==='smooth'?null:v693Rig(f.t);
  if(mode==='smooth'||!v693Ready(r)){drawToken(x,y,f.t,f.u.star||1,f.team,[hp,f.maxHp],mana,shield,false,false,hit>.25,false);return}
  const p=v693Pose(f,b,time),sizeX=70*portraitScaleX/110,sizeY=75*portraitScaleY/124;
  // Pedestal, HUD and equipment stay fixed while the miniature itself moves.
@@ -2841,8 +2845,7 @@ function v693DrawCrew(x,y,f,b,time,hp,mana,shield,fade,hit){
   ctx.restore();
  };
  if(r.back)prop();
- v693Part(r.left,42,96,p.leftFoot*.025,0,-Math.max(0,p.leftFoot)*.33);v693Part(r.right,68,96,p.rightFoot*.025,0,-Math.max(0,p.rightFoot)*.33);
- ctx.drawImage(r.upper,0,0,110,124);if(!r.back)prop();
+ const whole=mode==='balanced'?v697WholeBody(r):null;if(whole?.complete&&whole.naturalWidth)ctx.drawImage(whole,0,0,110,124);else{v693Part(r.left,42,96,p.leftFoot*.025,0,-Math.max(0,p.leftFoot)*.33);v693Part(r.right,68,96,p.rightFoot*.025,0,-Math.max(0,p.rightFoot)*.33);ctx.drawImage(r.upper,0,0,110,124)}if(!r.back)prop();
  ctx.restore();
  // Labels are cached and not mirrored, tilted, or bounced with the character.
  v63Label(stars(f.u.star||1),x,y-37*portraitScaleY,13,'#ffe4a2',false);
@@ -2900,21 +2903,22 @@ function renderCombatTactics(){const hud=$('combatTactics');if(!G?.battle||G.pha
 // V6.3 separates deterministic simulation ticks from presentation and measures actual canvas draws.
 let v58Previous=new WeakMap(),v58LastHud=0,v58PaintBattle=null,v63FXPrevious=new WeakMap();
 let v63Dirty=true,v63PrepSig='',v63LastDraw=0,v63NextDraw=0,v63SampleStart=0,v63Draws=0,v63Work=0,v63Samples=0,v63Bad=0,v63Good=0,v63Auto='full',v63Mode='auto';
-try{const mode=localStorage.getItem('rift_v63_visual_mode');if(['auto','full','smooth'].includes(mode))v63Mode=mode}catch(e){}
+try{const mode=localStorage.getItem('rift_v63_visual_mode');if(['auto','full','balanced','smooth'].includes(mode))v63Mode=mode}catch(e){}
 function v63EffectiveMode(){return v63Mode==='auto'?v63Auto:v63Mode}
 function v58VisualTime(b){return Math.max(0,b.t-.10+clamp(b.stepCarry||0,0,.10))}
 function v58VisualPosition(f,b){const p=v58Previous.get(f)||((Number.isFinite(f.v63StartX))?{x:f.v63StartX,y:f.v63StartY}:null);if(!p||Math.hypot(f.x-p.x,f.y-p.y)>1.15)return f;const a=clamp((b.stepCarry||0)/.10,0,1);return {x:p.x+(f.x-p.x)*a,y:p.y+(f.y-p.y)*a}}
-function v63ResetPerf(t){v63SampleStart=t;v63Draws=0;v63Work=0;v63Samples=0;v63Bad=0;v63Good=0;v63Auto='full';v63NextDraw=t;v63LastDraw=0;$('v63Fps').textContent='-- FPS';v63UpdateMode()}
-function v63UpdateMode(){const names={full:'完整',balanced:'均衡',smooth:'流畅'};$('v63Mode').textContent=v63Mode==='auto'?'自动·'+names[v63Auto]:names[v63Mode];$('v63Perf').title='实测Canvas绘制频率（并非显示器刷新率）。点击切换自动／完整／流畅；不影响战斗结果。'}
+function v63ResetPerf(t){v63SampleStart=t;v63Draws=0;v63Work=0;v63Samples=0;v63Bad=0;v63Good=0;v63NextDraw=t;v63LastDraw=0;$('v63Fps').textContent='-- FPS';v63UpdateMode()}
+function v63UpdateMode(){const names={full:'完整',balanced:'均衡',smooth:'流畅'};$('v63Mode').textContent=v63Mode==='auto'?'自动·'+names[v63Auto]:names[v63Mode];$('v63Perf').title='实测Canvas绘制频率（并非显示器刷新率）。点击切换自动／完整／均衡／流畅；不影响战斗结果。'}
 function v63Sample(t,work,didDraw){v63Work+=work;v63Samples++;if(didDraw)v63Draws++;const span=t-v63SampleStart;if(span<1000)return;
  const fps=Math.round(v63Draws*1000/span),mean=v63Work/Math.max(1,v63Samples);$('v63Fps').textContent=fps+' FPS';$('v63Perf').classList.toggle('low',fps<45);
  if(v63Mode==='auto'){if(fps<44||mean>15){v63Bad++;v63Good=0}else if(fps>=54&&mean<9){v63Good++;v63Bad=0}else{v63Bad=0;v63Good=0}
-  if(v63Bad>=2){v63Auto=v63Auto==='full'?'balanced':'smooth';v63Bad=0;v63UpdateMode()}else if(v63Good>=4){v63Auto=v63Auto==='smooth'?'balanced':'full';v63Good=0;v63UpdateMode()}}
+  if(v63Bad>=2&&v63Auto!=='smooth'){v63Auto=v63Auto==='full'?'balanced':'smooth';v63Bad=0;v63UpdateMode()}else if(v63Good>=6&&v63Auto!=='full'){v63Auto=v63Auto==='smooth'?'balanced':'full';v63Good=0;v63UpdateMode()}}
  v63SampleStart=t;v63Draws=0;v63Work=0;v63Samples=0;
 }
 function v63PrepSignature(){return [G?.phase||'menu',G?.round||0,selectedUid,enemyRangeUid,hoverTile,selectedCopy,dragCopy,selectedItem,selectedTransfer?.fromUid,highlightedTrait,v51Drag?.active?v51Drag.uid:'',v58Gear?.active?v58Gear.id:'',Object.values(PORTRAITS).filter(x=>x.complete&&x.naturalWidth).length,[...V694_IMAGES.values()].filter(x=>x.complete&&x.naturalWidth).length].join('|')}
 function frame(t){const dt=lastFrame?Math.min((t-lastFrame)/1000,.15):0;lastFrame=t;const start=performance.now();let drawn=false;
  if(document.hidden){requestAnimationFrame(frame);return}
+ if(v696NoticeGame&&(v696NoticeGame!==G||t>=v696NoticeUntil+80))v696ClearNotice();
  if(G?.phase==='battle'&&G.battle){const b=G.battle;if(v58PaintBattle!==b){v58PaintBattle=b;v58Previous=new WeakMap();v63FXPrevious=new WeakMap();v58LastHud=0;v63ResetPerf(t);}
   b.stepCarry=Math.min(.35,(b.stepCarry||0)+dt*G.speed);let steps=0;while(G?.phase==='battle'&&G.battle===b&&b.stepCarry>=.10&&steps++<3){b.stepCarry-=.10;for(const f of b.fighters){let p=v58Previous.get(f);if(!p){p={};v58Previous.set(f,p)}p.x=f.x;p.y=f.y;p.hp=f.hp;p.mana=f.mana;p.shield=f.shield}
    for(const z of fx.projectiles){let p=v58Previous.get(z);if(!p){p={};v58Previous.set(z,p)}p.x=z.x;p.y=z.y}for(const ring of fx.rings){let p=v63FXPrevious.get(ring);if(!p){p={};v63FXPrevious.set(ring,p)}p.r=ring.r}updateBattle(.10)}
@@ -2924,8 +2928,8 @@ function frame(t){const dt=lastFrame?Math.min((t-lastFrame)/1000,.15):0;lastFram
   }else v63Dirty=true;
  }else{if(v58PaintBattle){v58PaintBattle=null;v58Previous=new WeakMap();v63FXPrevious=new WeakMap();v63Dirty=true}const sig=v63PrepSignature();if(v63Dirty||sig!==v63PrepSig){paintBoard(t);v63PrepSig=sig;v63Dirty=false}}
  requestAnimationFrame(frame)}
-document.addEventListener('visibilitychange',()=>{lastFrame=0;v63Dirty=true;if(G?.battle&&!document.hidden){v63SampleStart=performance.now();v63Draws=0;v63Work=0;v63Samples=0;v63NextDraw=performance.now()}});
-$('v63Perf').addEventListener('click',()=>{v63Mode=({auto:'full',full:'smooth',smooth:'auto'})[v63Mode];v63Bad=v63Good=0;try{localStorage.setItem('rift_v63_visual_mode',v63Mode)}catch(e){}v63UpdateMode()});
+document.addEventListener('visibilitychange',()=>{lastFrame=0;v63Dirty=true;if(document.hidden)v697CancelAudio();else if(audioContext)musicNext=audioContext.currentTime+.06;if(G?.battle&&!document.hidden){v63SampleStart=performance.now();v63Draws=0;v63Work=0;v63Samples=0;v63NextDraw=performance.now()}});
+$('v63Perf').addEventListener('click',()=>{v63Mode=({auto:'full',full:'balanced',balanced:'smooth',smooth:'auto'})[v63Mode];v63Bad=v63Good=0;try{localStorage.setItem('rift_v63_visual_mode',v63Mode)}catch(e){}v63UpdateMode()});
 // ─── 星港图鉴：无需退出对局即可查全部规则。商店卡片的独立 ⓘ 可直接定位。 ───
 let codexTab='crew',codexFilter='all',codexQuery='',codexFocus='';
 const CODEX_TABS={lineup:'阵容 '+Object.keys(V61_PLANS).length,crew:'船员 '+Object.keys(UNITS).length,faction:'阵营 '+Object.keys(FACTIONS).length,role:'职业 '+Object.keys(CLASSES).length,item:'装备 '+ITEMS.length,relic:'奇遇 '+RELICS.length};
