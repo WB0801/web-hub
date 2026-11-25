@@ -36,6 +36,11 @@ jobs:
           exit 1
       - name: Run browser smoke test
         run: node qa/rift-fleet/browser-smoke.mjs
+      - name: Include exact game build for local review
+        if: always()
+        run: |
+          mkdir -p qa-artifacts
+          cp rift-fleet/index.html qa-artifacts/tested-game.html
       - name: Store screenshots and measurements
         if: always()
         uses: actions/upload-artifact@v4
