@@ -1007,9 +1007,11 @@ clubTraining=page1995;genAthlete=gen1995;
   const original={render,trainWeek,clubTrain16,row1995,calendarPage14};
   const roster=()=>S.club?activeRoster():[S.player];
   const n=v=>Number(v).toFixed(2);
-  const hist=p=>Array.isArray(S.growthV2?.[p.id])?S.growthV2[p.id]:[];
+  const hist=p=>Array.isArray(S.growthV2?.[p.id])?S.growthV2[p.id].filter(r=>r&&Number.isFinite(r.after)&&Number.isFinite(r.before)&&Number.isInteger(r.week)):[];
   function log(p,b,r){
-    const list=(S.growthV2??={})[p.id]??=[];
+    if(!S.growthV2||typeof S.growthV2!=='object'||Array.isArray(S.growthV2))S.growthV2={};
+    if(!Array.isArray(S.growthV2[p.id]))S.growthV2[p.id]=[];
+    const list=S.growthV2[p.id];
     const row={week:S.week,before:b.avg,after:avg(p),delta:copy(r.delta),fitness:copy(r.fitness),form:copy(r.form),learned:copy(r.learned||[])};
     if(list[list.length-1]?.week===S.week)list[list.length-1]=row;else list.push(row);
     if(list.length>104)list.splice(0,list.length-104);
@@ -1032,6 +1034,12 @@ clubTraining=page1995;genAthlete=gen1995;
   }
   function status(e){
     if(e.week<S.week)return ['已过','past'];
+    if(e.week===S.week){
+      if(!S.club&&S.tournament)return ['赛事进行中','ready'];
+      const c=S.club?.comp14;
+      if(c?.queue?.some(j=>j.kind===e.kind))return ['赛事进行中','ready'];
+      if(c?.results?.some(r=>r.week===S.week&&(e.kind==='personal'?r.name===e.name:e.kind==='league'?r.name==='俱乐部联赛':r.name==='年度俱乐部杯')))return ['已结算','past'];
+    }
     if(e.kind==='personal'){
       const next=S.club?.comp14?next14():nextEvent();
       if(e.week!==next.week)return ['报名未开放','later'];
@@ -1062,7 +1070,7 @@ clubTraining=page1995;genAthlete=gen1995;
     if(S.club){const exp=ps.filter(p=>p.id!=='p1'&&p.contract-S.week<=4);if(exp.length)issues.push([exp.length+'份合约将在4周内到期','roster','查看阵容']);if(budget16().net<0)issues.push(['预计每周赤字 '+money(-budget16().net),'business','查看预算'])}
     const latest=ps.map(p=>({p,r:hist(p).at(-1)})).filter(x=>x.r);
     const teamMean=ps.length?ps.reduce((a,p)=>a+avg(p),0)/ps.length:0;
-    return `<section class="panel m200dash"><div class="m200top"><div><small>当前赛季</small><strong>S${year()} · W${weekNo()}</strong></div><div><small>${S.club?'现役球员':'创始球员'}</small><strong>${S.club?ps.length:esc(S.player.name)}</strong></div><div><small>平均综合能力</small><strong>${n(teamMean)}</strong></div><div><small>下一站</small><strong>${next?(next.week===S.week?'本周':next.week-S.week+'周后'):'—'}</strong></div></div><div class="m200cols"><section><div class="between"><h2>经理待办</h2><span class="muted">${issues.length} 项</span></div>${issues.map(([label,k,action])=>`<div class="m200line"><span>${esc(label)}</span><button class="small" onclick="${['personal','league','cup'].includes(k)?`managerEvent200('${k}')`:`go('${k}')`}">${action}</button></div>`).join('')||'<p class="muted">暂无紧急事项，可继续安排训练或推进本周。</p>'}</section><section><div class="between"><h2>近8周赛程</h2><button class="small" onclick="managerCalendar200()">完整赛历</button></div>${table(events.filter(e=>e.week<S.week+8))}</section></div><div class="m200cols"><section><div class="between"><h2>球员状态</h2><button class="small" onclick="go('${S.club?'roster':'player'}')">查看档案</button></div><div class="tablewrap"><table class="m200table"><thead><tr><th>球员</th><th>等级</th><th>体能</th><th>竞技</th></tr></thead><tbody>${ps.slice(0,6).map(p=>`<tr><td>${esc(p.name)}</td><td>${grade(p)}</td><td>${Math.round(p.fitness)}%</td><td>${Math.round(p.form)}%</td></tr>`).join('')}</tbody></table></div>${ps.length>6?`<small>另有 ${ps.length-6} 名球员，前往阵容查看。</small>`:''}</section><section><div class="between"><h2>最近一次训练成长</h2><button class="small" onclick="go('training')">安排训练</button></div>${latest.slice(0,5).map(({p,r})=>`<div class="m200line"><span>${esc(p.name)} <small>${fmtWeek(r.week)}</small></span><b>${fmtDelta(r.after-r.before)} 综合能力</b></div>`).join('')||'<p class="muted">V2.0 开始记录每周实际训练成果；推进训练后显示。</p>'}</section></div></section>`;
+    return `<section class="panel m200dash"><div class="m200top"><div><small>当前赛季</small><strong>S${year()} · W${weekNo()}</strong></div><div><small>${S.club?'现役球员':'创始球员'}</small><strong>${S.club?ps.length:esc(S.player.name)}</strong></div><div><small>平均综合能力</small><strong>${n(teamMean)}</strong></div><div><small>下一站</small><strong>${next?(next.week===S.week?'本周':next.week-S.week+'周后'):'—'}</strong></div></div><div class="m200cols"><section><div class="between"><h2>经理待办</h2><span class="muted">${issues.length} 项</span></div>${issues.map(([label,k,action])=>`<div class="m200line"><span>${esc(label)}</span><button class="small" onclick="${['personal','league','cup'].includes(k)?`managerEvent200('${k}')`:`go('${k}')`}">${action}</button></div>`).join('')||'<p class="muted">暂无紧急事项，可继续安排训练或推进本周。</p>'}</section><section><div class="between"><h2>近8周赛程</h2><button class="small" onclick="managerCalendar200()">完整赛历</button></div>${table(events.filter(e=>e.week<S.week+8))}</section></div><div class="m200cols"><section><div class="between"><h2>球员状态</h2><button class="small" onclick="go('${S.club?'roster':'player'}')">查看档案</button></div><div class="tablewrap"><table class="m200table"><thead><tr><th>球员</th><th>等级</th><th>体能</th><th>竞技</th></tr></thead><tbody>${ps.slice(0,6).map(p=>`<tr><td>${esc(p.name)}</td><td>${grade(p)}</td><td>${Math.round(p.fitness)}%</td><td>${Math.round(p.form)}%</td></tr>`).join('')}</tbody></table></div>${ps.length>6?`<small>另有 ${ps.length-6} 名球员，前往阵容查看。</small>`:''}</section><section><div class="between"><h2>最近一次训练成长</h2><button class="small" onclick="go('training')">安排训练</button></div>${latest.slice(0,5).map(({p,r})=>`<div class="m200line"><span>${esc(p.name)} <small>${fmtWeek(r.week)}</small></span><b>${(r.after>=r.before?'+':'')+n(r.after-r.before)} 综合能力</b></div>`).join('')||'<p class="muted">V2.0 开始记录每周实际训练成果；推进训练后显示。</p>'}</section></div></section>`;
   }
   function topDelta(delta){
     return Object.entries(delta||{}).filter(([k,v])=>ATTR[k]&&v>0).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>ATTR[k]+' +'+Number(v).toFixed(1)).join(' · ')||'无明显能力提升';
@@ -1072,7 +1080,7 @@ clubTraining=page1995;genAthlete=gen1995;
     return out.replace('<small>预计成长</small></b>',`<small>预计成长</small></b><small class="m200gain">预计：${esc(topDelta(v.r.delta))}</small>${r?`<small>实绩 ${fmtWeek(r.week)}：${esc(topDelta(r.delta))}</small>`:''}`);
   };
   function growth(p){
-    const rows=hist(p).slice(-12),d=develop(p),initial=d.initial||{},last=rows.at(-1);
+    const rows=hist(p).filter(r=>r&&Number.isFinite(r.after)&&Number.isFinite(r.before)&&Number.isInteger(r.week)).slice(-12),d=develop(p),initial=d.initial||{},last=rows.at(-1);
     const points=rows.map(x=>x.after),low=points.length?Math.floor(Math.min(...points))-1:0,high=points.length?Math.ceil(Math.max(...points))+1:1;
     const x=i=>18+i*264/Math.max(1,points.length-1),y=v=>95-(v-low)*76/(high-low);
     const line=points.map((v,i)=>`${x(i)},${y(v)}`).join(' ');
@@ -1093,7 +1101,7 @@ clubTraining=page1995;genAthlete=gen1995;
       main.insertAdjacentHTML('beforeend',panel('第 '+year()+' 赛季 · 完整赛历',table(schedule(year()))));
     }else if(view==='training'&&!S.club){
       const last=hist(S.player).at(-1);
-      if(last)head.insertAdjacentHTML('afterend',panel('上次实际训练',`<p>${fmtWeek(last.week)} · 综合能力 ${fmtDelta(last.after-last.before)} · ${esc(topDelta(last.delta))}</p>`));
+      if(last)head.insertAdjacentHTML('afterend',panel('上次实际训练',`<p>${fmtWeek(last.week)} · 综合能力 ${(last.after>=last.before?'+':'')+n(last.after-last.before)} · ${esc(topDelta(last.delta))}</p>`));
     }
   };
 })();
