@@ -2199,7 +2199,7 @@ function drawMachine(x,y,f,time,hp=f.hp){const steps=12,rate=f.mechKind==='bee'?
 }
 function v63Pulse(time,at,len){return Number.isFinite(at)?clamp(1-Math.max(0,time-at)/len,0,1)*(time>=at-.04?1:0):0}
 function drawBattle(){if(!G?.battle)return;const b=G.battle,time=v58VisualTime(b),renderList=[];
- for(const f of b.fighters){const dead=f.hp<=0,fade=dead?v63Pulse(time,f.v63DeathAt,.28):1;if(!fade)continue;const xy=v58VisualPosition(f,b),pos=getTile(xy.x-.5,xy.y-.5),move=v63Pulse(time,f.v63AttackAt,.22),cast=v63Pulse(time,f.v63CastAt,.46),hit=v63Pulse(time,f.v63HitAt,.22);const motion=Math.sin(move*Math.PI)*(f.range>1.6?4:11);
+ for(const f of b.fighters){const dead=f.hp<=0,fade=dead?(Number.isFinite(f.v63DeathAt)?clamp(1-Math.max(0,time-f.v63DeathAt)/.28,0,1):0):1;if(!fade)continue;const xy=v58VisualPosition(f,b),pos=getTile(xy.x-.5,xy.y-.5),move=v63Pulse(time,f.v63AttackAt,.22),cast=v63Pulse(time,f.v63CastAt,.46),hit=v63Pulse(time,f.v63HitAt,.22);const motion=Math.sin(move*Math.PI)*(f.range>1.6?4:11);
  const bob=dead?0:Math.sin(time*5+xy.x*2)*1.6;renderList.push({f,fade,x:pos.x+(f.v63AttackX||0)*motion,y:pos.y+bob+(f.v63AttackY||0)*motion,cast,hit,dead})}
  renderList.sort((a,c)=>a.y-c.y);
  for(const z of renderList){const {f,x,y,fade,cast,hit,dead}=z;const prev=v58Previous.get(f),a=clamp((b.stepCarry||0)/.10,0,1),mix=(k,value)=>prev&&Number.isFinite(prev[k])?prev[k]+(value-prev[k])*a:value;
@@ -2258,7 +2258,7 @@ function v63Sample(t,work,didDraw){v63Work+=work;v63Samples++;if(didDraw)v63Draw
   if(v63Bad>=2){v63Auto=v63Auto==='full'?'balanced':'smooth';v63Bad=0;v63UpdateMode()}else if(v63Good>=4){v63Auto=v63Auto==='smooth'?'balanced':'full';v63Good=0;v63UpdateMode()}}
  v63SampleStart=t;v63Draws=0;v63Work=0;v63Samples=0;
 }
-function v63PrepSignature(){return [G?.phase||'menu',G?.round||0,selectedUid,enemyRangeUid,hoverTile,selectedCopy,dragCopy,selectedItem,selectedTransfer?.fromUid,highlightedTrait?.kind,highlightedTrait?.key,v51Drag?.active?v51Drag.uid:'',v58Gear?.active?v58Gear.id:'',Object.values(PORTRAITS).filter(x=>x.complete&&x.naturalWidth).length].join('|')}
+function v63PrepSignature(){return [G?.phase||'menu',G?.round||0,selectedUid,enemyRangeUid,hoverTile,selectedCopy,dragCopy,selectedItem,selectedTransfer?.fromUid,highlightedTrait,v51Drag?.active?v51Drag.uid:'',v58Gear?.active?v58Gear.id:'',Object.values(PORTRAITS).filter(x=>x.complete&&x.naturalWidth).length].join('|')}
 function frame(t){const dt=lastFrame?Math.min((t-lastFrame)/1000,.15):0;lastFrame=t;const start=performance.now();let drawn=false;
  if(document.hidden){requestAnimationFrame(frame);return}
  if(G?.phase==='battle'&&G.battle){const b=G.battle;if(v58PaintBattle!==b){v58PaintBattle=b;v58Previous=new WeakMap();v63FXPrevious=new WeakMap();v58LastHud=0;v63ResetPerf(t);}
@@ -2270,7 +2270,7 @@ function frame(t){const dt=lastFrame?Math.min((t-lastFrame)/1000,.15):0;lastFram
   }else v63Dirty=true;
  }else{if(v58PaintBattle){v58PaintBattle=null;v58Previous=new WeakMap();v63FXPrevious=new WeakMap();v63Dirty=true}const sig=v63PrepSignature();if(v63Dirty||sig!==v63PrepSig){paintBoard(t);v63PrepSig=sig;v63Dirty=false}}
  requestAnimationFrame(frame)}
-document.addEventListener('visibilitychange',()=>{lastFrame=0;v63Dirty=true;if(G?.battle&&!document.hidden){v63SampleStart=performance.now();v63Draws=0;v63Work=0;v63Samples=0;v63NextDraw=0}});
+document.addEventListener('visibilitychange',()=>{lastFrame=0;v63Dirty=true;if(G?.battle&&!document.hidden){v63SampleStart=performance.now();v63Draws=0;v63Work=0;v63Samples=0;v63NextDraw=performance.now()}});
 $('v63Perf').addEventListener('click',()=>{v63Mode=({auto:'full',full:'smooth',smooth:'auto'})[v63Mode];v63Bad=v63Good=0;try{localStorage.setItem('rift_v63_visual_mode',v63Mode)}catch(e){}v63UpdateMode()});
 // ─── 星港图鉴：无需退出对局即可查全部规则。商店卡片的独立 ⓘ 可直接定位。 ───
 let codexTab='crew',codexFilter='all',codexQuery='',codexFocus='';
