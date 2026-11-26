@@ -1238,8 +1238,8 @@ function tension233(m){
  return {critical:pointEnds1981(m,0)||pointEnds1981(m,1),closeLate:close&&late,decider:m?.set===3}
 }
 function reaction233(r,m){
- let t=tension233(m),len=r.length||r.events?.length||0,final=/决赛/.test(String(m.title||""))&&!/半决赛|1\/[48]决赛/.test(String(m.title||"")),key=t.critical,matchPoint=key&&[0,1].some(i=>m.sets?.[i]===1&&pointEnds1981(m,i)),kind=matchPoint?"matchpoint":key?"key":len>=15?"long":len>=9?"rally":t.closeLate?"close":"normal",tier=arenaTier233(m);
- let power=({normal:.32,close:.48,rally:.62,long:.86,key:.92,matchpoint:1})[kind];if(final)power=Math.min(1,power+.08);if(t.decider)power=Math.min(1,power+.05);
+ let t=tension233(m),len=r.length||r.events?.length||0,final=/决赛/.test(String(m.title||""))&&!/半决赛|1\/[48]决赛/.test(String(m.title||"")),key=t.critical,matchPoint=key&&[0,1].some(i=>m.sets?.[i]===1&&pointEnds1981(m,i)),finished=[0,1].includes(r.winner)&&m.sets?.[r.winner]===1&&pointEnds1981(m,r.winner),kind=finished?(r.winner===0?"victory":"defeat"):matchPoint?"matchpoint":key?"key":len>=15?"long":len>=9?"rally":t.closeLate?"close":"normal",tier=arenaTier233(m);
+ let power=({normal:.32,close:.48,rally:.62,long:.86,key:.92,matchpoint:1,victory:1,defeat:.58})[kind];if(final)power=Math.min(1,power+.08);if(t.decider)power=Math.min(1,power+.05);
  return {tier,kind,power}
 }
 function rngArena233(seed){let x=seed>>>0;return ()=>{x=(Math.imul(x,1664525)+1013904223)>>>0;return x/4294967296}}
