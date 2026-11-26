@@ -2939,7 +2939,7 @@ const VENUE256={
 future:[[19,"斯洛伐克公开赛","布拉迪斯拉发"],[22,"波恩未来系列赛","波恩"],[23,"巴拉圭瓜拉尼公开赛","亚松森"],[24,"拉脱维亚国际赛","里加"],[25,"捷克未来系列赛","捷克布杰约维采"],[35,"墨西哥未来系列赛","蒙特雷"],[37,"哥斯达黎加未来系列赛","圣何塞"],[40,"保加利亚国际锦标赛","索菲亚"]],
 series:[[18,"卢森堡公开赛","卢森堡"],[20,"斯洛文尼亚公开赛","马里博尔"],[21,"奥地利公开赛","格拉茨"],[25,"北马里亚纳国际赛","塞班岛"],[37,"马来西亚国际系列赛","吉隆坡"],[38,"秘鲁国际系列赛","利马"],[44,"匈牙利国际锦标赛","布达佩斯"],[48,"萨尔瓦多国际赛","圣萨尔瓦多"]],
 challenge:[[19,"丹麦国际挑战赛","法鲁姆"],[20,"留尼汪公开赛","圣但尼"],[35,"拉各斯国际赛","拉各斯"],[40,"荷兰公开赛","斯海尔托亨博斯"],[41,"悉尼国际赛","利德科姆"],[49,"加拿大国际挑战赛","万锦"]],
-s100:[[20,"中国宝鸡大师赛","宝鸡"],[37,"越南公开赛","胡志明市"],[39,"高雄大师赛","高雄"],[40,"阿布扎比大师赛","阿布扎比"],[42,"马来西亚Super 100赛","吉隆坡"],[49,"古瓦哈提大师赛","古瓦哈提"],[50,"奥里萨大师赛","克塔克"],[43,"印尼大师赛Super 100","印度尼西亚"]],
+s100:[[20,"中国宝鸡大师赛","宝鸡"],[37,"越南公开赛","胡志明市"],[39,"高雄大师赛","高雄"],[36,"印尼坤甸大师赛Super 100","坤甸"],[42,"马来西亚Super 100赛","依斯干达公主城"],[49,"古瓦哈提大师赛","古瓦哈提"],[50,"奥里萨大师赛","克塔克"],[43,"印尼古突士大师赛Super 100","古突士"]],
 s300:[[5,"泰国大师赛","曼谷"],[9,"德国公开赛","米尔海姆"],[11,"瑞士公开赛","巴塞尔"],[12,"奥尔良大师赛","奥尔良"],[25,"澳门公开赛","澳门"],[26,"美国公开赛","富勒顿"],[27,"加拿大公开赛","万锦"],[31,"台北公开赛","台北"],[32,"韩国大师赛","牙山"],[48,"赛义德莫迪国际赛","勒克瑙"]],
 s500:[[4,"印尼大师赛","雅加达"],[20,"泰国公开赛","曼谷"],[21,"马来西亚大师赛","吉隆坡"],[24,"澳大利亚公开赛","悉尼"],[41,"北极公开赛","万塔"],[44,"海洛公开赛","萨尔布吕肯"],[45,"韩国公开赛","丽水"],[46,"日本熊本大师赛","熊本"],[47,"香港公开赛","香港"]],
 s750:[[3,"印度公开赛","新德里"],[22,"新加坡公开赛","新加坡"],[29,"日本公开赛","东京"],[36,"中国大师赛","深圳"],[42,"丹麦公开赛","欧登塞"],[43,"法国公开赛","巴黎"]],
@@ -2958,15 +2958,15 @@ function calendarCore256(y,legacy=false){
  const offset=(y-1)*52,old=oldCalendar256(y),out=[];
  for(const e of old){
   const i=Number(e.id.split("-").at(-1))-1;
-  if(["local","regional","national"].includes(e.code)){out.push(domesticVenue256(e,i));continue}
+  if(["local","regional","national"].includes(e.code)){let d=domesticVenue256(e,i);if(!legacy&&e.code==="national")d={...d,wn:28,week:offset+28};out.push(d);continue}
   if(VENUE256[e.code]){
    if(!legacy)continue;
    let row=VENUE256[e.code][i];
    if(row)out.push(venueName256(e,row));
-   else out.push({...e,name:e.label+" · 旧赛历保留站",city:"旧赛历"});
+   else out.push({...e,name:e.label+" · 旧赛历保留站（吉隆坡）",city:"吉隆坡"});
    continue;
   }
-  let row=e.code==="continental"?({"亚洲":[15,"宁波"],"欧洲":[15,"欧洲轮办城市"],"非洲":[7,"非洲轮办城市"],"美洲":[17,"美洲轮办城市"],"大洋洲":[7,"大洋洲轮办城市"]}[e.continent]):e.code==="world"?[34,["新德里","巴黎","哥本哈根"][(y-1)%3]]:e.code==="olympics"?[31,["洛杉矶","布里斯班","巴黎"][(Math.floor(y/4)-1)%3]]:e.code==="finals"?[52,"杭州"]:null;
+  let row=e.code==="continental"?({"亚洲":[15,"宁波"],"欧洲":[15,"韦尔瓦"],"非洲":[7,"哈博罗内"],"美洲":[15,"利马"],"大洋洲":[7,"奥克兰"]}[e.continent]):e.code==="world"?[34,["新德里","巴黎","哥本哈根"][(y-1)%3]]:e.code==="olympics"?[31,["洛杉矶","布里斯班","巴黎"][(Math.floor(y/4)-1)%3]]:e.code==="finals"?[52,"杭州"]:null;
   if(row)out.push({...e,wn:legacy?e.wn:row[0],week:legacy?e.week:offset+row[0],city:row[1],name:e.name+" · "+row[1]});else out.push(e);
  }
  if(!legacy)for(const [code,rows] of Object.entries(VENUE256)){let rule=RULES210.find(r=>r[0]===code);rows.forEach((row,i)=>out.push(venueName256({id:"S"+y+"-"+code+"-"+(i+1),code,label:rule[1],tier:rule[2],wn:row[0],week:offset+row[0],kind:"personal",prize:rule[4],draw:rule[5]},row)))}
@@ -2974,16 +2974,18 @@ function calendarCore256(y,legacy=false){
 }
 calendar210=function(y){
  let legacy=S?.calendarLegacy256?.includes(y),a=calendarCore256(y,legacy);
- if(legacy){let old=new Map(oldCalendar256(y).map(e=>[e.id,e]));return a.map(e=>e.week<S.week?old.get(e.id)||e:e)}
+ if(legacy){let old=new Map(oldCalendar256(y).map(e=>[e.id,e]));return a.map(e=>e.week<(S.calendarCutover256||S.week)?old.get(e.id)||e:e)}
  return a;
 };
 const migrateBase256=migrate;
 migrate=function(d){
  if(!Array.isArray(d.calendarLegacy256)){
   const y=Math.floor((d.week-1)/52)+1,keys=Object.keys(d.club?.comp14?.eventEntries210||{});
-  d.calendarLegacy256=Array.from({length:y},(_,i)=>i+1);
+  d.calendarLegacy256=Array.from({length:y},(_,i)=>i+1);d.calendarCutover256=d.week;
   if(keys.some(k=>k.startsWith("S"+(y+1)+"-")))d.calendarLegacy256.push(y+1);
  }
+ if(d.calendarLegacy256.length&&!d.calendarCutover256)d.calendarCutover256=d.week;
+ const c=d.club?.comp14;if(c){for(const h of c.honours250||[]){if(!h.own&&h.ownRunner===undefined){const cat=CAT[h.cat]||"团体";if((c.results||[]).some(r=>r.week===h.week&&r.name===h.name&&r.cat===cat&&r.result==="亚军"&&r.detail===h.runner))h.ownRunner=true;else if(h.cat==="TEAM"&&h.runner===d.club.name)h.ownRunner=true}}}
  return migrateBase256(d)
 };
 const createBase256=createGame;
@@ -2993,7 +2995,7 @@ const LABEL256={olympics:"奥运会",world:"世界锦标赛",finals:"年终总�
 function honourRows256(){
  let rows=[],seen=new Map(),c=S.club?.comp14;
  function add(r){if(!r||!Number.isInteger(r.week)||!["冠军","亚军"].includes(r.result))return;let key=[r.week,r.name,r.cat,r.result].join("|");if(seen.has(key))return;seen.set(key,true);rows.push(r)}
- for(let r of S.founderHonours256||[])add(r);
+ for(let r of S.founderHonours256||[])add(r);for(let r of S.legacyHonours256||[])add(r);
  for(let h of S.history||[]){if(!h.title?.endsWith(" · 决赛")||h.report?.players?.[0]?.id!=="p1"||h.report?.comp14)continue;let won=h.report.winner;if(won!==0&&won!==1)continue;add({week:h.week,name:h.title.slice(0,-5).trim(),cat:S.player.gender==="女"?"WS":"MS",code:"local",result:won===0?"冠军":"亚军",detail:h.report.players[0].name})}
  for(let r of c?.honours250||[]){
   if(r.own)add({week:r.week,name:r.name,cat:r.cat,code:r.code,result:"冠军",detail:r.champion});
@@ -3002,6 +3004,8 @@ function honourRows256(){
  for(let r of c?.results||[]){if(!["冠军","亚军"].includes(r.result))continue;let cat=CATS.find(k=>CAT[k]===r.cat)||r.cat,e=calendar210(Math.floor((r.week-1)/52)+1).find(e=>e.week===r.week&&(e.name===r.name||e.label===r.name||e.code==="national"&&r.name.endsWith("全国锦标赛"))),known=c.honours250?.find(x=>x.week===r.week&&x.name===r.name&&x.cat===cat);add({week:r.week,name:r.name,cat,code:known?.code||e?.code||"legacy",result:r.result,detail:r.detail})}
  return rows.sort((a,b)=>(RANK256[b.code]??-1)-(RANK256[a.code]??-1)||(a.result==="冠军"?0:1)-(b.result==="冠军"?0:1)||b.week-a.week||a.name.localeCompare(b.name))
 }
+const saveBase256=save;
+save=function(){if(S){const c=S.club?.comp14;if(c?.results){S.legacyHonours256??=[];for(const r of c.results){if(!["冠军","亚军"].includes(r.result))continue;const cat=CATS.find(k=>CAT[k]===r.cat)||r.cat;if((c.honours250||[]).some(h=>h.week===r.week&&h.name===r.name&&h.cat===cat&&(h.own||h.ownRunner)))continue;if(S.legacyHonours256.some(h=>h.week===r.week&&h.name===r.name&&h.cat===cat&&h.result===r.result))continue;const e=calendar210(Math.floor((r.week-1)/52)+1).find(e=>e.week===r.week&&(e.name===r.name||e.label===r.name||e.code==="national"&&r.name.endsWith("全国锦标赛")));S.legacyHonours256.push({week:r.week,name:r.name,cat,result:r.result,code:e?.code||"legacy",detail:r.detail})}}}return saveBase256()};
 const founderEnd256=endTournament;
 endTournament=function(){let t=S?.tournament;if(t?.finished&&!S.match){let f=t.rounds.at(-1)?.[0];if(f&&[f.a,f.b].includes("p1")){S.founderHonours256??=[];if(!S.founderHonours256.some(r=>r.week===S.week&&r.name===t.name))S.founderHonours256.push({week:S.week,name:t.name,cat:S.player.gender==="女"?"WS":"MS",code:"local",result:t.winner==="p1"?"冠军":"亚军",detail:S.player.name})}}return founderEnd256()};
 function honourPanel256(){
@@ -3017,13 +3021,13 @@ function quickCalendar256(){
 function quickCalRows256(all,filter,club){
  let next=club?null:nextEvent(),rows=[];
  for(const e of all){let status,cls,units=[];
-  if(club){[status,cls]=status230(e);units=entryUnits230(e)}
+  if(club){[status,cls]=status230(e);units=entryUnits230(e);if(e.code==="club"&&e.week>(year()*52)){status="未报名";cls="later";units=[]}}
   else if(S.tournament?.id===e.id){status="比赛中";cls="entered"}
   else if(e.id===next?.id&&S.entered){status="已报名";cls="entered"}
   else if(e.id===next?.id){status="可报名";cls="open"}
   else {status=e.code==="local"?"未报名":"俱乐部解锁后开放";cls="later"}
   if(filter==="entered"&&cls!=="entered"||filter==="domestic"&&!["local","regional","national"].includes(e.code)||filter==="tour"&&!/^s[0-9]+$/.test(e.code))continue;
-  rows.push('<tr class="'+(e.week===S.week?"m200current":"")+'"><td>'+date230(e)+(e.week===S.week?" · 本周":"")+'</td><td><b>'+esc(e.name)+'</b><small>'+esc(e.label)+'</small></td><td><span class="cal230state '+cls+'">'+esc(status)+'</span>'+(units.length?'<small>'+esc(units.map(x=>(CAT[x.cat]||x.cat)+" "+x.u.name).join("、"))+'</small>':"")+'</td></tr>')
+  rows.push('<tr class="'+(e.week===S.week?"m200current":"")+'"><td>'+date230(e)+(e.week===S.week?" · 本周":"")+'</td><td><b>'+esc(e.name)+'</b><small>'+esc(e.label)+'</small></td><td><span class="cal230state '+cls+'">'+esc(status)+'</span>'+(units.length?'<small>'+esc(units.map(x=>(CAT[x.cat]||x.cat)+" "+x.u.name).join("、"))+'</small>':"")+(club&&e.week>=S.week&&!busy()?'<small>'+eventButton274(e,"详情 / 报名")+'</small>':"")+'</td></tr>')
  }
  return rows.join("")||'<tr><td colspan="3">暂无符合条件的赛事。</td></tr>'
 }
