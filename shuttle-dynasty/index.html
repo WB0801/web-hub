@@ -249,7 +249,7 @@ body.ui271reduced .ui271Overlay,body.ui271reduced .toast{animation:none!importan
 .u274group{padding:8px 0;border-bottom:1px solid var(--line)}.u274group:last-child{border-bottom:0}.u274group h2{font-size:14px;margin:0}.u274group .cal230unit{padding:6px 0}.u274workbench{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px}.u274workbench>.u274group{min-width:0}
 .u274line{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}.u274line small{display:block;color:var(--muted)}.u274line>div{min-width:0}.u274own{margin:10px 0}.u274own h3{margin:0}
 .u274qual{margin:8px 0;padding:6px 0;border-bottom:1px solid var(--line)}.u274qual summary{cursor:pointer}.u274qual details{padding:5px 0}
-@media(max-width:730px){.u274workbench{grid-template-columns:1fr}.u274main .cal230table{min-width:0}.u274main .cal230table :is(th,td):nth-child(3){display:none}.u274main .cal230table td:last-child{white-space:normal}.u274main .cal230table button{white-space:normal;padding:4px}.u274main .tablewrap th,.u274main .tablewrap td{padding:5px 3px!important;overflow-wrap:anywhere}.u274rankname,.ui271Overlay .cal230unit button{min-height:44px}}
+@media(max-width:730px){.u274workbench{grid-template-columns:1fr}.u274main .cal230table{min-width:0}.u274main .cal230table :is(th,td):nth-child(3){display:none}.u274main .cal230table td[colspan]{display:table-cell}.u274main .cal230table td:last-child{white-space:normal}.u274main .cal230table button{white-space:normal;padding:4px}.u274main .tablewrap th,.u274main .tablewrap td{padding:5px 3px!important;overflow-wrap:anywhere}.u274rankname,.ui271Overlay .cal230unit button{min-height:44px}}
 
 </style></head><body><header><div class="brand"><img class="brand91" src="logo.svg" alt="羽林之巅 Shuttle Dynasty"><small class="version91">V2.2.4</small></div><div class="headerinfo" id="headerinfo"></div></header><div id="app"></div><div id="ui271Host"></div><div id="toast" class="toast hide" role="status"></div><input id="importfile" type="file" accept="application/json,.json" class="filein"><script>
 'use strict';
@@ -1858,7 +1858,7 @@ function matchMark219(m,side,withCode=true){let half=m.members?2:1,ps=(m.members
  clubHome=function(){return base.home()+countryPanel()};
  playerPage=function(){let out=base.player();if(!S?.club)return out;let p=selectedP(),code=country219(p);return out.replace('<div class="playerhead">','<div class="playerhead"><span class="profileCountry219">'+flag219(code,true)+'</span>')};
  entry14=function(cat,id){if(id&&scope220(eventCode220(selectedEvent210()))==='world'&&!Object.hasOwn(COUNTRY219,S?.club?.country219)){notify('请先在球队首页登记所属国家／协会');return}return base.entry(cat,id)};
- entryPage14=function(){let out=base.entryPage();return scope220(eventCode220(selectedEvent210()))==='world'?`<div class="notice countryNotice219">${Object.hasOwn(COUNTRY219,S.club.country219)?'国际巡回赛 · '+flag219(S.club.country219,true)+' 球员以所属协会旗帜参赛。':'国际巡回赛 · 尚未登记国家／协会。请先前往球队首页或品牌页完成登记。 '+btn('登记国家',"go('brand')",'small')}</div>`+out:out};
+ entryPage14=function(eventOverride){let out=base.entryPage(eventOverride);return scope220(eventCode220(eventOverride||selectedEvent210()))==='world'?`<div class="notice countryNotice219">${Object.hasOwn(COUNTRY219,S.club.country219)?'国际巡回赛 · '+flag219(S.club.country219,true)+' 球员以所属协会旗帜参赛。':'国际巡回赛 · 尚未登记国家／协会。请先前往球队首页或品牌页完成登记。 '+btn('登记国家',"go('brand')",'small')}</div>`+out:out};
  rankPage14=function(){return base.rank()};
 })();
 function awayIdentity240(){let b=window.brandKit240,id=identity18(),a=S.club?.away240||{color:id.color==="#f5f5ee"?"#155743":"#f5f5ee",accent:id.color,pattern:"plain"};return b.normalize({...id,color:a.color,accent:a.accent,pattern:a.pattern})}
@@ -2012,20 +2012,15 @@ function rankDetail274(id,anchor){
  out+='<h3>成绩记录</h3>'+(d.all.slice().sort((a,b)=>b.week-a.week).map(x=>'<div class="u274line"><div><b>'+esc(x.name||"旧版积分记录")+'</b><small>'+fmtWeek(x.week)+' · '+(mode==="race"?"赛季内有效":"到期 "+fmtWeek(x.week+52))+'</small></div><b>'+x.points.toLocaleString()+' · '+(keys.has(x.key)?"计入":"未计入")+'</b></div>').join("")||'<p class="muted">暂无该榜有效期内的成绩。</p>');
  return openUI271("inspector",(q?.name||u.name)+" · 积分明细",out,anchor)
 }
-function movePanel274(panel,anchor,title,kind="inspector"){
- if(!openUI271(kind,title,"",anchor))return;
- const body=UI271.overlay.node.querySelector('.ui271OverlayBody');let copy=panel.cloneNode(true);
- copy.classList.add('u274detail');for(let d of copy.querySelectorAll('details'))d.open=false;body.append(copy)
-}
 function compactEvents274(main){
  if(!main||!S?.club?.comp14||busy())return;
  main.classList.add("u274main");let c=cp14(),panels=[...main.querySelectorAll('section.panel')];
  if(c.tab==="entry"){
    let h=panels.find(p=>heading92(p)==="赛事报名"),e=selectedEvent210();if(!h||!e)return;
-   let b=document.createElement('span');b.innerHTML=eventButton274(e,"赛事 / 资格详情");h.querySelector('h2')?.after(b.firstElementChild);
+   let b=document.createElement('span');b.innerHTML=eventButton274(e,"赛事 / 资格详情");let head=h.querySelector('h2');if(head){let row=document.createElement('div');row.className='between';head.before(row);row.append(head,b.firstElementChild)}
    for(const p of [...h.querySelectorAll(':scope > p.muted')])p.remove();
    let q=panels.find(p=>/^(当前代表资格名单|全国锦标赛代表资格)$/.test(heading92(p)));q?.remove();
-   let units=panels.filter(p=>Object.values(CAT).includes(heading92(p)));if(units.length){let group=document.createElement('section');group.className='panel u274workbench';units[0].before(group);for(let p of units){p.classList.add('u274group');p.classList.remove('panel');group.append(p)}}
+   let units=panels.filter(p=>Object.values(CAT).includes(heading92(p)));if(units.length){let group=document.createElement('section');group.className='panel full u274workbench';units[0].before(group);for(let p of units){p.classList.add('u274group');p.classList.remove('panel');group.append(p)}}
  }
  if(c.tab==="rank"){
    let own=panels.find(p=>heading92(p)==="我方积分明细"),board=panels.find(p=>p.querySelector('table'));if(!own||!board)return;
