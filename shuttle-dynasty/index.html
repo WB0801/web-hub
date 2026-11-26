@@ -1283,12 +1283,12 @@ function sound1981(cue){
 function pointEnds1981(m,side){const a=m.score[side]+1,b=m.score[1-side];return a>=21||(a>=15&&a-b>=2)}
 function pressure1981(m){if(!m||m.phase!=='live')return '';let sides=[0,1].filter(i=>pointEnds1981(m,i));if(!sides.length)return '';if(sides.length===2&&m.sets[0]===m.sets[1])return '双方'+(m.sets[0]===1?'赛点':'局点');return sides.map(side=>(side===0?'我方':'对手')+(m.sets[side]===1?'赛点':'局点')).join(' · ')}
 function cueList1981(r,m){
- let cues=[],time=LEAD,flip=!!m.flip;
+ let cues=[],time=LEAD,flip=!!m.flip,variantBase=((m.score?.[0]||0)+(m.score?.[1]||0)+(m.set||0))%3;
  for(let [idx,e] of r.events.entries()){
   let actor=e.actor??e.i,duration=e.duration,quality=e.quality,from=e.from||e.fromPos?.[actor];
-  cues.push({at:time,type:"shot",kind:e.kind,pan:pan232(from,flip),quality,variant:idx%3});
+  cues.push({at:time,type:"shot",kind:e.kind,pan:pan232(from,flip),quality,variant:(idx+variantBase)%3});
   let moves=(e.fromPos||[]).map((p,i)=>({i,p,to:e.toPos?.[i]})).filter(x=>x.to&&x.i!==actor).map(x=>({...x,d:Math.hypot(x.p.x-x.to.x,x.p.y-x.to.y)})).filter(x=>x.d>.65).sort((a,b)=>b.d-a.d);
-  let step=(move,f,scrape)=>({at:time+duration*f,type:"step",scrape,pan:pan232({x:move.p.x+(move.to.x-move.p.x)*f,y:move.p.y+(move.to.y-move.p.y)*f},flip),variant:(idx+move.i)%3});
+  let step=(move,f,scrape)=>({at:time+duration*f,type:"step",scrape,pan:pan232({x:move.p.x+(move.to.x-move.p.x)*f,y:move.p.y+(move.to.y-move.p.y)*f},flip),variant:(idx+move.i+variantBase)%3});
   if(moves.length&&duration>.19){cues.push(step(moves[0],.32,moves[0].d>1.6));if(moves[0].d>1.7&&duration>.43)cues.push(step(moves[0],.70,true))}
   time+=duration
  }
