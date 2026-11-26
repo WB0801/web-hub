@@ -261,7 +261,7 @@ body.matchmode93 .ui271-inspector{top:12px;bottom:12px;width:min(400px,calc(100v
 #match93[data-phase=live] .u275broadcastbar [data-u275-match="tactics"]{display:inline-flex}
 #match93[data-phase=pre] .u275broadcastbar{display:none}
 #match93[data-phase=done] .u275broadcastbar [data-u275-match="tactics"]{display:none}
-#match93.u275match[data-phase=live] .matchreport93,#match93.u275match[data-phase=break] .matchreport93,#match93.u275match[data-phase=done] .matchreport93,#match93.u275match[data-phase=break] #tacticpanel,#match93.u275match[data-phase=done] #reportdetail93{display:none!important}
+#match93.u275match.u275focus[data-phase=live] .matchreport93,#match93.u275match[data-phase=break] .matchreport93,#match93.u275match[data-phase=done] .matchreport93,#match93.u275match[data-phase=break] #tacticpanel,#match93.u275match[data-phase=done] #reportdetail93{display:none!important}
 body.matchmode93 #match93.u275match:not([data-phase=pre]){width:min(100%,max(520px,calc(183.673dvh - 280px)),1200px)}
 .ui271Overlay .u275moved{border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important;min-width:0}
 .ui271Overlay .u275moved .fields93{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -279,7 +279,7 @@ body.matchmode93 #match93.u275match:not([data-phase=pre]){width:min(100%,max(520
 .u275detailrow small{display:block;color:var(--muted);line-height:1.45}
 .u275detailrow button{flex-shrink:0}
 .u275links{display:flex;flex-wrap:wrap;gap:5px}
-.u275links button{min-height:32px}
+.u275links button{min-height:32px}.u275commerceTabs{grid-column:1/-1;margin-bottom:2px}.u275commerceTabs button{flex:1 1 auto}
 .u275compact .biz203kpi{gap:8px;padding:8px 12px}
 .u275compact .biz203kpi strong{font-size:18px}
 .u275compact .brandStudio213{margin-top:6px}
@@ -2111,7 +2111,7 @@ function matchBar275(root){
 }
 function syncMatch275(m){
  let root=document.getElementById("match93");if(!root||!m)return;
- matchBar275(root);let bar=root.querySelector(".u275broadcastbar");if(!bar)return;
+ matchBar275(root);root.classList.toggle("u275focus",visualPrefs18().focus);let bar=root.querySelector(".u275broadcastbar");if(!bar)return;
  let old=bar.dataset.phase;bar.dataset.phase=m.phase;
  let tactic=bar.querySelector('[data-u275-match="tactics"]'),report=bar.querySelector('[data-u275-match="report"]');
  if(old!==m.phase){tactic.hidden=m.phase==="done";report.hidden=m.phase!=="done";
@@ -2142,11 +2142,21 @@ function tuckDetails275(d,key,title){
  for(let n of [...d.childNodes])if(!(n.nodeType===1&&n.matches("summary")))body.append(n);
  d.replaceWith(body);tuckPanel275(body,key,title)
 }
+let commercial275={owner:null,key:'sponsor'};
+function commercialTabs275(main,panels){
+ const sections=[['sponsor','球队赞助','球队独家赞助'],['endorse','球员代言','球员代言 · 收益与训练取舍'],['merch','周边商品','周边商品 · 投资回收']].map(([k,l,h])=>({k,l,p:panels.find(p=>heading92(p)===h)})).filter(x=>x.p);if(sections.length<2)return;
+ if(commercial275.owner!==S){commercial275={owner:S,key:'sponsor'}}
+ const bar=document.createElement('div');bar.className='u275links u275commerceTabs';bar.setAttribute('aria-label','商业合作类别');
+ const buttons=[];function select(k){commercial275.key=k;for(const x of sections)x.p.hidden=x.k!==k;for(const b of buttons){let on=b.dataset.cat===k;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))}}
+ for(const x of sections){let b=document.createElement('button');b.type='button';b.className='small';b.dataset.cat=x.k;b.textContent=x.l;b.onclick=()=>select(x.k);buttons.push(b);bar.append(b)}
+ sections[0].p.before(bar);select(sections.some(x=>x.k===commercial275.key)?commercial275.key:sections[0].k)
+}
 function compactOther275(main){
  if(!main||!S)return;main.classList.add("u275compact");
  let panels=[...main.querySelectorAll("section.panel")],find=name=>panels.find(p=>heading92(p)===name);
  if(view==="business"&&S.club){
    let b=business16();
+   if(b.tab==="commercial")commercialTabs275(main,panels);
    if(b.tab==="overview"){
     let cash=panels.find(p=>heading92(p).startsWith("现金趋势"));let detail=cash?.querySelector("details");if(detail)tuckDetails275(detail,"business:forecast","逐周预测明细");
     let audit=find("资金账簿核对");if(audit)tuckPanel275(audit,"business:audit","资金账簿核对",audit.querySelector("p:last-child")?.textContent||"");
