@@ -1225,7 +1225,7 @@ const MUSIC234=Object.freeze({
 });
 const music234={current:null,retiring:new Set(),cache:new Map(),manageIndex:0,preview:null,timer:null};
 function musicScore234(id){
- const q=MUSIC234[id];if(!q)return null;let beats=60/q.bpm,bars=id==="Pre"?8:16,notes=[],add=(at,dur,midi,role,gain,pan=0)=>{if(midi>0)notes.push({at:at*beats,dur:dur*beats,midi,role,gain,pan})};
+ const q=MUSIC234[id];if(!q)return null;let beats=60/q.bpm,bars=id==="Pre"?8:16,notes=[],add=(at,dur,midi,role,gain,pan=0)=>{if(midi>0)notes.push({at:at*beats,dur:Math.min(dur,bars*4-at)*beats,midi,role,gain,pan})};
  for(let bar=0;bar<bars;bar++){
   let i=bar%8,c=q.chords[i],mel=q.melody[i],a=bar*4,second=bar>=8,pre=q.style==="pre";
   for(let [j,n] of c.slice(1).entries())add(a,3.9,n,"pad",pre?.038:.047,(j-1)*.28);
@@ -1257,7 +1257,7 @@ function renderMusic234(id,rate=22050){
  for(let i=len-1;i>=delay2;i--){let l=left[i],r=right[i];left[i]=l+right[i-delay]*.105+left[i-delay2]*.045;right[i]=r+left[i-delay]*.105+right[i-delay2]*.045}
  let edge=Math.min(Math.floor(rate*.18),Math.floor(len/4)),peak=0;
  for(let i=0;i<len;i++){let envelope=i<edge?Math.sin(Math.PI*.5*i/edge):i>=len-edge?Math.sin(Math.PI*.5*(len-1-i)/edge):1;left[i]*=envelope;right[i]*=envelope;peak=Math.max(peak,Math.abs(left[i]),Math.abs(right[i]))}
- let gain=peak?Math.min(1.9,.48/peak):0;
+ let gain=peak?Math.min(3.0,.48/peak):0;
  for(let i=0;i<len;i++){left[i]*=gain;right[i]*=gain}
  return {left,right,rate,seconds:len/rate}
 }
@@ -1280,7 +1280,7 @@ function startMusic234(id){
  try{
   let buffer=musicBuffer234(c,id);if(!buffer)return;source=c.createBufferSource();gain=c.createGain();source.buffer=buffer;source.loop=id==="Menu"||id==="Pre";gain.gain.value=0;source.connect(gain);gain.connect(A.buses.music);let track={id,node:source,gain};music234.current=track;
   source.onended=()=>{music234.retiring.delete(track);try{source.disconnect();gain.disconnect()}catch(e){}if(music234.current!==track)return;music234.current=null;if(!music234.preview&&musicScene234()==="Manage"){music234.manageIndex=id==="Manage1"?1:0;syncMusic234()}};
-  source.start(c.currentTime);smoothGain231(gain.gain,.83,c.currentTime);retireMusic234(old);
+  source.start(c.currentTime);gain.gain.setTargetAtTime(.83,c.currentTime,.16);retireMusic234(old);while(music234.retiring.size>2)retireMusic234(music234.retiring.values().next().value,true);
  }catch(e){music234.current=old;try{source?.disconnect();gain?.disconnect()}catch(err){}}
 }
 function syncMusic234(){
