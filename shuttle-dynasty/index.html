@@ -3096,7 +3096,7 @@ headerUI271=function(){
 function career259(d){return d.career259??={matches:[],medals:[],initialized:false}}
 function match259(d,m,week,title){
  if(!m||![0,1].includes(m.winner)||!Number.isInteger(week)||!m.players?.[0]||!m.players?.[1])return null;
- let cat=m.category||(d.player.gender==="女"?"WS":"MS"),units=m.units,founder=!units&&m.players[0].id==="p1";
+ let cat=m.category||(d.player.gender==="女"?"WS":"MS"),units=m.units,founder=!units&&m.players[0].id==="p1"&&(!d.club?.founded240?.week||week<d.club.founded240.week);
  if(!CATS.includes(cat)||!founder&&(!units||units[0]?.club!=="my"))return null;
  let ids=units?.[0]?.ids||[m.players[0].id],oppIds=units?.[1]?.ids||[m.players[1].id];
  if(!ids.length||!oppIds.length)return null;
@@ -3133,7 +3133,7 @@ function initCareer259(d){
    if(!ids?.length){
     // Recover only a unique exact identity, never infer a short surname.
     let candidates=[];
-    if(!dbl(h.cat)){for(let p of people)if(p.name===names)candidates.push([p.id])}
+    if(!dbl(h.cat)){for(let p of people)if(p.name===names&&(result==="冠军"?!h.own||d.club?.roster?.some(x=>x.id===p.id):true))candidates.push([p.id])}
     else for(let q of qrows){if(q.cat!==h.cat||q.ids.length!==2)continue;let ps=q.ids.map(id=>byId.get(id));if(ps.every(Boolean)&&(q.name===names||unitName250(ps)===names))candidates.push(q.ids)}
     let unique=new Map(candidates.map(x=>[x.slice().sort().join("+"),x]));if(unique.size===1)ids=[...unique.values()][0]
    }
@@ -3159,9 +3159,9 @@ const careerMigrate259=migrate;
 migrate=function(d){d=careerMigrate259(d);initCareer259(d);return d};
 function captureMatch259(m){if(S){initCareer259(S);addMatch259(S,m,S.week,m.title)}}
 function archiveFinal259(j){if(!S||!j||j.done||!j.rounds?.at(-1)?.[0]?.winner)return;let f=j.rounds.at(-1)[0],w=f.winner,l=f.a===w?f.b:f.a;
- for(let [id,result] of [[w,"冠军"],[l,"亚军"]]){let q=j.units[id];if(q?.ids?.length)medal259(S,{week:S.week,name:j.event.name,code:eventCode220(j.event),cat:j.cat,result,ids:q.ids,detail:q.name})}
+ for(let [id,result] of [[w,"冠军"],[l,"亚军"]]){let q=j.units[id];if(q?.ids?.length&&q.club==="my")medal259(S,{week:S.week,name:j.event.name,code:eventCode220(j.event),cat:j.cat,result,ids:q.ids,detail:q.name})}
 }
-function playerMedals259(p){return initCareer259(S).medals.filter(r=>r.ids.includes(p.id)).sort((a,b)=>(RANK256[b.code]??-1)-(RANK256[a.code]??-1)||b.week-a.week)}
+function playerMedals259(p){let rows=initCareer259(S).medals.filter(r=>r.ids.includes(p.id)),seen=new Set(rows.map(r=>r.key));for(let h of S.club?.comp14?.honours250||[]){if(!CATS.includes(h.cat))continue;for(let [result,ids,detail] of [["冠军",h.championIds259,h.champion],["亚军",h.runnerIds259,h.runner]]){if(!ids?.includes(p.id))continue;let key=JSON.stringify([h.week,h.name,h.cat,result,ids.slice().sort()]);if(!seen.has(key)){seen.add(key);rows.push({week:h.week,name:h.name,cat:h.cat,code:h.code,result,ids,detail,key})}}}return rows.sort((a,b)=>(RANK256[b.code]??-1)-(RANK256[a.code]??-1)||b.week-a.week)}
 function rivals259(p){
  let map=new Map();for(let m of initCareer259(S).matches){if(!m.ids.includes(p.id))continue;
   let key=JSON.stringify([m.cat,m.ids.slice().sort(),m.opponentKey]),q=map.get(key);
