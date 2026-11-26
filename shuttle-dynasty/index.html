@@ -2059,8 +2059,9 @@ function eventContent274(e){
 function openEvent274(id,anchor){let e=eventBy274(id);return e?openUI271("inspector",e.name,()=>eventContent274(e),anchor||null):false}
 function entryAction274(id,cat,unitId,anchor){
  let e=eventBy274(id);if(!canEditEvent274(e))return;
- let inside=!!anchor?.closest('.ui271Overlay'),body=UI271.overlay?.node?.querySelector('.ui271OverlayBody'),y=window.scrollY,bodyY=body?.scrollTop||0;
+ let inside=!!anchor?.closest('.ui271Overlay'),body=UI271.overlay?.node?.querySelector('.ui271OverlayBody'),y=window.scrollY,bodyY=body?.scrollTop||0,calendar=document.querySelector('.calendarScroll276'),calendarY=calendar?.scrollTop||0,calendarX=calendar?.scrollLeft||0;
  entry14(cat,unitId,id);
+ let updated=document.querySelector('.calendarScroll276');if(updated){updated.scrollTop=calendarY;updated.scrollLeft=calendarX}
  if(inside){closeUI271(false);let a=[...document.querySelectorAll('[data-event274]')].find(b=>b.dataset.event274===id&&!b.closest('[hidden]'));openEvent274(id,a);let b=UI271.overlay?.node?.querySelector('.ui271OverlayBody');if(b)b.scrollTop=bodyY}
  window.scrollTo(0,y)
 }
