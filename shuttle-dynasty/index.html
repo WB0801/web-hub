@@ -1216,6 +1216,84 @@ async function previewAudio231(kind){
 }
 function audioMixer231(){const active=[["master","主音量"],["music","背景音乐"],["court","比赛音效"],["crowd","观众音效"]];return '<div class="audioMixer231"><div class="between"><small data-audio-status231>'+esc(audioStatus231())+'</small><button type="button" class="small" data-audio-mute231 aria-pressed="'+audioPrefs231.muted+'" onclick="setAudio231(\'muted\',!audioPrefs231.muted);if(!audioPrefs231.muted)audioUnlock1981()">'+(audioPrefs231.muted?"解除静音":"全部静音")+'</button></div>'+active.map(([k,n])=>'<label class="audioRow231"><span>'+n+'</span><input type="range" min="0" max="100" step="1" aria-label="'+n+'" data-audio-slider231="'+k+'" value="'+audioPrefs231[k]+'" oninput="setAudio231(\''+k+'\',Number(this.value))"><b data-audio-value231="'+k+'">'+audioPrefs231[k]+'%</b></label>').join("")+'<div class="audioActions231"><label class="audioTest232"><span>音效试听</span><select id="audioTest232" aria-label="选择试听音效">'+[["smash","杀球"],["clear","高远球"],["drop","吊球"],["drive","平抽"],["net","网前球"],["lift","挑球"],["block","挡球"],["serve","发球"],["foot","脚步"],["mesh","触网"],["floor","落地"],["out","出界"],["left","左声道"],["right","右声道"],["crowdLocal","地方赛掌声"],["crowd","全国赛欢呼"],["crowdWorld","世界大赛欢呼"],["crowdKey","关键分欢呼"],["musicMenu","音乐：羽林序曲"],["musicManage1","音乐：逐梦之路"],["musicManage2","音乐：晨练时分"],["musicPre","音乐：战前一刻"]].map(([k,n])=>'<option value="'+k+'">'+n+'</option>').join("")+'</select></label><button type="button" class="small" onclick="previewAudio231(document.getElementById(\'audioTest232\').value)">试听</button><button type="button" class="small" onclick="resetAudio231()">恢复默认</button></div><p class="muted">偏好独立保存；1×完整音效，2×主要击球与得分反馈，4×、8×及快进保持静音。背景音乐按场景自动切换；正式比赛以球场原声为主。界面反馈与裁判语音后续加入。</p></div>'}
 function openAudio231(anchor){return openUI271("inspector","声音与音乐",audioMixer231,anchor)}
+// A4: original, locally synthesized instrumental scores. No third-party music assets.
+const MUSIC234=Object.freeze({
+ Menu:{name:"羽林序曲",bpm:92,chords:[[50,54,57,62],[49,52,57,61],[47,50,54,59],[43,47,50,55],[45,50,54,57],[40,47,52,55],[43,50,55,59],[45,49,52,57]],melody:[[66,69,74,73],[69,66,64,0],[62,66,71,69],[67,66,62,0],[69,74,78,76],[74,71,67,0],[67,69,71,74],[73,69,66,64]],style:"theme"},
+ Manage1:{name:"逐梦之路",bpm:86,chords:[[48,52,55,59],[45,48,52,55],[41,45,48,52],[43,47,50,55],[48,52,55,62],[40,43,47,50],[41,45,48,55],[43,47,50,57]],melody:[[64,67,0,71],[69,67,64,0],[65,69,72,0],[67,65,62,0],[64,67,74,72],[71,67,64,0],[69,67,65,72],[71,69,67,62]],style:"piano"},
+ Manage2:{name:"晨练时分",bpm:100,chords:[[45,48,52,57],[41,45,48,53],[48,52,55,60],[43,47,50,55],[40,45,48,52],[41,48,53,57],[43,47,52,55],[43,47,50,57]],melody:[[72,0,69,67],[69,65,0,64],[67,72,76,0],[74,71,67,0],[69,72,76,74],[72,69,65,0],[67,71,76,74],[71,67,0,62]],style:"warm"},
+ Pre:{name:"战前一刻",bpm:112,chords:[[45,48,52,57],[45,48,52,59],[41,45,48,53],[43,47,50,55],[45,48,52,57],[40,47,52,55],[41,45,48,57],[43,47,50,55]],melody:[[69,0,72,0],[71,69,0,76],[72,69,65,0],[67,71,74,0],[69,72,76,0],[76,71,67,0],[65,69,72,0],[74,71,67,0]],style:"pre"}
+});
+const music234={current:null,retiring:new Set(),cache:new Map(),manageIndex:0,preview:null,timer:null};
+function musicScore234(id){
+ const q=MUSIC234[id];if(!q)return null;let beats=60/q.bpm,bars=id==="Pre"?8:16,notes=[],add=(at,dur,midi,role,gain,pan=0)=>{if(midi>0)notes.push({at:at*beats,dur:dur*beats,midi,role,gain,pan})};
+ for(let bar=0;bar<bars;bar++){
+  let i=bar%8,c=q.chords[i],mel=q.melody[i],a=bar*4,second=bar>=8,pre=q.style==="pre";
+  for(let [j,n] of c.slice(1).entries())add(a,3.9,n,"pad",pre?.038:.047,(j-1)*.28);
+  add(a,1.55,c[0]-12,"bass",pre?.13:.075,-.12);add(a+2,1.5,c[0]-12,"bass",pre?.10:.055,.12);
+  let seq=pre?[0,2,1,2,0,3,1,2]:q.style==="warm"?[0,2,1,3,2,1,3,2]:[0,1,2,3,2,1,2,3];
+  for(let j=0;j<8;j++)add(a+j*.5,pre?.33:.62,c[seq[j]]+(seq[j]===0?12:0),"pluck",pre?.036:.040,j%2?.28:-.28);
+  for(let j=0;j<4;j++){let n=mel[j];if(second&&j===3&&i!==7&&n)n+=i%2?0:2;add(a+j,pre?.60:j===3?.88:.92,n,"lead",pre?.055:q.style==="theme"?.10:.071,.12)}
+  if(pre||second&&q.style==="theme"){add(a,.42,36,"pulse",pre?.065:.035,0);add(a+2,.4,36,"pulse",pre?.05:.028,0)}
+  else if(q.style==="warm"){add(a+.5,.32,36,"pulse",.035,0);add(a+2.5,.32,36,"pulse",.028,0)}
+ }
+ return {notes,seconds:bars*4*beats,bpm:q.bpm,bars}
+}
+function renderMusic234(id,rate=22050){
+ const score=musicScore234(id);if(!score||!Number.isFinite(rate)||rate<8000)return null;
+ const len=Math.ceil(score.seconds*rate),left=new Float32Array(len),right=new Float32Array(len),tau=2*Math.PI;
+ for(let n of score.notes){
+  let f=440*Math.pow(2,(n.midi-69)/12),dur=n.dur,role=n.role,from=Math.round(n.at*rate),count=Math.ceil(dur*rate),lp=Math.sqrt((1-n.pan)*.5)*n.gain,rp=Math.sqrt((1+n.pan)*.5)*n.gain,attack=role==="pad"?.24:role==="pulse"?.012:.014,release=role==="pad"?.38:.08;
+  for(let j=0;j<count;j++){let t=j/rate,p=tau*f*t,edge=Math.min(1,t/attack,Math.max(0,(dur-t)/release)),x;
+   if(role==="pad")x=(Math.sin(p)+.30*Math.sin(p*2+.4)+.12*Math.sin(p*3))*.61*edge*(.9+.1*Math.sin(tau*.47*t));
+   else if(role==="bass")x=(Math.sin(p)+.23*Math.sin(2*p))*.78*edge*Math.exp(-t/(dur*.8));
+   else if(role==="pulse")x=Math.sin(tau*(56*t+6*(1-Math.exp(-14*t))))*edge*Math.exp(-t/.095);
+   else if(role==="pluck")x=(Math.sin(p)+.30*Math.sin(2*p)*Math.exp(-t/.12)+.10*Math.sin(3*p))*edge*Math.exp(-t/(dur*.42))*.71;
+   else x=(Math.sin(p)+.36*Math.sin(2*p)*Math.exp(-t/.24)+.13*Math.sin(3*p)*Math.exp(-t/.11))*edge*Math.exp(-t/(dur*.72))*.67;
+   let idx=from+j;if(idx>=len)break;left[idx]+=x*lp;right[idx]+=x*rp
+  }
+ }
+ // Small stereo room reflections; no random simulation state or external files.
+ let delay=Math.round(rate*.087),delay2=Math.round(rate*.129);
+ for(let i=len-1;i>=delay2;i--){let l=left[i],r=right[i];left[i]=l+right[i-delay]*.105+left[i-delay2]*.045;right[i]=r+left[i-delay]*.105+right[i-delay2]*.045}
+ let edge=Math.min(Math.floor(rate*.18),Math.floor(len/4)),peak=0;
+ for(let i=0;i<len;i++){let envelope=i<edge?Math.sin(Math.PI*.5*i/edge):i>=len-edge?Math.sin(Math.PI*.5*(len-1-i)/edge):1;left[i]*=envelope;right[i]*=envelope;peak=Math.max(peak,Math.abs(left[i]),Math.abs(right[i]))}
+ let gain=peak?Math.min(1.9,.48/peak):0;
+ for(let i=0;i<len;i++){left[i]*=gain;right[i]*=gain}
+ return {left,right,rate,seconds:len/rate}
+}
+function musicBuffer234(c,id){let b=music234.cache.get(id);if(b)return b;let a=renderMusic234(id);if(!a)return null;b=c.createBuffer(2,a.left.length,a.rate);b.getChannelData(0).set(a.left);b.getChannelData(1).set(a.right);while(music234.cache.size>=2)music234.cache.delete(music234.cache.keys().next().value);music234.cache.set(id,b);return b}
+function musicScene234(){
+ if(document.body.classList.contains("titleMode207")||document.querySelector(".setupform,.found240"))return "Menu";
+ if(view==="match"&&S?.match&&document.getElementById("match93"))return S.match.phase==="pre"?"Pre":null;
+ return S&&document.getElementById("main")?"Manage":null
+}
+function clearMusicPreview234(){if(music234.timer!==null){clearTimeout(music234.timer);music234.timer=null}music234.preview=null}
+function retireMusic234(track,immediate=false){if(!track)return;const c=AUDIO1981.ctx;music234.retiring.add(track);
+ try{if(immediate||!c){track.node.stop();track.node.disconnect();track.gain.disconnect();music234.retiring.delete(track)}
+ else{let t=c.currentTime;track.gain.gain.cancelScheduledValues(t);track.gain.gain.setTargetAtTime(0,t,.095);track.node.stop(t+.52)}
+ }catch(e){music234.retiring.delete(track);try{track.node.disconnect();track.gain.disconnect()}catch(err){}}
+}
+function stopMusic234(immediate=false){clearMusicPreview234();let old=music234.current;music234.current=null;retireMusic234(old,immediate);if(immediate)for(let t of [...music234.retiring])retireMusic234(t,true)}
+function startMusic234(id){
+ let A=AUDIO1981,c=A.ctx;if(!MUSIC234[id]||!c||c.state!=="running"||music234.current?.id===id)return;
+ let old=music234.current,source,gain;
+ try{
+  let buffer=musicBuffer234(c,id);if(!buffer)return;source=c.createBufferSource();gain=c.createGain();source.buffer=buffer;source.loop=id==="Menu"||id==="Pre";gain.gain.value=0;source.connect(gain);gain.connect(A.buses.music);let track={id,node:source,gain};music234.current=track;
+  source.onended=()=>{music234.retiring.delete(track);try{source.disconnect();gain.disconnect()}catch(e){}if(music234.current!==track)return;music234.current=null;if(!music234.preview&&musicScene234()==="Manage"){music234.manageIndex=id==="Manage1"?1:0;syncMusic234()}};
+  source.start(c.currentTime);smoothGain231(gain.gain,.83,c.currentTime);retireMusic234(old);
+ }catch(e){music234.current=old;try{source?.disconnect();gain?.disconnect()}catch(err){}}
+}
+function syncMusic234(){
+ const A=AUDIO1981,c=A.ctx,scene=musicScene234();
+ if(A.muted||!audioPrefs231.master||!audioPrefs231.music||document.hidden||c?.state!=="running"){stopMusic234(true);return}
+ if(!scene){stopMusic234(false);return}
+ if(music234.preview&&music234.preview.scene!==scene)clearMusicPreview234();
+ let id=music234.preview?.id||(scene==="Manage"?(music234.manageIndex?"Manage2":"Manage1"):scene);startMusic234(id)
+}
+function previewMusic234(id){let scene=musicScene234();if(!MUSIC234[id]||!scene||!audioPrefs231.music)return;clearMusicPreview234();music234.preview={id,scene};syncMusic234();music234.timer=setTimeout(()=>{clearMusicPreview234();syncMusic234()},12000)}
+// Unlock only after a user interaction; no autoplay attempts on initial load.
+document.addEventListener("click",()=>{if(!audioPrefs231.muted&&(!AUDIO1981.ctx||AUDIO1981.ctx.state==="suspended"||AUDIO1981.ctx.state==="interrupted"))audioUnlock1981()});
+
 // A3: procedural arena ambience and point reactions, independent of simulation RNG.
 const ARENA233=Object.freeze([
  {name:"社区体育馆",bed:.035,reaction:.24,density:.20,decay:.34},
@@ -2443,5 +2521,5 @@ function polish276(){
 
 (function installArena233(){const base=render;render=function(){base();syncArena233();syncMusic234()}})();
 const settingsBase231=settingsPage;settingsPage=function(){return settingsBase231()+panel("声音与音乐",'<div class="between"><span>主音量 '+audioPrefs231.master+'% · 比赛 '+audioPrefs231.court+'%</span><button class="small" onclick="openAudio231(this)">音量设置 ›</button></div>')};
-window.SDTest={arenaTier233,tension233,reaction233,bedSample233,cheerSample233,arenaBuffer233,arenaLevel233,syncArena233,stopArena233,renderSample232,pan232,sampleKey232,buffer232,cueList1981,pulse1981,sound1981,normalizeAudio231,gainAudio231,setAudio231,resetAudio231,audioUnlock1981,audioStop1981,previewAudio231,getAudio231:()=>({...audioPrefs231}),polish276,defaultCalendar276,calendarPool276,visible230,ui230,matchPanel275,syncMatch275,showReport275,compactOther275,eventBy274,canEditEvent274,eventContent274,rankDetail274,compactProfile273,forecast272,founderTraining272,founderBody272,detailContent272,home272,placement271,readUI271,ui271Rows,fundsUI271,noticesUI271,promotion260,finishCupWorld260,cupWorld260,seasonLeaders260,pack250,unpack250,groupRounds250,groupStand250,placement250,nationalEvents250,qualification250,countryOf250,major250,majorList250,makePersonal14,progressPersonal14,stage250,points250,aiCandidates250,honours250,needsClub240,draft240,validateDraft240,found240,calendar210,clubCalendar210,regular210,entries210,selectedEvent210,aiPool210,all230,visible230,status230,entryUnits230,projected230,risk230,prune230,calendar230,playerSchedule230,eventPoints220,rankingDetail220,requirement220,seed220,life17,aging17,retire17,season17,aiWeek17,coach17,injuries17,business16,budget16,settle16,clubTrain16,staff16,sponsor16,signEndorse16,merch16,merchQuote16,fame16,endorsementOffer16,frontIndex153,frontIntercept153,intercept153,rotation153,rotations153,continuation153,openingTarget152,serve152,doubleShot152,responsibility152,role152,PROFILE152,rotation152,initiative151,policy151,D_POLICY,doubleShot151,attackPair151,defendPair151,analysis15,heat15,reportHTML,tacticalHTML,beginSegment,finishSegment,receivePenalty15,getState:()=>copy(S),setState:x=>{S=migrate(copy(x));render()},newMatch,makeRally,awardRally,autoMatch,makePlayer,rng,grade,trainWeek,createGame,advanceWeek,skipInterval,resumeMatch,recordMatch,startOwnMatch,simulateOtherRounds,validSave,sampleVisual,TACTIC_PRESETS,develop,unlockSkills,ageFactor,migrate,effective,SKILLS,capGain,initClub,hire,addSlot,myUnits,unit,makeUnitMatch,simulateUnit,launchCupMatch,closeCup,setEntry,cp14,calendar14,next14,rank14,addPoints14,eligible14,standings14,entry14,lineup14,launch14,quick14,close14,finish14,scoreLeague14,prime14,planned14,world14};if(load()){view=S.match?'match':S.tournament||S.club?.cup||S.club?.comp14?.queue?.length?'events':'home'}render();
+window.SDTest={musicScore234,renderMusic234,musicScene234,musicBuffer234,syncMusic234,stopMusic234,previewMusic234,arenaTier233,tension233,reaction233,bedSample233,cheerSample233,arenaBuffer233,arenaLevel233,syncArena233,stopArena233,renderSample232,pan232,sampleKey232,buffer232,cueList1981,pulse1981,sound1981,normalizeAudio231,gainAudio231,setAudio231,resetAudio231,audioUnlock1981,audioStop1981,previewAudio231,getAudio231:()=>({...audioPrefs231}),polish276,defaultCalendar276,calendarPool276,visible230,ui230,matchPanel275,syncMatch275,showReport275,compactOther275,eventBy274,canEditEvent274,eventContent274,rankDetail274,compactProfile273,forecast272,founderTraining272,founderBody272,detailContent272,home272,placement271,readUI271,ui271Rows,fundsUI271,noticesUI271,promotion260,finishCupWorld260,cupWorld260,seasonLeaders260,pack250,unpack250,groupRounds250,groupStand250,placement250,nationalEvents250,qualification250,countryOf250,major250,majorList250,makePersonal14,progressPersonal14,stage250,points250,aiCandidates250,honours250,needsClub240,draft240,validateDraft240,found240,calendar210,clubCalendar210,regular210,entries210,selectedEvent210,aiPool210,all230,visible230,status230,entryUnits230,projected230,risk230,prune230,calendar230,playerSchedule230,eventPoints220,rankingDetail220,requirement220,seed220,life17,aging17,retire17,season17,aiWeek17,coach17,injuries17,business16,budget16,settle16,clubTrain16,staff16,sponsor16,signEndorse16,merch16,merchQuote16,fame16,endorsementOffer16,frontIndex153,frontIntercept153,intercept153,rotation153,rotations153,continuation153,openingTarget152,serve152,doubleShot152,responsibility152,role152,PROFILE152,rotation152,initiative151,policy151,D_POLICY,doubleShot151,attackPair151,defendPair151,analysis15,heat15,reportHTML,tacticalHTML,beginSegment,finishSegment,receivePenalty15,getState:()=>copy(S),setState:x=>{S=migrate(copy(x));render()},newMatch,makeRally,awardRally,autoMatch,makePlayer,rng,grade,trainWeek,createGame,advanceWeek,skipInterval,resumeMatch,recordMatch,startOwnMatch,simulateOtherRounds,validSave,sampleVisual,TACTIC_PRESETS,develop,unlockSkills,ageFactor,migrate,effective,SKILLS,capGain,initClub,hire,addSlot,myUnits,unit,makeUnitMatch,simulateUnit,launchCupMatch,closeCup,setEntry,cp14,calendar14,next14,rank14,addPoints14,eligible14,standings14,entry14,lineup14,launch14,quick14,close14,finish14,scoreLeague14,prime14,planned14,world14};if(load()){view=S.match?'match':S.tournament||S.club?.cup||S.club?.comp14?.queue?.length?'events':'home'}render();
 </script><script>if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).catch(e=>console.warn('Offline cache unavailable',e))})}</script></body></html>
