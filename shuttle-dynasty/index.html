@@ -262,7 +262,7 @@ body.matchmode93 .ui271-inspector{top:12px;bottom:12px;width:min(400px,calc(100v
 #match93[data-phase=pre] .u275broadcastbar{display:none}
 #match93[data-phase=done] .u275broadcastbar [data-u275-match="tactics"]{display:none}
 #match93.u275match[data-phase=live] .matchreport93,#match93.u275match[data-phase=break] .matchreport93,#match93.u275match[data-phase=done] .matchreport93,#match93.u275match[data-phase=break] #tacticpanel,#match93.u275match[data-phase=done] #reportdetail93{display:none!important}
-body.matchmode93 #match93.u275match:not([data-phase=pre]){width:min(100%,max(520px,calc(183.673dvh - 225px)),1200px)}
+body.matchmode93 #match93.u275match:not([data-phase=pre]){width:min(100%,max(520px,calc(183.673dvh - 280px)),1200px)}
 .ui271Overlay .u275moved{border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important;min-width:0}
 .ui271Overlay .u275moved .fields93{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ui271Overlay .u275moved .coachhead93{flex-wrap:wrap;gap:6px}
@@ -915,7 +915,7 @@ if(view==='events'){let route=find('赛事发展路线');if(route){let p=route.q
 if(view==='history'){let box=main.querySelector('#historyreport');if(box){box.hidden=true;let table=main.querySelector('table');if(table)pageRows92([...table.tBodies[0].rows],table.closest('.tablewrap'),'history',8)}}
 if(view==='business'){for(let n of ['最近60笔流水'])fold(n)}
 if(view==='world'){let teams=find('球队一览');if(teams){let buttons=[...teams.querySelectorAll('button')],sel=node92('select');sel.setAttribute('aria-label','选择电脑球队');for(let [i,b] of buttons.entries()){let o=node92('option','',b.textContent);o.value=String(i);o.selected=b.classList.contains('active');sel.append(o)}sel.onchange=()=>buttons[Number(sel.value)]?.click();let row=teams.querySelector('.flex');if(row)row.replaceWith(sel)}}
-if(view==='settings'){for(let n of ['观赛显示','球队视觉识别','比赛规则与版本范围','周初恢复点','游戏百科 · 新手指南'])fold(n);let help=main.querySelector('#help19');if(help)foldPanel92(help,'settings:help')}
+if(view==='settings'){for(let n of ['观赛显示','球队视觉识别','周初恢复点'])fold(n)}
 if(view==='match'){for(let p of main.querySelectorAll('.matchside > .panel:not(.tactical)')){let h=heading92(p);if(h)foldPanel92(p,'match:'+h)}return}
 for(let [i,table] of [...main.querySelectorAll('table')].entries()){let body=table.tBodies[0],wrap=table.closest('.tablewrap');if(!body||!wrap||wrap.nextElementSibling?.classList.contains('pager92'))continue;pageRows92([...body.rows],wrap,view+':'+(S.club&&view==='events'?cp14()?.tab+':'+cp14()?.cat:'')+':'+i,8)}
 for(let p of [...panels,...main.querySelectorAll('.foldbody92')]){if(p.closest('[hidden]'))continue;let rows=[...p.querySelectorAll(':scope > .newsrow')];if(rows.length>8&&!p.querySelector(':scope > .pager92'))pageRows92(rows,rows.at(-1),view+':news:'+(heading92(p)||p.parentElement?.querySelector('summary')?.textContent),6)}
@@ -1811,9 +1811,9 @@ function syncInterval211(m){
  function options(k,map,id,preview){return `<div class="brandOptions213">${Object.entries(map).map(([v,n])=>`<button class="${id[k]===v?'active':''}" aria-pressed="${id[k]===v}" onclick="brandSet213('${k}','${v}')">${preview({...id,[k]:v})}<small>${Array.isArray(n)?n[0]:k==='crest'?v:n}</small></button>`).join('')}</div>`}
  let tab='crest',owner=null;
  function brandPage(){if(!S.club)return pageHead('CLUB BRAND','俱乐部品牌','首冠后开放');if(owner!==S){owner=S;tab='crest'}let id=identity18(),lock=busy();return pageHead('CLUB BRAND','俱乐部品牌','队徽与球衣设计',btn('返回球队首页',"go('home')",'small'))+window.countryPanel219()+`<div class="brandStudio213"><section class="panel brandPreview213"><div class="brandStage213" style="--team:${id.color}">${crest18(id)}${jersey(id)}<h2>${esc(S.club.name)}</h2><small>第 ${year()} 赛季 · ${patterns[id.pattern]}</small></div><p class="muted">设计自动保存，仅影响视觉，不影响比赛能力或财务。</p>${lock?'<p class="muted">赛事进行中，暂时锁定设计。</p>':''}</section><section class="panel brandEditor213"><div class="brandTabs213">${[['crest','队徽设计'],['kit','球衣设计']].map(([k,n])=>`<button class="${tab===k?'active':''}" aria-pressed="${tab===k}" onclick="brandTab213('${k}')">${n}</button>`).join('')}</div><fieldset ${lock?'disabled':''}>${tab==='crest'?`<h3>队徽外形</h3>${options('shape',shapes,id,crest18)}<h3>队徽图案</h3>${options('crest',icons,id,crest18)}${colorPicker('crestColor','队徽底色',id)}${colorPicker('symbolColor','图案颜色',id)}${colorPicker('trim','边框颜色',id)}`:`<h3>球衣款式</h3>${options('pattern',patterns,id,jersey)}${colorPicker('color','主色',id)}${colorPicker('accent','辅色',id)}`}<div class="brandActions213"><button class="small" onclick="brandRandom213()">随机搭配</button><button class="small" onclick="brandReset213()">恢复经典设计</button></div></fieldset></section></div>`}
- function update(patch){if(!S?.club||busy())return false;S.club.identity18=normalize({...identity18(),...patch});save();if(view==='brand'){let main=document.getElementById('main');if(main)main.innerHTML=brandPage()+awayPanel240()}else render();return true}
+ function update(patch){if(!S?.club||busy())return false;S.club.identity18=normalize({...identity18(),...patch});save();if(view==='brand'){let main=document.getElementById('main');if(main){closeUI271(false);main.innerHTML=brandPage()+awayPanel240();compactOther275(main)}}else render();return true}
  window.brandSet213=(k,v)=>{if(Object.hasOwn(identity18(),k))update({[k]:v})};
- window.brandTab213=k=>{if(!['crest','kit'].includes(k))return;tab=k;let main=document.getElementById('main');if(main)main.innerHTML=brandPage()+awayPanel240()};
+ window.brandTab213=k=>{if(!['crest','kit'].includes(k))return;tab=k;let main=document.getElementById('main');if(main){closeUI271(false);main.innerHTML=brandPage()+awayPanel240();compactOther275(main)}};
  window.brandRandom213=()=>{const take=a=>a[Math.floor(Math.random()*a.length)],c=take(colors),accent=take(colors.filter(x=>x!==c));if(tab==='crest')update({shape:take(Object.keys(shapes)),crest:take(Object.keys(icons)),crestColor:c,symbolColor:accent,trim:'#e6ba66'});else update({color:c,accent,pattern:take(Object.keys(patterns))})};
  window.brandReset213=()=>{if(tab==='crest')update({shape:'shield',crest:'羽翼',crestColor:identity18().color,symbolColor:'#f5eaca',trim:'#e6ba66'});else update({color:COLORS18[0],accent:'#f4f5e8',pattern:'plain'})};
  window.brandPage213=()=>brandPage()+awayPanel240();window.brandKit240={normalize,jersey,shapes,icons,patterns,colors};
@@ -2114,10 +2114,10 @@ function syncMatch275(m){
  matchBar275(root);let bar=root.querySelector(".u275broadcastbar");if(!bar)return;
  let old=bar.dataset.phase;bar.dataset.phase=m.phase;
  let tactic=bar.querySelector('[data-u275-match="tactics"]'),report=bar.querySelector('[data-u275-match="report"]');
- tactic.hidden=m.phase==="done";report.hidden=m.phase!=="done";
+ if(old!==m.phase){tactic.hidden=m.phase==="done";report.hidden=m.phase!=="done";
  tactic.textContent=m.phase==="break"?"调整战术 ›":"当前战术";
  tactic.classList.toggle("primary",m.phase==="break");
- bar.querySelector(".u275hint").textContent=m.phase==="break"?"暂停中 · 调整或直接继续":m.phase==="done"?"比赛结束 · 可查看完整战报":"比赛不中断 · 按需查看资讯";
+ bar.querySelector(".u275hint").textContent=m.phase==="break"?"暂停中 · 调整或直接继续":m.phase==="done"?"比赛结束 · 可查看完整战报":"比赛不中断 · 按需查看资讯";}
  if(old!==m.phase&&U275MOVE?.key?.startsWith("match:"))closeUI271(false);
  if(m.phase==="break"){
   let quick=document.getElementById("quickbtn");
@@ -2161,7 +2161,7 @@ function compactOther275(main){
  if(view==="world"&&S.club){
   let l=life17(),c=cp14();
   if(l.tab==="teams"){
-   let list=find("球队一览");if(list){let old=list.querySelector(".flex");if(old){let select=document.createElement("select");select.className="u275teamSelect";select.setAttribute("aria-label","选择电脑球队");for(const t of c.teams){let o=document.createElement("option");o.value=t.id;o.textContent=t.name;select.append(o)}select.value=c.teams.some(t=>t.id===l.team)?l.team:c.teams[0]?.id||"";select.onchange=()=>inspect17(select.value);old.replaceWith(select)}}
+   let list=find("球队一览");if(list){list.querySelector('select')?.classList.add('u275teamSelect');let old=list.querySelector(".flex");if(old){let select=document.createElement("select");select.className="u275teamSelect";select.setAttribute("aria-label","选择电脑球队");for(const t of c.teams){let o=document.createElement("option");o.value=t.id;o.textContent=t.name;select.append(o)}select.value=c.teams.some(t=>t.id===l.team)?l.team:c.teams[0]?.id||"";select.onchange=()=>inspect17(select.value);old.replaceWith(select)}}
   }else if(l.tab==="overview"){
    let news=find("羽坛动态");if(news){let rows=[...news.querySelectorAll(":scope > .newsrow")];if(rows.length>8)pageRows92(rows,rows.at(-1),"u275:worldnews",8)}
   }
