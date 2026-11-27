@@ -916,9 +916,9 @@ button.atlas265matchlink:hover:not(:disabled){background:transparent;transform:n
  .m7TeamPicker label{display:grid;gap:3px;font-size:12px;min-width:0}
  .m7TeamPicker select,.m7TeamPicker input{width:100%;min-width:0;padding:6px}
 }
-</style></head><body><header><div class="brand"><img class="brand91" src="logo.svg" alt="羽林之巅 Shuttle Dynasty"><small class="version91">V2.8.6</small></div><div class="headerinfo" id="headerinfo"></div></header><div id="app"></div><div id="ui271Host"></div><div id="toast" class="toast hide" role="status"></div><input id="importfile" type="file" accept="application/json,.json" class="filein"><script>
+</style></head><body><header><div class="brand"><img class="brand91" src="logo.svg" alt="羽林之巅 Shuttle Dynasty"><small class="version91">V2.8.7</small></div><div class="headerinfo" id="headerinfo"></div></header><div id="app"></div><div id="ui271Host"></div><div id="toast" class="toast hide" role="status"></div><input id="importfile" type="file" accept="application/json,.json" class="filein"><script>
 'use strict';
-const VERSION='2.8.6', KEY='shuttle-dynasty-v1', clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), round=v=>Math.round(v*10)/10, esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])), money=v=>'RM '+Math.round(v).toLocaleString('en-MY'), dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y), copy=o=>JSON.parse(JSON.stringify(o));
+const VERSION='2.8.7', KEY='shuttle-dynasty-v1', clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), round=v=>Math.round(v*10)/10, esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])), money=v=>'RM '+Math.round(v).toLocaleString('en-MY'), dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y), copy=o=>JSON.parse(JSON.stringify(o));
 const ATTR={power:'杀球',clear:'高远球',drop:'吊球',net:'网前',drive:'平抽挡',defense:'防守',footwork:'步法',speed:'速度',stamina:'耐力',control:'控球',anticipation:'预判',mental:'心理'};
 const GROUPS=[['后场技术',['power','clear','drop']],['前中场技术',['net','drive','control']],['防守与移动',['defense','footwork','speed']],['身体与意识',['stamina','anticipation','mental']]];
 const STYLES={balanced:{name:'全面均衡',desc:'攻守兼备，适合逐步探索发展路线。',mods:{},tac:{attack:50,risk:43,pace:50,target:'auto'}},attack:{name:'强攻突击',desc:'后场进攻有力，偏好抢高点和短回合，但消耗较大。',mods:{power:13,speed:5,stamina:-5,defense:-5},tac:{attack:76,risk:55,pace:72,target:'auto'}},defense:{name:'防守反击',desc:'稳健接杀，擅长化解压力，等待反击时机。',mods:{defense:12,anticipation:7,stamina:6,power:-7},tac:{attack:30,risk:25,pace:36,target:'auto'}},control:{name:'手法控制',desc:'网前和落点变化突出，善于破坏对手的节奏。',mods:{net:10,drop:9,control:9,power:-7},tac:{attack:47,risk:48,pace:42,target:'front'}},rally:{name:'拉吊消耗',desc:'耐力与步法突出，通过四角调动赢得长回合。',mods:{stamina:12,footwork:8,clear:7,power:-5},tac:{attack:35,risk:30,pace:25,target:'corners'}},speed:{name:'快速突击',desc:'移动迅速，中场平抽和连续突击出色。',mods:{speed:12,drive:9,footwork:5,stamina:-6},tac:{attack:67,risk:48,pace:82,target:'auto'}}};
@@ -3181,18 +3181,22 @@ function positionUI271(){
  let o=UI271.overlay;if(!o)return;
  let v=window.visualViewport,vw=v?.width||window.innerWidth,vh=v?.height||window.innerHeight,node=o.node,ox=v?.offsetLeft||0,oy=v?.offsetTop||0;
  let mobile=window.matchMedia("(max-width:730px) and (orientation:portrait)").matches;
+ let anchored=o.anchor?.isConnected&&(!o.anchor.getClientRects||o.anchor.getClientRects().length>0);
+ let effective=mobile||o.kind==="popover"&&!anchored?"sheet":o.kind;
+ for(let k of ["popover","inspector","sheet"])node.classList.toggle("ui271-"+k,effective===k);
  node.classList.toggle("m1Sheet",mobile);
  if(mobile){
    node.style.removeProperty("left");node.style.removeProperty("top");node.style.removeProperty("max-width");
    node.style.maxHeight=Math.max(100,Math.min(vh-16,vh*.78))+"px";
    node.style.bottom="max(calc(8px + env(safe-area-inset-bottom,0px)), "+Math.max(8,window.innerHeight-vh-oy+8)+"px)";return
  }
- if(o.kind!=="popover"){
+ if(effective!=="popover"){
+   node.style.removeProperty("left");node.style.removeProperty("top");node.style.removeProperty("max-width");
    if(window.innerWidth<=730&&v){node.style.maxHeight=Math.max(100,Math.min(vh-16,vh*.78))+"px";node.style.bottom=Math.max(8,window.innerHeight-vh-oy+8)+"px"}
    else{node.style.removeProperty("max-height");node.style.removeProperty("bottom")}
    return
  }
- if(!o.anchor?.isConnected){closeUI271(false);return}
+ node.style.removeProperty("bottom");
  let r=o.anchor.getBoundingClientRect();node.style.maxWidth=Math.max(160,vw-20)+"px";node.style.maxHeight=Math.max(100,vh-20)+"px";
  let p=placement271({top:r.top-oy,bottom:r.bottom-oy,right:r.right-ox},node.offsetWidth,node.offsetHeight,vw,vh);node.style.left=(p.left+ox)+"px";node.style.top=(p.top+oy)+"px"
 }
@@ -4544,8 +4548,7 @@ header=function(){headerBase280();let h=document.querySelector("header");if(h){h
 function measureShell280(){let h=document.querySelector("header"),n=h?.getBoundingClientRect().height||0;document.documentElement.style.setProperty("--m1-header-height",Math.ceil(n)+"px")}
 const renderBase280=render;
 render=function(){renderBase280();let h=document.querySelector("header");if(h){h.classList.toggle("m1Next",!!h.querySelector(".nextEvent262"));h.classList.toggle("m1Empty",!S)}measureShell280();if(S&&view==="settings")refreshDiag280()};
-const openBase280=openUI271;
-openUI271=function(kind,title,content,anchor=null){return openBase280(kind==="popover"&&window.matchMedia(M1PORTRAIT).matches?"sheet":kind,title,content,anchor)};
+// Keep original overlay intent; positionUI271 selects the current presentation.
 function syncM1280(){measureShell280();if(S&&view==="settings")refreshDiag280()}
 window.addEventListener("resize",syncM1280,{passive:true});
 window.visualViewport?.addEventListener("resize",syncM1280,{passive:true});
@@ -4590,14 +4593,17 @@ function mobileHome281(){
  let recent=club?(S.club.news?.[0]?.text||"暂无动态"):growth?"最近训练 "+fmtWeek(growth.week)+" · "+fmtDelta(growth.after-growth.before):"首冠后开启俱乐部生涯";
  return '<div class="m2PortraitHome">'+info+homeEvent281(e,club)+warning+status+'<div class="m2Footer"><span class="muted">'+esc(recent)+'</span>'+homeButton281("动态记录","detail272('news','',this)")+'</div></div>'
 }
+let m8GuideOwner=null,m8GuideOpen=false;
+function guidePreference287(owner){if(m8GuideOwner!==owner){m8GuideOwner=owner;m8GuideOpen=false}return m8GuideOpen}
+function guideOpen287(owner,portrait){return !portrait||guidePreference287(owner)}
 const homeBase281=homePage;
 homePage=function(){return homeBase281()+mobileHome281()};
 const renderBase281=render;
 render=function(){renderBase281();if(!S||view!=="home")return;let guide=document.querySelector("#main .guide19:not(.warn19)");if(guide&&!guide.closest(".m2GuideWrap")){
  // Keep the desktop guide unmodified; a small mobile-only disclosure is applied by CSS.
- let wrap=document.createElement("details"),summary=document.createElement("summary");wrap.className="m2GuideWrap";summary.textContent="新手生涯引导";wrap.open=!window.matchMedia(M1PORTRAIT).matches;guide.before(wrap);wrap.append(summary,guide)
+ let wrap=document.createElement("details"),summary=document.createElement("summary");wrap.className="m2GuideWrap";summary.textContent="新手生涯引导";guidePreference287(S);wrap.open=guideOpen287(S,window.matchMedia(M1PORTRAIT).matches);summary.addEventListener("click",e=>{if(!window.matchMedia(M1PORTRAIT).matches)return;e.preventDefault();guidePreference287(S);m8GuideOpen=!wrap.open;wrap.open=m8GuideOpen});guide.before(wrap);wrap.append(summary,guide)
  }};
-function syncHomeGuide281(){let wrap=document.querySelector(".m2GuideWrap");if(wrap)wrap.open=!window.matchMedia(M1PORTRAIT).matches}
+function syncHomeGuide281(){let wrap=document.querySelector(".m2GuideWrap");if(wrap)wrap.open=guideOpen287(S,window.matchMedia(M1PORTRAIT).matches)}
 window.matchMedia(M1PORTRAIT).addEventListener?.("change",syncHomeGuide281);
 
 
@@ -4799,15 +4805,17 @@ function m7TeamOptions286(teams,query,current){
  let matches=m7TeamMatches286(teams,query);
  return '<option value="">'+(matches.length?"选择球队（"+matches.length+"支）":"没有符合条件的球队")+'</option>'+matches.map(t=>option(t.id,t.name+" · "+(COUNTRY219[t.country219]||t.country219||""),current)).join("")
 }
-function filterTeams286(input){let el=document.getElementById("m7TeamSelect");if(el)el.innerHTML=m7TeamOptions286(cp14().teams,input.value,life17().team)}
+let m8TeamOwner=null,m8TeamQuery="";
+function teamQuery287(owner,value){if(m8TeamOwner!==owner){m8TeamOwner=owner;m8TeamQuery=""}if(typeof value==="string")m8TeamQuery=value;return m8TeamQuery}
+function filterTeams286(input){let query=teamQuery287(S,input.value),el=document.getElementById("m7TeamSelect");if(el)el.innerHTML=m7TeamOptions286(cp14().teams,query,life17().team)}
 function decorateWorld286(main){
  let nav=[...main.querySelectorAll(".flex.wrap")].find(x=>x.querySelector("button[onclick*='worldTab17']")&&x.querySelectorAll(":scope > button").length===5);if(nav)nav.classList.add("m7WorldNav");
  if(life17().tab!=="teams")return;
  let panel=[...main.querySelectorAll("section.panel")].find(p=>p.querySelector(":scope > h2")?.textContent==="球队一览"),buttons=panel?.querySelector(".flex.wrap");if(!buttons||panel.querySelector(".m7TeamPicker"))return;
- buttons.classList.add("m7TeamButtons");let picker=document.createElement("div");picker.className="m7TeamPicker";picker.innerHTML='<label>搜索球队／国家<input type="search" placeholder="球队名称、国家或协会" oninput="filterTeams286(this)"></label><label>选择电脑球队<select id="m7TeamSelect" onchange="if(this.value)inspect17(this.value)">'+m7TeamOptions286(cp14().teams,"",life17().team||cp14().teams[0]?.id)+'</select></label>';buttons.before(picker)
+ buttons.classList.add("m7TeamButtons");let picker=document.createElement("div");picker.className="m7TeamPicker";picker.innerHTML='<label>搜索球队／国家<input type="search" placeholder="球队名称、国家或协会" oninput="filterTeams286(this)"></label><label>选择电脑球队<select id="m7TeamSelect" onchange="if(this.value)inspect17(this.value)">'+m7TeamOptions286(cp14().teams,teamQuery287(S),life17().team||cp14().teams[0]?.id)+'</select></label>';picker.querySelector("input").value=teamQuery287(S);buttons.before(picker)
 }
 const m7RenderBase286=render;
 render=function(){m7RenderBase286();if(S?.club?.comp14&&view==="world"){let main=document.getElementById("main");if(main)decorateWorld286(main)}};
 
-window.SDTest={m7Metric286,m7Market286,m7TeamMatches286,m7TeamOptions286,matchLayout285,relocateScore285,m5DrawData284,m5DrawMarkup284,m5EventList284,m4PlanDays283,m4ForecastMetrics283,m4TeamMarkup283,rosterRankText282,mobileRoster282,profileActionGroup282,homeAlerts281,homeEvent281,mobileHome281,mobileMode280,formatViewport280,workerCache280,cupPlan276,weeklyPlan276,executeCup276,storePrimary276,aiCareer275,aiDevelopment275,aiAging275,fractionalGain275,compactSize274,minimumDraw274,realWins274,aiContext273,aiIntent273,aiPlans273,milestoneKind235,milestoneScore235,playMilestone235,stopMilestone235,uiSample235,playUI235,deviceVoice235,sayScore235,stopVoice235,musicScore234,renderMusic234,musicScene234,musicBuffer234,syncMusic234,stopMusic234,previewMusic234,arenaTier233,tension233,reaction233,bedSample233,cheerSample233,arenaBuffer233,arenaLevel233,syncArena233,stopArena233,renderSample232,pan232,sampleKey232,buffer232,cueList1981,pulse1981,sound1981,normalizeAudio231,gainAudio231,setAudio231,resetAudio231,audioUnlock1981,audioStop1981,previewAudio231,getAudio231:()=>({...audioPrefs231}),polish276,defaultCalendar276,calendarPool276,visible230,ui230,matchPanel275,syncMatch275,showReport275,compactOther275,eventBy274,canEditEvent274,eventContent274,rankDetail274,compactProfile273,forecast272,founderTraining272,founderBody272,detailContent272,home272,placement271,readUI271,ui271Rows,fundsUI271,noticesUI271,promotion260,finishCupWorld260,cupWorld260,seasonLeaders260,pack250,unpack250,groupRounds250,groupStand250,placement250,nationalEvents250,qualification250,countryOf250,major250,majorList250,makePersonal14,progressPersonal14,stage250,points250,aiCandidates250,honours250,needsClub240,draft240,validateDraft240,found240,calendar210,clubCalendar210,regular210,entries210,selectedEvent210,aiPool210,all230,visible230,status230,entryUnits230,projected230,risk230,prune230,calendar230,playerSchedule230,eventPoints220,rankingDetail220,requirement220,seed220,life17,aging17,retire17,season17,aiWeek17,coach17,injuries17,business16,budget16,settle16,clubTrain16,staff16,sponsor16,signEndorse16,merch16,merchQuote16,fame16,endorsementOffer16,frontIndex153,frontIntercept153,intercept153,rotation153,rotations153,continuation153,openingTarget152,serve152,doubleShot152,responsibility152,role152,PROFILE152,rotation152,initiative151,policy151,D_POLICY,doubleShot151,attackPair151,defendPair151,analysis15,heat15,reportHTML,tacticalHTML,beginSegment,finishSegment,receivePenalty15,getState:()=>copy(S),setState:x=>{S=migrate(copy(x));render()},newMatch,makeRally,awardRally,autoMatch,makePlayer,rng,grade,trainWeek,createGame,advanceWeek,skipInterval,resumeMatch,recordMatch,startOwnMatch,simulateOtherRounds,validSave,sampleVisual,TACTIC_PRESETS,develop,unlockSkills,ageFactor,migrate,effective,SKILLS,capGain,initClub,hire,addSlot,myUnits,unit,makeUnitMatch,simulateUnit,launchCupMatch,closeCup,setEntry,cp14,calendar14,next14,rank14,addPoints14,eligible14,standings14,entry14,lineup14,launch14,quick14,close14,finish14,scoreLeague14,prime14,planned14,world14};if(load()){view=S.match?'match':S.tournament||S.club?.cup||S.club?.comp14?.queue?.length?'events':'home'}render();
+window.SDTest={guidePreference287,guideOpen287,teamQuery287,m7Metric286,m7Market286,m7TeamMatches286,m7TeamOptions286,matchLayout285,relocateScore285,m5DrawData284,m5DrawMarkup284,m5EventList284,m4PlanDays283,m4ForecastMetrics283,m4TeamMarkup283,rosterRankText282,mobileRoster282,profileActionGroup282,homeAlerts281,homeEvent281,mobileHome281,mobileMode280,formatViewport280,workerCache280,cupPlan276,weeklyPlan276,executeCup276,storePrimary276,aiCareer275,aiDevelopment275,aiAging275,fractionalGain275,compactSize274,minimumDraw274,realWins274,aiContext273,aiIntent273,aiPlans273,milestoneKind235,milestoneScore235,playMilestone235,stopMilestone235,uiSample235,playUI235,deviceVoice235,sayScore235,stopVoice235,musicScore234,renderMusic234,musicScene234,musicBuffer234,syncMusic234,stopMusic234,previewMusic234,arenaTier233,tension233,reaction233,bedSample233,cheerSample233,arenaBuffer233,arenaLevel233,syncArena233,stopArena233,renderSample232,pan232,sampleKey232,buffer232,cueList1981,pulse1981,sound1981,normalizeAudio231,gainAudio231,setAudio231,resetAudio231,audioUnlock1981,audioStop1981,previewAudio231,getAudio231:()=>({...audioPrefs231}),polish276,defaultCalendar276,calendarPool276,visible230,ui230,matchPanel275,syncMatch275,showReport275,compactOther275,eventBy274,canEditEvent274,eventContent274,rankDetail274,compactProfile273,forecast272,founderTraining272,founderBody272,detailContent272,home272,placement271,readUI271,ui271Rows,fundsUI271,noticesUI271,promotion260,finishCupWorld260,cupWorld260,seasonLeaders260,pack250,unpack250,groupRounds250,groupStand250,placement250,nationalEvents250,qualification250,countryOf250,major250,majorList250,makePersonal14,progressPersonal14,stage250,points250,aiCandidates250,honours250,needsClub240,draft240,validateDraft240,found240,calendar210,clubCalendar210,regular210,entries210,selectedEvent210,aiPool210,all230,visible230,status230,entryUnits230,projected230,risk230,prune230,calendar230,playerSchedule230,eventPoints220,rankingDetail220,requirement220,seed220,life17,aging17,retire17,season17,aiWeek17,coach17,injuries17,business16,budget16,settle16,clubTrain16,staff16,sponsor16,signEndorse16,merch16,merchQuote16,fame16,endorsementOffer16,frontIndex153,frontIntercept153,intercept153,rotation153,rotations153,continuation153,openingTarget152,serve152,doubleShot152,responsibility152,role152,PROFILE152,rotation152,initiative151,policy151,D_POLICY,doubleShot151,attackPair151,defendPair151,analysis15,heat15,reportHTML,tacticalHTML,beginSegment,finishSegment,receivePenalty15,getState:()=>copy(S),setState:x=>{S=migrate(copy(x));render()},newMatch,makeRally,awardRally,autoMatch,makePlayer,rng,grade,trainWeek,createGame,advanceWeek,skipInterval,resumeMatch,recordMatch,startOwnMatch,simulateOtherRounds,validSave,sampleVisual,TACTIC_PRESETS,develop,unlockSkills,ageFactor,migrate,effective,SKILLS,capGain,initClub,hire,addSlot,myUnits,unit,makeUnitMatch,simulateUnit,launchCupMatch,closeCup,setEntry,cp14,calendar14,next14,rank14,addPoints14,eligible14,standings14,entry14,lineup14,launch14,quick14,close14,finish14,scoreLeague14,prime14,planned14,world14};if(load()){view=S.match?'match':S.tournament||S.club?.cup||S.club?.comp14?.queue?.length?'events':'home'}render();
 </script><script>if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).catch(e=>console.warn('Offline cache unavailable',e))})}</script></body></html>
