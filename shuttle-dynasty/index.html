@@ -2887,7 +2887,7 @@ function compactEvents274(main){
  if(c.tab==="rank"){
    let own=panels.find(p=>heading92(p)==="我方积分明细"),board=panels.find(p=>p.querySelector('table'));if(!own||!board)return;
    let summary=document.createElement('div');summary.className='u274own';summary.innerHTML='<h3>我方球员</h3>';
-   for(let u of myUnits(c.cat)){let d=rankingDetail220(u.id,c.rankMode220||"world");let line=document.createElement('div');line.className='u274line';line.innerHTML='<div><b>'+esc(u.name)+'</b><small>'+d.points.toLocaleString()+' 分 · '+d.count+'/'+d.played+'站</small></div>'+action272("明细","rankDetail274("+JSON.stringify(u.id)+",this)");summary.append(line)}
+   for(let u of myUnits(c.cat)){let d=rankingDetail220(u.id,c.rankMode220||"world");let line=document.createElement('div');line.className='u274line';line.innerHTML='<div><b>'+esc(u.name)+'</b><small>'+d.points.toLocaleString()+' 分 · '+d.count+'/'+d.played+'站</small></div>'+action272("明细","openAtlas265("+JSON.stringify(u.id)+",this,'','points')");summary.append(line)}
    if(!myUnits(c.cat).length)summary.innerHTML+='<p class="muted">暂无注册球员／组合</p>';
    board.querySelector('.tablewrap')?.before(summary);own.remove();
    let rules=board.querySelector(':scope > p.muted');if(rules){let button=document.createElement('button');button.type='button';button.className='small';button.textContent='排名规则';button.onclick=()=>openUI271("popover","排名规则",'<p>'+esc(rules.textContent)+'</p>',button);rules.replaceWith(button)}
@@ -3430,10 +3430,10 @@ function atlasPoints263(id,mode){
 function atlasMarkup263(u,state){
  let book=worldRanks260(),pair=u.players.length===2,p=state.member?u.players.find(x=>x.id===state.member):pair?null:u.players[0];
  let nav=pair?'<div class="atlas263nav">'+atlasButton263("组合档案","atlasSwitch263('member','')",state.member?"small":"small active")+u.players.map(x=>atlasButton263(esc(shortPlayer250(x,15)),"atlasSwitch263('member',"+JSON.stringify(x.id)+")",state.member===x.id?"small active":"small")).join("")+'</div>':"";
- let head=p?atlasIdentity263(p,u.club)+atlasPlayerRanks263(p,book)+atlasStats263(p):'<div class="atlas263pair">'+u.players.map(x=>atlasButton263(atlasIdentity263(x,u.club),"atlasSwitch263('member',"+JSON.stringify(x.id)+")","atlas263member")).join("")+'</div>'+atlasRankCard263(u.id,u.cat,u.name,book)+ui271Rows([["组合默契度",u.historical265?"历史默契未记录":Math.round(u.chem)+"%"],["组合综合评分",avg(teamProxy(u)).toFixed(1)]]);
+ let head=p?atlasIdentity263(p,u.club)+atlasPlayerRanks263(p,book)+atlasStats263(p):'<div class="atlas263pair">'+u.players.map(x=>atlasButton263(atlasIdentity263(x,u.club),"atlasSwitch263('member',"+JSON.stringify(x.id)+")","atlas263member")).join("")+'</div>'+atlasRankCard263(u.id,u.cat,u.name,book)+ui271Rows([["组合默契度",u.historical265?"历史默契未记录":Math.round(u.chem)+"%"],["组合综合评分",avg(teamProxy(u)).toFixed(1)+(u.historical265?"（中性默契估算）":"")]]);
  let tabs='<div class="atlas263nav" role="group" aria-label="档案栏目">'+[["ability","能力"],["honours","荣誉"],["h2h","交手"],["recent","近况"],["points","积分"],["compare","对比"]].map(([k,n])=>atlasButton263(n,"atlasSwitch263('tab','"+k+"')","small "+(state.tab===k?"active":""))).join("")+'</div>';
  let pointId=p&&pair?unitId(p.gender==="女"?"WS":"MS",[p.id]):u.id;
- let body=state.tab==="compare"?atlasCompare265(u,p,state):state.tab==="honours"?atlasHonours264(u,p,state):state.tab==="h2h"?atlasH2HHTML264(u,p):state.tab==="recent"?atlasRecentHTML264(u,p):state.tab==="points"?atlasPoints263(pointId,state.mode):p?atlasAttrs263(p)+ui271Rows([["体能",Math.round(p.fitness)+"%"],["竞技状态",Math.round(p.form)+"%"],["伤病",p.injury?"康复 "+p.injury+" 周":"无"]])+atlasSkills263(p):'<p class="muted">以下为组合综合能力，点击搭档查看个人专项能力和技能。</p>'+atlasAttrs263(teamProxy(u));
+ let body=state.tab==="compare"?atlasCompare265(u,p,state):state.tab==="honours"?atlasHonours264(u,p,state):state.tab==="h2h"?atlasH2HHTML264(u,p):state.tab==="recent"?atlasRecentHTML264(u,p):state.tab==="points"?atlasPoints263(pointId,state.mode):p?atlasAttrs263(p)+ui271Rows([["体能",Math.round(p.fitness)+"%"],["竞技状态",Math.round(p.form)+"%"],["伤病",p.injury?"康复 "+p.injury+" 周":"无"]])+atlasSkills263(p):'<p class="muted">以下为组合综合能力，点击搭档查看个人专项能力和技能。'+(u.historical265?' 历史组合默契未记录，能力按中性默契估算。':'')+'</p>'+atlasAttrs263(teamProxy(u));
  return '<div class="atlas263">'+nav+head+tabs+'<div class="atlas263body">'+body+'</div><p class="muted atlas263note">最高排名自 '+esc(fmtWeek(S.rankArchive260?.since||S.week))+' 起记录。旧版本未保存的历史峰值不作推算。'+(pair&&p&&state.tab==="points"?" 当前显示个人单打积分；返回组合档案查看组合积分。":"")+'</p></div>'
 }
 function atlasSwitch263(k,v){
@@ -3535,11 +3535,11 @@ function atlasResolve265(id,cat){
  if(side>=0){let half=m.members?2:1,ps=(m.members||m.players).slice(side*half,(side+1)*half),q=m.units[side];if(ps.length===ids.length)return unit(cat,ps,m.chem?.[side]??50,q.club)}
  return null
 }
-function openAtlas265(id,anchor,member=""){
+function openAtlas265(id,anchor,member="",tab="ability"){
  let u=atlasUnit263(id);if(!u)return false;
  let root=anchor?.closest(".ui271Overlay")?UI271.overlay?.anchor:anchor;
  if(root&&!root.isConnected)root=null;
- let a={id,member:u.players.some(p=>p.id===member)?member:"",tab:"ability",level:"all",compare:"",mode:cp14().rankMode220||"world"};
+ let a={id,member:u.players.some(p=>p.id===member)?member:"",tab:tab==="points"?"points":"ability",level:"all",compare:"",mode:cp14().rankMode220||"world"};
  let opened=openUI271("inspector",u.name+" · "+(u.players.length===2?"组合档案":"球员档案"),()=>atlasMarkup263(u,a),root);
  atlas263=opened?a:null;return opened
 }
