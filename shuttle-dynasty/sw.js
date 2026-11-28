@@ -1,4 +1,4 @@
-const CACHE='shuttle-dynasty-v2.9.2';
+const CACHE='shuttle-dynasty-v2.9.3';
 const ROOT=new URL('./',self.location.href);
 const FILES=['./','index.html','logo.svg','home-hero.webp','founder-male.webp','founder-female.webp','icon.svg','icon-180.png','icon-192.png','icon-512.png','manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(FILES.map(x=>new Request(new URL(x,ROOT).href,{cache:'reload'})));await Promise.allSettled(['en-female','en-male','zh-female','zh-male'].flatMap(l=>['json','wav'].map(ext=>c.add(new Request(new URL('referee/neural-v1/'+l+'.'+ext,ROOT).href,{cache:'reload'})))));await self.skipWaiting()})()));
