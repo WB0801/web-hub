@@ -20,13 +20,36 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Build Shuttle Dynasty offline referee phrases
-        continue-on-error: true
+      - name: Restore fixed referee audio bank
+        id: referee-cache
+        uses: actions/cache@v4
+        with:
+          path: shuttle-dynasty/referee/neural-v1
+          key: sd-kokoro-v1-${{ hashFiles('shuttle-dynasty/build-referee.py') }}
+      - name: Build fixed referee audio bank
+        if: steps.referee-cache.outputs.cache-hit != 'true'
         run: |
-          if ! command -v espeak >/dev/null 2>&1; then
-            sudo apt-get update -qq && sudo apt-get install -y -qq espeak
-          fi
-          python3 shuttle-dynasty/build-referee.py shuttle-dynasty/referee
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq espeak-ng
+          python3 -m venv /tmp/referee-env
+          /tmp/referee-env/bin/pip install --quiet torch --index-url https://download.pytorch.org/whl/cpu
+          /tmp/referee-env/bin/pip install --quiet "kokoro==0.9.4" "misaki[zh]" soundfile
+          /tmp/referee-env/bin/python shuttle-dynasty/build-referee.py shuttle-dynasty/referee/neural-v1
+      - name: Verify referee bank artifacts
+        run: |
+          python3 - <<'PY'
+          import json, wave
+          from pathlib import Path
+          p=Path('shuttle-dynasty/referee/neural-v1')
+          for asset,voice in [('en-female','af_heart'),('en-male','am_michael'),('zh-female','zf_xiaobei'),('zh-male','zm_yunjian')]:
+              m=json.loads((p/(asset+'.json')).read_text())
+              assert m['voice']==voice and m['asset']==asset and m['engine']=='Kokoro-82M'
+              with wave.open(str(p/(asset+'.wav'))) as w:
+                  assert w.getframerate()==24000 and w.getnchannels()==1 and w.getnframes()>24000
+                  duration=w.getnframes()/w.getframerate()
+              assert len(m['clips'])>=32 and all(0<=s and d>0 and s+d<=duration+.001 for s,d in m['clips'].values())
+              assert all(str(i) in m['clips'] for i in range(22))
+          PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
