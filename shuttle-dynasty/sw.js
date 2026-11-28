@@ -1,7 +1,7 @@
-const CACHE='shuttle-dynasty-v2.9.1';
+const CACHE='shuttle-dynasty-v2.9.2';
 const ROOT=new URL('./',self.location.href);
 const FILES=['./','index.html','logo.svg','home-hero.webp','founder-male.webp','founder-female.webp','icon.svg','icon-180.png','icon-192.png','icon-512.png','manifest.webmanifest'];
-self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(FILES.map(x=>new Request(new URL(x,ROOT).href,{cache:'reload'})));await Promise.allSettled(['en','zh'].flatMap(l=>['json','wav'].map(ext=>c.add(new Request(new URL('referee/'+l+'.'+ext,ROOT).href,{cache:'reload'})))));await self.skipWaiting()})()));
+self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(FILES.map(x=>new Request(new URL(x,ROOT).href,{cache:'reload'})));await Promise.allSettled(['en-female','en-male','zh-female','zh-male'].flatMap(l=>['json','wav'].map(ext=>c.add(new Request(new URL('referee/neural-v1/'+l+'.'+ext,ROOT).href,{cache:'reload'})))));await self.skipWaiting()})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('shuttle-dynasty-')&&k!==CACHE)await caches.delete(k);await self.clients.claim()})()));
 async function networkFirst287(request,cache,key){
  let response;
