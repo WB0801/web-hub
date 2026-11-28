@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,12 +26,18 @@ jobs:
         with:
           path: shuttle-dynasty/referee/neural-v1
           key: sd-kokoro-v1-${{ hashFiles('shuttle-dynasty/build-referee.py') }}
+      - name: Set up compatible Python for referee generation
+        if: steps.referee-cache.outputs.cache-hit != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Build fixed referee audio bank
         if: steps.referee-cache.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq espeak-ng
-          python3 -m venv /tmp/referee-env
+          python --version
+          python -m venv /tmp/referee-env
           /tmp/referee-env/bin/pip install --quiet torch --index-url https://download.pytorch.org/whl/cpu
           /tmp/referee-env/bin/pip install --quiet "kokoro==0.9.4" "misaki[zh]" soundfile
           /tmp/referee-env/bin/python shuttle-dynasty/build-referee.py shuttle-dynasty/referee/neural-v1
