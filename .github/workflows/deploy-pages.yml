@@ -20,6 +20,13 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Build Shuttle Dynasty offline referee phrases
+        continue-on-error: true
+        run: |
+          if ! command -v espeak >/dev/null 2>&1; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq espeak
+          fi
+          python3 shuttle-dynasty/build-referee.py shuttle-dynasty/referee
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
