@@ -1,4 +1,4 @@
-const CACHE='shuttle-dynasty-v2.9.0';
+const CACHE='shuttle-dynasty-v2.9.1';
 const ROOT=new URL('./',self.location.href);
 const FILES=['./','index.html','logo.svg','home-hero.webp','founder-male.webp','founder-female.webp','icon.svg','icon-180.png','icon-192.png','icon-512.png','manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(FILES.map(x=>new Request(new URL(x,ROOT).href,{cache:'reload'})));await Promise.allSettled(['en','zh'].flatMap(l=>['json','wav'].map(ext=>c.add(new Request(new URL('referee/'+l+'.'+ext,ROOT).href,{cache:'reload'})))));await self.skipWaiting()})()));
